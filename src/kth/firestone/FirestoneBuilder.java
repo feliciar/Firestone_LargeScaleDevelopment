@@ -43,7 +43,7 @@ public class FirestoneBuilder implements GameBuilder {
 			HashMap<String, String> data = GameData.cards.get(s);	
 			
 			Card card = new FirestoneCard(data.get("name"), data.get("health"),
-					data.get("attack"), data.get("manaCost"), data.get("type"),
+					data.get("attack"), data.get("mana"), data.get("type"),
 					data.get("description"));
 			cards.add(card);
 		}
