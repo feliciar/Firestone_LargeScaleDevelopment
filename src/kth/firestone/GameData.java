@@ -19,7 +19,7 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
-		card.clear();
+		card = new HashMap<>();
 		
 		card.put("name", "War Golem");
 		card.put("health", "7");
@@ -32,7 +32,7 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
-		card.clear();
+		card = new HashMap<>();
 		
 		card.put("name", "Boulderfist Ogre");
 		card.put("health", "7");
@@ -45,7 +45,7 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
-		card.clear();
+		card = new HashMap<>();
 		
 		card.put("name", "Ironforge Rifleman");
 		card.put("health", "2");
@@ -58,7 +58,7 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
-		card.clear();
+		card = new HashMap<>();
 		
 		card.put("name", "Blackwing Corruptor");
 		card.put("health", "4");
@@ -71,7 +71,7 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
-		card.clear();
+		card = new HashMap<>();
 		
 		card.put("name", "Twilight Drake");
 		card.put("health", "1");
@@ -83,6 +83,7 @@ public class GameData {
 		card.put("buff", "Battlecry: Gain +1 Health for each card in your hand.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
+		
 	}
 	
 	public HashMap<String, HashMap<String, String>> getCards() {
