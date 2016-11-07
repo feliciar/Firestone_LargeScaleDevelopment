@@ -7,11 +7,15 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
 public class FirestoneGame implements Game {
-
+	List<Player> players;
+	
+	public FirestoneGame(List<Player> players) {
+		this.players = players;
+	}
+	
 	@Override
 	public List<Player> getPlayers() {
-		// TODO Auto-generated method stub
-		return null;
+		return players;
 	}
 
 	@Override

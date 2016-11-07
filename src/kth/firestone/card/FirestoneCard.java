@@ -3,65 +3,78 @@ package kth.firestone.card;
 import java.util.Optional;
 
 public class FirestoneCard implements Card {
-
+	
+	private String id;
+	private String name;
+	private Optional<Integer> health;
+	private int manaCost;
+	private int originalManaCost;
+	private Optional<Integer> originalHealth;
+	private Optional<Integer> originalAttack;
+	private Optional<Integer> attack;
+	private Type type;
+	private String description;
+	
+	public FirestoneCard(String name, String health, String attack, 
+			String manaCost, String type, String description) {
+		this.name = name;
+		this.originalHealth = Optional.of(Integer.parseInt(health));
+		this.health = Optional.of(Integer.parseInt(health));
+		this.originalAttack = Optional.of(Integer.parseInt(attack));
+		this.attack = Optional.of(Integer.parseInt(attack));
+		this.manaCost = Integer.parseInt(manaCost);
+		this.type = Type.valueOf(type);
+		this.description = description;
+	}
+	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public int getManaCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return manaCost;
 	}
 
 	@Override
 	public int getOriginalManaCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return originalManaCost;
 	}
 
 	@Override
 	public Optional<Integer> getAttack() {
-		// TODO Auto-generated method stub
-		return null;
+		return attack;
 	}
 
 	@Override
 	public Optional<Integer> getHealth() {
-		// TODO Auto-generated method stub
-		return null;
+		return health;
 	}
 
 	@Override
 	public Optional<Integer> getOriginalAttack() {
-		// TODO Auto-generated method stub
-		return null;
+		return originalAttack;
 	}
 
 	@Override
 	public Optional<Integer> getOriginalHealth() {
-		// TODO Auto-generated method stub
-		return null;
+		return originalHealth;
 	}
 
 	@Override
 	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return description;
 	}
 
 }

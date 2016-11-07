@@ -5,71 +5,71 @@ import java.util.List;
 import kth.firestone.buff.BuffDescription;
 
 public class FirestoneMinion implements Minion {
-
+	private String id;
+	private String name;
+	private int health;
+	private int maxHealth;
+	private int originalHealth;
+	private int originalAttack;
+	private int attack;
+	private MinionRace race;
+	private List<MinionState> states;
+	private List<BuffDescription> buffDescriptions;
+	private boolean sleepy = true;
+	
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return health;
 	}
 
 	@Override
 	public int getMaxHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return maxHealth;
 	}
 
 	@Override
 	public int getOriginalHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return originalHealth;
 	}
 
 	@Override
 	public int getOriginalAttack() {
-		// TODO Auto-generated method stub
-		return 0;
+		return originalAttack;
 	}
 
 	@Override
 	public int getAttack() {
-		// TODO Auto-generated method stub
-		return 0;
+		return attack;
 	}
 
 	@Override
 	public MinionRace getRace() {
-		// TODO Auto-generated method stub
-		return null;
+		return race;
 	}
 
 	@Override
 	public List<MinionState> getStates() {
-		// TODO Auto-generated method stub
-		return null;
+		return states;
 	}
 
 	@Override
 	public List<BuffDescription> getBuffDescriptions() {
-		// TODO Auto-generated method stub
-		return null;
+		return buffDescriptions;
 	}
 
 	@Override
 	public boolean isSleepy() {
-		// TODO Auto-generated method stub
-		return false;
+		return sleepy;
 	}
 
 }
