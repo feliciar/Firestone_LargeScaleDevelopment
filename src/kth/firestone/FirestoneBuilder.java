@@ -14,9 +14,12 @@ import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
 public class FirestoneBuilder implements GameBuilder {
-	List<Player> players;
+	private List<Player> players;
+	private GameData gameData;
 	
-	public FirestoneBuilder() {
+	public FirestoneBuilder(GameData gameData) {
+		this.gameData = gameData;
+		gameData.populate();
 		this.players = createPlayers();
 	}
 	
@@ -40,7 +43,8 @@ public class FirestoneBuilder implements GameBuilder {
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
 		for (String s : cardNames) {
-			HashMap<String, String> data = GameData.cards.get(s);	
+			HashMap<String, HashMap<String, String>> t = gameData.getCards();
+			HashMap<String, String> data = t.get(s);	
 			
 			Card card = new FirestoneCard(data.get("name"), data.get("health"),
 					data.get("attack"), data.get("mana"), data.get("type"),
@@ -112,6 +116,10 @@ public class FirestoneBuilder implements GameBuilder {
 		players.add(player1);
 		players.add(player2);
 		
+		return players;
+	}
+	
+	public List<Player> getPlayers() {
 		return players;
 	}
 

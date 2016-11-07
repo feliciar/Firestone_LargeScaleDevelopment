@@ -2,11 +2,11 @@ package kth.firestone;
 
 import java.util.HashMap;
 
-public final class GameData {
-	public static final HashMap<String, HashMap<String, String>> cards 
+public class GameData {
+	public final HashMap<String, HashMap<String, String>> cards 
 						= new HashMap<String, HashMap<String, String>>();
 	
-	public static void populate() {
+	public void populate() {
 		HashMap<String, String> card = new HashMap<>();
 		card.put("name", "Imp");
 		card.put("health", "1");
@@ -83,5 +83,9 @@ public final class GameData {
 		card.put("buff", "Battlecry: Gain +1 Health for each card in your hand.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
+	}
+	
+	public HashMap<String, HashMap<String, String>> getCards() {
+		return cards;
 	}
 }

@@ -7,7 +7,7 @@ import kth.firestone.card.Card;
 
 public class FirestoneDeck implements Deck {
 	
-	ArrayDeque<Card> cards;
+	private ArrayDeque<Card> cards;
 	
 	public FirestoneDeck(Collection<Card> cards) {
 		this.cards = new ArrayDeque<>(cards);
@@ -16,6 +16,10 @@ public class FirestoneDeck implements Deck {
 	@Override
 	public int size() {
 		return cards.size();
+	}
+	
+	public ArrayDeque<Card> getCards() {
+		return cards;
 	}
 
 }
