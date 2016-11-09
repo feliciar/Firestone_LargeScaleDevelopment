@@ -9,6 +9,8 @@ import kth.firestone.GameData;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.card.PlayCardHandler;
+import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionState;
@@ -40,10 +42,18 @@ public class PlayCardHandlerTest {
 		
 		//Mock player.getHand()
 		GamePlayer player = mock(GamePlayer.class);
-		Card card = new FirestoneCard("Imp", "1", "1", "1", "MINION", "");
+		int manaCost = 5;
+		Card card = new FirestoneCard("Imp", "1", "1", ""+manaCost, "MINION", "");
 		List<Card> hand = new ArrayList<Card>();
 		hand.add(card);
 		when(player.getHand()).thenReturn(hand);
+		
+		//Mock hero
+		FirestoneHero hero = new FirestoneHero();
+		int startMana = 10;
+		hero.setMana(startMana);
+		when(player.getHero()).thenReturn(hero);
+		
 		
 		//Mock player.getActiveMinions()
 		List<Minion> minions = new ArrayList<Minion>();
@@ -66,11 +76,15 @@ public class PlayCardHandlerTest {
 		int index2 = 4;
 		pch.playMinionCard(player, card, index2);
 		
+		
 		//Assert
 		hand.remove(card);
 		minions.add(index2, new FirestoneMinion(card,gameData));
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
+		assertEquals(player.getHero().getMana(), startMana-manaCost*2);
+		
+		
 		
 	}
 

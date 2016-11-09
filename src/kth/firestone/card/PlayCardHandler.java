@@ -4,6 +4,8 @@ import java.util.List;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
+import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.GamePlayer;
@@ -12,6 +14,7 @@ import kth.firestone.player.Player;
 public class PlayCardHandler {
 	
 	GameData gameData;
+	public static int MAX_CARDS_ALLOWED_ON_THE_BOARD = 8;
 	
 	public PlayCardHandler(GameData gameData){
 		this.gameData = gameData;
@@ -45,6 +48,7 @@ public class PlayCardHandler {
     /**
      * Playing a minion without a target.
      * Removes the card from the players hand,
+     * reduces the mana,
      * creates the minion, and puts it on the board
      * Then discard the card
      * 
@@ -54,6 +58,8 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position){
+    	FirestoneHero hero = (FirestoneHero)player.getHero();
+    	hero.setMana(hero.getMana()-card.getManaCost());
     	player.getHand().remove(card);
     	Minion minion = new FirestoneMinion(card,gameData);
     	player.getActiveMinions().add(position, minion);
@@ -105,6 +111,42 @@ public class PlayCardHandler {
     	return null;
     }
     
+    
+    /**
+     * Determines if the given card can be played without a target.
+     * 
+     * @param player the player playing the card
+     * @param card the card to be played
+     * @return true if the play is valid
+     */
+    public boolean isPlayCardValid(Player player, Card card){
+    	//Check if the player has less than 8 cards
+    	//Check if the player has enough mana
+    	if(player.getHand().size() >= MAX_CARDS_ALLOWED_ON_THE_BOARD){
+    		//TODO throw an appropriate error
+    		return false;
+    	}
+    	if(player.getHero().getMana() < card.getManaCost()){
+    		//TODO throw an error
+    		return false;
+    	}
+    	
+    	return true;
+    }
+
+    /**
+     * Tells if a card is valid to play at this stage.
+     * 
+     * @param player the player playing the card
+     * @param card the card to be played
+     * @param targetId the id of the target that of the card
+     * @return true if the play is valid
+     */
+    public boolean isPlayCardValid(Player player, Card card, String targetId){
+    	//TODO
+    	return true;
+    }
+
    
 	
 }
