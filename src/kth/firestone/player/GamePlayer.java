@@ -1,5 +1,6 @@
 package kth.firestone.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import kth.firestone.card.Card;
@@ -17,6 +18,8 @@ public class GamePlayer implements Player {
 	public GamePlayer(String id, Hero hero) {
 		this.id = id;
 		this.hero = hero;
+		hand = new ArrayList<Card>();
+		activeMinions = new ArrayList<Minion>();
 	}
 	
 	@Override
