@@ -25,7 +25,7 @@ public class GameData {
 		card.put("health", "7");
 		card.put("attack", "7");
 		card.put("mana", "7");
-		card.put("race", "");
+		card.put("race", "NONE");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "");
@@ -38,7 +38,7 @@ public class GameData {
 		card.put("health", "7");
 		card.put("attack", "6");
 		card.put("mana", "6");
-		card.put("race", "");
+		card.put("race", "NONE");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "");
@@ -51,7 +51,7 @@ public class GameData {
 		card.put("health", "2");
 		card.put("attack", "2");
 		card.put("mana", "3");
-		card.put("race", "");
+		card.put("race", "NONE");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "Battlecry: Deal 1 damage.");
@@ -64,7 +64,7 @@ public class GameData {
 		card.put("health", "4");
 		card.put("attack", "5");
 		card.put("mana", "5");
-		card.put("race", "");
+		card.put("race", "NONE");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "Battlecry: If you're holding a Dragon, deal 3 damage.");
