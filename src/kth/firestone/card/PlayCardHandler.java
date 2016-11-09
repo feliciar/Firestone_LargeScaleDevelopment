@@ -3,9 +3,19 @@ package kth.firestone.card;
 import java.util.List;
 
 import kth.firestone.Event;
+import kth.firestone.GameData;
+import kth.firestone.minion.FirestoneMinion;
+import kth.firestone.minion.Minion;
+import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
 public class PlayCardHandler {
+	
+	GameData gameData;
+	
+	public PlayCardHandler(GameData gameData){
+		this.gameData = gameData;
+	}
 
 	
 	/**
@@ -34,6 +44,9 @@ public class PlayCardHandler {
 
     /**
      * Playing a minion without a target.
+     * Removes the card from the players hand,
+     * creates the minion, and puts it on the board
+     * Then discard the card
      * 
      * @param player the player playing the card 
      * @param card the card to play
@@ -41,7 +54,11 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position){
-    	//TODO
+    	player.getHand().remove(card);
+    	Minion minion = new FirestoneMinion(card,gameData);
+    	player.getActiveMinions().add(position, minion);
+    	
+    	//TODO discard the played card
     	return null;
     }
 
@@ -83,5 +100,7 @@ public class PlayCardHandler {
     	//TODO
     	return null;
     }
+    
+   
 	
 }
