@@ -58,12 +58,16 @@ public class PlayCardHandler {
     	Minion minion = new FirestoneMinion(card,gameData);
     	player.getActiveMinions().add(position, minion);
     	
-    	//TODO discard the played card
+    	//TODO Put the card in a discard pile
     	return null;
     }
 
     /**
      * Playing a minion that requires a target.
+     * Removes the card from the players hand,
+     * creates the minion, and puts it on the board
+     * performs its buff on the target.
+     * Then discard the card
      * 
      * @param player the player playing the card
      * @param card the card to play
@@ -72,7 +76,7 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position, String targetId){
-    	//TODO
+    	//TODO discard the played card
     	return null;
     }
 
