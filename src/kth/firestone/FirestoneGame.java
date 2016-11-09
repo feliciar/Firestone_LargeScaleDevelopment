@@ -7,6 +7,7 @@ import java.util.List;
 import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
+import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 import kth.firestone.player.GamePlayer;
@@ -118,18 +119,22 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public List<Event> endTurn(Player player) {
-		if (player.getId().equals("1")) {
-			playerIndexInTurn = 2;
-		} else {
-			playerIndexInTurn = 1;
+		if (((FirestoneDeck) player.getDeck()).size() == 0) {
+			((FirestoneHero) player.getHero()).decreaseHealth();
 		}
-		// draw new card for next player
-		Card drawnCard = ((FirestoneDeck) player.getDeck()).getCards().pop();
-
-		List<Card> hand = player.getHand();
-		hand.add(drawnCard);
-		((GamePlayer) player).setHand(hand);
-		
+		if (getPlayerInTurn().equals(player)) {
+			if (player.getId().equals("1")) {
+				playerIndexInTurn = 2;
+			} else {
+				playerIndexInTurn = 1;
+			}
+			// draw new card for next player
+			Card drawnCard = ((FirestoneDeck) player.getDeck()).getCards().pop();
+	
+			List<Card> hand = player.getHand();
+			hand.add(drawnCard);
+			((GamePlayer) player).setHand(hand);
+		}
 		return events;
 	}
 

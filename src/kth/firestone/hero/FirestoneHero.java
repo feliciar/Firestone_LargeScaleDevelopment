@@ -96,5 +96,9 @@ public class FirestoneHero implements Hero {
 	public String toString(){
 		return "Hero: id: "+id+" name: "+name + " health: " + health+"/"+maxHealth + " attack: "+ attack+ " mana: "+mana;
 	}
+	
+	public void decreaseHealth() {
+		health--;
+	}
 
 }
