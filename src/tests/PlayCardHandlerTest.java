@@ -5,6 +5,8 @@ import org.junit.Test;
 import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import kth.firestone.GameData;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
@@ -43,14 +45,14 @@ public class PlayCardHandlerTest {
 		//Mock player.getHand()
 		GamePlayer player = mock(GamePlayer.class);
 		int manaCost = 5;
-		Card card = new FirestoneCard("Imp", "1", "1", ""+manaCost, "MINION", "");
+		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "");
 		List<Card> hand = new ArrayList<Card>();
 		hand.add(card);
 		when(player.getHand()).thenReturn(hand);
 		
 		//Mock hero
 		int startHealth = 30;
-		FirestoneHero hero = new FirestoneHero(startHealth);
+		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), startHealth);
 		int startMana = 10;
 		hero.setMana(startMana);
 		when(player.getHero()).thenReturn(hero);
@@ -69,7 +71,7 @@ public class PlayCardHandlerTest {
 		
 		//Assert
 		hand.remove(card);
-		minions.add(index1, new FirestoneMinion(card,gameData));
+		minions.add(index1, new FirestoneMinion(UUID.randomUUID().toString(), card,gameData));
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
 		
@@ -80,7 +82,7 @@ public class PlayCardHandlerTest {
 		
 		//Assert
 		hand.remove(card);
-		minions.add(index2, new FirestoneMinion(card,gameData));
+		minions.add(index2, new FirestoneMinion(UUID.randomUUID().toString(), card,gameData));
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
 		assertEquals(player.getHero().getMana(), startMana-manaCost*2);

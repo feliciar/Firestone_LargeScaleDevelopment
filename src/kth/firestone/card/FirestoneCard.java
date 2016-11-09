@@ -15,8 +15,9 @@ public class FirestoneCard implements Card {
 	private Type type;
 	private String description;
 	
-	public FirestoneCard(String name, String health, String attack, 
+	public FirestoneCard(String id, String name, String health, String attack, 
 			String manaCost, String type, String description) {
+		this.id = id;
 		this.name = name;
 		this.originalHealth = Optional.of(Integer.parseInt(health));
 		this.health = Optional.of(Integer.parseInt(health));
