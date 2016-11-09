@@ -14,6 +14,8 @@ public class FirestoneHero implements Hero {
 	private List<HeroState> states;
 	private Weapon weapon;
 	
+	//TODO create this constructor
+	
 	@Override
 	public String getId() {
 		return id;
