@@ -1,8 +1,8 @@
 package kth.firestone;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import kth.firestone.hero.Hero;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
@@ -33,7 +33,7 @@ public class AttackHandler {
 	public boolean isAttackValid(Player player, String attackerId, String targetId) {
 		List<Minion> activeMinions= player.getActiveMinions();
 		Minion minion = null;
-		//Find the minion chosen to attack, or get the hero.
+		//Find the minion chosen to attack.
 		for(Minion m : activeMinions) {
 			if (m.getId().equals(attackerId)) {
 				minion = m;
@@ -50,20 +50,15 @@ public class AttackHandler {
 			Player adversary = getAdversary(player.getId());
 		
 			// Find if the adversary has a TAUNT on the board and who it is.
-			List<Minion> adversaryActiveMinions= adversary.getActiveMinions();
-			boolean hasTaunt = false;
-			Minion adversaryMinion = null;
-			for(Minion m : adversaryActiveMinions){
-				if (m.getStates().contains("TAUNT")){
-					hasTaunt = true;
-					adversaryMinion = m;
-					break;
+			List<Minion> tauntingMinions = getAdversaryMinionswithTaunt(adversary);
+			
+			if (tauntingMinions.size() != 0){// There was at least one taunt minion
+				for(Minion m : tauntingMinions){
+					if (m.getId().equals(targetId)){
+						return true;
+					}
 				}	
 			}
-			if (hasTaunt && adversaryMinion.getId().equals(targetId)){// There was a TAUNT and it is the target
-				return true;
-			}
-			
 			return false;
 		}
 		return false;
@@ -79,6 +74,17 @@ public class AttackHandler {
 		return adversary;
 	}
 	
+	private List<Minion> getAdversaryMinionswithTaunt(Player adversary){
+		List<Minion> adversaryActiveMinions = adversary.getActiveMinions();
+		List<Minion> tauntingMinions = new ArrayList<Minion>();
+		for(Minion m : adversaryActiveMinions){
+			if (m.getStates().contains("TAUNT")){
+				tauntingMinions.add(m);
+			}	
+		}
+		
+		return tauntingMinions;
+	}
 	
 	public List<Event> attack(Player player, String attackerId, String targetId) {
 		return null;
