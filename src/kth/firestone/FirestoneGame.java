@@ -136,6 +136,7 @@ public class FirestoneGame implements Game {
 	@Override
 	public void start() {
 		start(players.get(0));
+		start(players.get(1));
 	}
 
 	@Override
