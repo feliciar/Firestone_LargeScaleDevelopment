@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
@@ -17,7 +18,9 @@ import kth.firestone.player.Player;
 public class FirestoneBuilder implements GameBuilder {
 	private List<Player> players;
 	private GameData gameData;
-	private int HERO_HEALTH = 30;
+	private final int HERO_HEALTH = 30;
+	private final String PLAYER_1_ID = "1";
+	private final String PLAYER_2_ID = "2";
 	
 	public FirestoneBuilder(GameData gameData) {
 		this.gameData = gameData;
@@ -48,8 +51,8 @@ public class FirestoneBuilder implements GameBuilder {
 			HashMap<String, HashMap<String, String>> t = gameData.getCards();
 			HashMap<String, String> data = t.get(s);	
 			
-			Card card = new FirestoneCard(data.get("name"), data.get("health"),
-					data.get("attack"), data.get("mana"), data.get("type"),
+			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
+					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
 					data.get("description"));
 			cards.add(card);
 		}
@@ -112,8 +115,8 @@ public class FirestoneBuilder implements GameBuilder {
 	
 	private List<Player> createPlayers() {
 		List<Player> players = new ArrayList<>();
-		Player player1 = new GamePlayer("1", new FirestoneHero(HERO_HEALTH));
-		Player player2 = new GamePlayer("2", new FirestoneHero(HERO_HEALTH));
+		Player player1 = new GamePlayer(PLAYER_1_ID, new FirestoneHero(PLAYER_1_ID, HERO_HEALTH));
+		Player player2 = new GamePlayer(PLAYER_2_ID, new FirestoneHero(PLAYER_2_ID, HERO_HEALTH));
 		players.add(player1);
 		players.add(player2);
 		

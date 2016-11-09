@@ -18,7 +18,8 @@ public class FirestoneMinion implements Minion {
 	private List<BuffDescription> buffDescriptions;
 	private boolean sleepy = true;
 	
-	public FirestoneMinion(Card card, GameData gameData){
+	public FirestoneMinion(String id, Card card, GameData gameData){
+		this.id = id;
 		this.name = card.getName();
 		this.health = card.getHealth().get();
 		this.maxHealth = this.health; //TODO This might be something else

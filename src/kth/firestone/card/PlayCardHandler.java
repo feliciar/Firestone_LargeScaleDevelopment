@@ -1,6 +1,7 @@
 package kth.firestone.card;
 
 import java.util.List;
+import java.util.UUID;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
@@ -61,7 +62,7 @@ public class PlayCardHandler {
     	FirestoneHero hero = (FirestoneHero)player.getHero();
     	hero.setMana(hero.getMana()-card.getManaCost());
     	player.getHand().remove(card);
-    	Minion minion = new FirestoneMinion(card,gameData);
+    	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card,gameData);
     	player.getActiveMinions().add(position, minion);
     	
     	//TODO Put the card in a discard pile
