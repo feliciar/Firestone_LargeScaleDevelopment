@@ -3,6 +3,7 @@ package kth.firestone;
 import java.util.ArrayList;
 import java.util.List;
 
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
@@ -32,14 +33,7 @@ public class AttackHandler {
 	 */
 	public boolean isAttackValid(Player player, String attackerId, String targetId) {
 		List<Minion> activeMinions= player.getActiveMinions();
-		Minion minion = null;
-		//Find the minion chosen to attack.
-		for(Minion m : activeMinions) {
-			if (m.getId().equals(attackerId)) {
-				minion = m;
-				break;
-			}	
-		}
+		Minion minion = findMinion(activeMinions, attackerId);
 		
 		if(minion == null){
 			System.err.println("This minion did not exist and therefore cannot attack another minion");
@@ -65,9 +59,9 @@ public class AttackHandler {
 		return false;
 	}
 	
-	private Player getAdversary(String attackerId){
+	private Player getAdversary(String playerId){
 		Player adversary;
-		if(attackerId.equals(players.get(0).getId())) {
+		if(playerId.equals(players.get(0).getId())) {
 			adversary = players.get(1);
 		}else{
 			adversary = players.get(0);
@@ -87,7 +81,33 @@ public class AttackHandler {
 		return tauntingMinions;
 	}
 	
+	private Minion findMinion(List<Minion> activeMinions, String minionId){
+		Minion minion = null;
+		//Find the minion chosen to attack.
+		for(Minion m : activeMinions) {
+			if (m.getId().equals(minionId)) {
+				minion = m;
+				break;
+			}	
+		}
+		return minion;
+	}
+	
 	public List<Event> attack(Player player, String attackerId, String targetId) {
-		return null;
+		List<Event> eventList = new ArrayList<Event>();
+		boolean acceptedAttack = isAttackValid(player, attackerId, targetId);
+		if (acceptedAttack){
+			Minion attacker = findMinion(player.getActiveMinions(), attackerId);
+			Player adversary = getAdversary(player.getId());
+			Minion target = findMinion(adversary.getActiveMinions(), targetId);
+			Hero targetHero = null;
+			if (target == null){// det var inte en minion som var target
+				if (adversary.getHero().getId().equals(targetId)){
+					targetHero = adversary.getHero();
+				}				
+			}
+			//TODO gör klart själva attacken
+		}
+		return eventList;
 	}
 }
