@@ -4,6 +4,8 @@ import java.util.List;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
+import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.GamePlayer;
@@ -46,6 +48,7 @@ public class PlayCardHandler {
     /**
      * Playing a minion without a target.
      * Removes the card from the players hand,
+     * reduces the mana,
      * creates the minion, and puts it on the board
      * Then discard the card
      * 
@@ -55,6 +58,8 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position){
+    	FirestoneHero hero = (FirestoneHero)player.getHero();
+    	hero.setMana(hero.getMana()-card.getManaCost());
     	player.getHand().remove(card);
     	Minion minion = new FirestoneMinion(card,gameData);
     	player.getActiveMinions().add(position, minion);
