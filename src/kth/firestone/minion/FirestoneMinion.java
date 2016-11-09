@@ -93,4 +93,8 @@ public class FirestoneMinion implements Minion {
 		return sleepy;
 	}
 
+	public String toString(){
+		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") race: "+race+ "is sleepy: "+sleepy;
+	}
+
 }

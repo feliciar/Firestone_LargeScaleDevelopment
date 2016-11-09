@@ -2,6 +2,8 @@ package kth.firestone.hero;
 
 import java.util.List;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 public class FirestoneHero implements Hero {
 	private String id;
 	private String name;
@@ -89,6 +91,10 @@ public class FirestoneHero implements Hero {
 	
 	public void setMaxMana(int maxMana) {
 		this.maxMana = maxMana;
+	}
+	
+	public String toString(){
+		return "Hero: id: "+id+" name: "+name + " health: " + health+"/"+maxHealth + " attack: "+ attack+ " mana: "+mana;
 	}
 
 }
