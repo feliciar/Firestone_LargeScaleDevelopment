@@ -1,5 +1,6 @@
 package kth.firestone.minion;
 
+import java.util.ArrayList;
 import java.util.List;
 import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
@@ -27,6 +28,7 @@ public class FirestoneMinion implements Minion {
 		this.originalAttack = card.getOriginalAttack().get();
 		this.attack = card.getAttack().get();
 		this.race = MinionRace.valueOf(gameData.getCards().get(this.name).get("race"));
+		this.states = new ArrayList<MinionState>();
 		//Add the states
 		String stateStrings = gameData.getCards().get(this.name).get("state");
 		if(stateStrings!=null && !stateStrings.equals("")){

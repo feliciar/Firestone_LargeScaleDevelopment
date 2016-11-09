@@ -41,6 +41,11 @@ public class AttackHandler {
 			}	
 		}
 		
+		if(minion == null){
+			System.err.println("This minion did not exist and therefore cannot attack another minion");
+			return false;
+		}
+		
 		if(canAttack(player, minion)) {
 			Player adversary = getAdversary(player.getId());
 		
