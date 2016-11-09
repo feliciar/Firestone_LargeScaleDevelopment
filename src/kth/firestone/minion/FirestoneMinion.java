@@ -1,8 +1,9 @@
 package kth.firestone.minion;
 
 import java.util.List;
-
+import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
+import kth.firestone.card.Card;
 
 public class FirestoneMinion implements Minion {
 	private String id;
@@ -16,6 +17,25 @@ public class FirestoneMinion implements Minion {
 	private List<MinionState> states;
 	private List<BuffDescription> buffDescriptions;
 	private boolean sleepy = true;
+	
+	public FirestoneMinion(Card card, GameData gameData){
+		this.name = card.getName();
+		this.health = card.getHealth().get();
+		this.maxHealth = this.health; //TODO This might be something else
+		this.originalHealth = card.getOriginalHealth().get();
+		this.originalAttack = card.getOriginalAttack().get();
+		this.attack = card.getAttack().get();
+		this.race = MinionRace.valueOf(gameData.getCards().get(this.name).get("race"));
+		//Add the states
+		String stateStrings = gameData.getCards().get(this.name).get("state");
+		if(stateStrings!=null && !stateStrings.equals("")){
+			for(String state : stateStrings.split(", ")){
+				this.states.add(MinionState.valueOf(state));
+			}
+		}
+		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)
+		
+	}
 	
 	@Override
 	public String getId() {
