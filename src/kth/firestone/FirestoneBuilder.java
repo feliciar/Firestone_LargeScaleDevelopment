@@ -7,6 +7,7 @@ import java.util.List;
 
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
+import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.Deck;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
@@ -16,6 +17,7 @@ import kth.firestone.player.Player;
 public class FirestoneBuilder implements GameBuilder {
 	private List<Player> players;
 	private GameData gameData;
+	private int HERO_HEALTH = 30;
 	
 	public FirestoneBuilder(GameData gameData) {
 		this.gameData = gameData;
@@ -104,15 +106,14 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public Game build() {
-		Game game = new FirestoneGame(players);
-		
-		return game;
+		return new FirestoneGame(players, 
+				new PlayCardHandler(gameData), new AttackHandler(players));
 	}
 	
 	private List<Player> createPlayers() {
 		List<Player> players = new ArrayList<>();
-		Player player1 = new GamePlayer("1", new FirestoneHero());
-		Player player2 = new GamePlayer("2", new FirestoneHero());
+		Player player1 = new GamePlayer("1", new FirestoneHero(HERO_HEALTH));
+		Player player2 = new GamePlayer("2", new FirestoneHero(HERO_HEALTH));
 		players.add(player1);
 		players.add(player2);
 		

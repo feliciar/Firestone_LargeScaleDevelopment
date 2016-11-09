@@ -49,7 +49,8 @@ public class PlayCardHandlerTest {
 		when(player.getHand()).thenReturn(hand);
 		
 		//Mock hero
-		FirestoneHero hero = new FirestoneHero();
+		int startHealth = 30;
+		FirestoneHero hero = new FirestoneHero(startHealth);
 		int startMana = 10;
 		hero.setMana(startMana);
 		when(player.getHero()).thenReturn(hero);
