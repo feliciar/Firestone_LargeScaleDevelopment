@@ -5,15 +5,12 @@ import static org.mockito.Mockito.*;
 
 import java.util.HashMap;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import kth.firestone.FirestoneBuilder;
-import kth.firestone.GameBuilder;
 import kth.firestone.GameData;
-import kth.firestone.deck.Deck;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.player.Player;
 
