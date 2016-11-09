@@ -12,7 +12,7 @@ public class GameData {
 		card.put("health", "1");
 		card.put("attack", "1");
 		card.put("mana", "1");
-		card.put("race", "Demon");
+		card.put("race", "DEMON");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "");
@@ -77,7 +77,7 @@ public class GameData {
 		card.put("health", "1");
 		card.put("attack", "4");
 		card.put("mana", "4");
-		card.put("race", "Dragon");
+		card.put("race", "DRAGON");
 		card.put("description", "");
 		card.put("state", "");
 		card.put("buff", "Battlecry: Gain +1 Health for each card in your hand.");
