@@ -124,7 +124,8 @@ public class FirestoneGame implements Game {
 			playerIndexInTurn = 1;
 		}
 		// draw new card for next player
-		Card drawnCard = ((FirestoneDeck) player).getCards().pop();
+		Card drawnCard = ((FirestoneDeck) player.getDeck()).getCards().pop();
+
 		List<Card> hand = player.getHand();
 		hand.add(drawnCard);
 		((GamePlayer) player).setHand(hand);
