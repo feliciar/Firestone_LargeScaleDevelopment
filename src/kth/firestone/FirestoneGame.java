@@ -79,12 +79,12 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public boolean isPlayCardValid(Player player, Card card) {
-		return false; //playCardHandler.isPlayCardValid(player, card);
+		return playCardHandler.isPlayCardValid(player, card);
 	}
 
 	@Override
 	public boolean isPlayCardValid(Player player, Card card, String targetId) {
-		return false;//playCardHandler.isPlayCardValid(player, card, targetId);
+		return playCardHandler.isPlayCardValid(player, card, targetId);
 	}
 
 	@Override
@@ -135,7 +135,6 @@ public class FirestoneGame implements Game {
 	@Override
 	public void start() {
 		start(players.get(0));
-		
 	}
 
 	@Override
@@ -159,7 +158,10 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public boolean isActive() {
-		// TODO Auto-generated method stub
+		if (players.get(0).getHero().getHealth() > 0 &&
+			players.get(1).getHero().getHealth() > 0) {
+			return true;
+		}
 		return false;
 	}
 
