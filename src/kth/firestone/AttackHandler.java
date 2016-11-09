@@ -7,11 +7,13 @@ import kth.firestone.player.Player;
 
 public class AttackHandler {
 	public boolean canAttack(Player player, Minion minion){
-		
+		// kan ej attackera om FROZEN
+		// Kan ej attackera om sleepy
+		// 
 		return false;
 	}
 	
-	public boolean isAttackValid(){
+	public boolean isAttackValid(Player player, String attackerId, String targetId){
 		return false;
 	}
 	
