@@ -14,7 +14,10 @@ public class FirestoneHero implements Hero {
 	private List<HeroState> states;
 	private Weapon weapon;
 	
-	//TODO create this constructor
+	public FirestoneHero(int health) {
+		this.health = health;
+		this.maxHealth = health;
+	}
 	
 	@Override
 	public String getId() {
