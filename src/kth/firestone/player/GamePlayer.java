@@ -33,10 +33,18 @@ public class GamePlayer implements Player {
 	public List<Card> getHand() {
 		return hand;
 	}
+	
+	public void setHand(List<Card> hand) {
+		this.hand = hand;
+	}
 
 	@Override
 	public List<Minion> getActiveMinions() {
 		return activeMinions;
+	}
+	
+	public void setActiveMinions(List<Minion> activeMinions) {
+		this.activeMinions = activeMinions;
 	}
 
 	@Override
@@ -47,4 +55,6 @@ public class GamePlayer implements Player {
 	public void setDeck(Deck deck) {
 		this.deck = deck;
 	}
+	
+	
 }
