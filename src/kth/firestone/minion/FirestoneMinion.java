@@ -104,5 +104,8 @@ public class FirestoneMinion implements Minion {
 		String sleepString = isSleepy() ? "Zzz" : "";
 		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") " + raceString +" " + sleepString;
 	}
-
+	
+	public void reduceHealth(int val) {
+		health -= val;
+	}
 }

@@ -97,8 +97,8 @@ public class FirestoneHero implements Hero {
 		return "Hero: id: "+id+" name: "+name + " health: " + health+"/"+maxHealth + " attack: "+ attack+ " mana: "+mana;
 	}
 	
-	public void decreaseHealth() {
-		health--;
+	public void reduceHealth(int val) {
+		health -= val;
 	}
 	
 	public void restoreAllMana(){
