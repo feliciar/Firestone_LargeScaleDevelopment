@@ -19,6 +19,7 @@ public class AttackHandler {
 	 */
 	public boolean canAttack(Player player, Minion minion) {
 		if (minion.getStates().contains("FROZEN")) {
+			System.err.println("Minion was FROZEN, cannot attack");
 			return false;
 		} else if (minion.isSleepy()){//Utlagd nyss
 			System.err.println("Minion was sleepy, cannot attack");
@@ -53,11 +54,12 @@ public class AttackHandler {
 						return true;
 					}
 				}	
-				System.err.println("Could not find target, cannot attack");
+				System.err.println("Could not find a TAUNT target, cannot attack");
 				return false;
 			}
 			return true;
 		}
+		System.err.println("Could not find target, cannot attack");
 		return false;
 	}
 	
@@ -85,7 +87,6 @@ public class AttackHandler {
 	
 	private Minion findMinion(List<Minion> activeMinions, String minionId){
 		Minion minion = null;
-		//Find the minion chosen to attack.
 		for(Minion m : activeMinions) {
 			if (m.getId().equals(minionId)) {
 				minion = m;
@@ -101,14 +102,14 @@ public class AttackHandler {
 		if (acceptedAttack){
 			Minion attacker = findMinion(player.getActiveMinions(), attackerId);
 			Player adversary = getAdversary(player.getId());
-			Minion target = findMinion(adversary.getActiveMinions(), targetId);
+			Minion targetMinion = findMinion(adversary.getActiveMinions(), targetId);
 			Hero targetHero = null;
-			if (target == null){// det var inte en minion som var target
+			if (targetMinion == null){// det var inte en minion som var target
 				if (adversary.getHero().getId().equals(targetId)){
 					targetHero = adversary.getHero();
 				}				
 			}
-			//TODO gör klart själva attacken
+			
 		}
 		return eventList;
 	}
