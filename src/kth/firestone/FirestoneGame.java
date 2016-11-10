@@ -132,7 +132,7 @@ public class FirestoneGame implements Game {
 			}
 			//Draw card if there is one to draw
 			if (((FirestoneDeck) player.getDeck()).size() == 0) {
-				((FirestoneHero) player.getHero()).decreaseHealth();
+				((FirestoneHero) player.getHero()).reduceHealth(1);
 			}else{
 				// draw new card for next player
 				Card drawnCard = ((FirestoneDeck) nextPlayer.getDeck()).getCards().pop();
