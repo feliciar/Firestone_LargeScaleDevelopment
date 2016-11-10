@@ -2,7 +2,6 @@ package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ import kth.firestone.GameData;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.card.PlayCardHandler;
+import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
@@ -29,7 +29,6 @@ import kth.firestone.player.Player;
 public class FirestoneGameTest {
 	
 	FirestoneGame fg;
-	List<Player> players;
 	
 	public FirestoneGameTest() {
 		GameBuilder gb = new FirestoneBuilder(new GameData());
@@ -38,14 +37,9 @@ public class FirestoneGameTest {
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, 10);
+			  .setStartingMana(i, 1);
 		}
 		fg = (FirestoneGame) gb.build();
-		
-		
-		players = new ArrayList<>();
-		players.add(new GamePlayer("1", new FirestoneHero("1", 30)));
-		players.add(new GamePlayer("2", new FirestoneHero("2", 30)));
 	}
 	
 	@Test
@@ -59,12 +53,55 @@ public class FirestoneGameTest {
 
 	@Test
 	public void testEndTurn() {
-		// TODO Implement test
+		// check that next player != current player
+		Player player1 = fg.getPlayerInTurn();
+		fg.endTurn(player1);
+		Player player2 = fg.getPlayerInTurn();
+		assertFalse(player2.equals(player1));
+		
+		// make deck size 0 and check that hero health is reduced by 1
+		((FirestoneDeck) player2.getDeck()).getCards().clear();
+		assertEquals(player2.getDeck().size(), 0);
+		int healthBefore = player2.getHero().getHealth();
+		fg.endTurn(player2);
+		fg.endTurn(player1);
+		int healthAfter = player2.getHero().getHealth();
+		assertEquals(healthBefore, healthAfter+1);
+		
+		// check that player's hand and deck are updated
+		int handBefore = player1.getHand().size();
+		int deckBefore = player1.getDeck().size();
+		fg.endTurn(player2);
+		int handAfter = player1.getHand().size();
+		int deckAfter = player1.getDeck().size();
+		assertEquals(handBefore, handAfter-1);
+		assertEquals(deckBefore, deckAfter+1);
+		
+		// check that no minions are sleepy
+		fg.playMinionCard(player1, player1.getHand().get(0), 0);
+		assertEquals(player1.getActiveMinions().size(), 1);
+		Minion minion = player1.getActiveMinions().get(0);
+		assertTrue(minion.isSleepy());
+		fg.endTurn(player1);
+		fg.endTurn(player2);
+		assertFalse(minion.isSleepy());
+		
+		// check that max mana is increased and all mana is restored
+		fg.endTurn(player1);
+		int manaBefore = player1.getHero().getMana();
+		int maxManaBefore = player1.getHero().getMaxMana();
+		fg.playMinionCard(player1, player1.getHand().get(0), 0);
+		fg.endTurn(player2);
+		int manaAfter = player1.getHero().getMana();
+		int maxManaAfter = player1.getHero().getMaxMana();
+		assertEquals(maxManaBefore, maxManaAfter-1);
+		assertEquals(manaBefore, manaAfter-1);
+		assertEquals(manaAfter, maxManaAfter);
 	}
 
 	@Test
 	public void testStartPlayer() {
-		// TODO Implement test
+		
 	}
 	
 	@Test

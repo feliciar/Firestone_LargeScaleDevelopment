@@ -69,7 +69,7 @@ public class FirestoneBuilder implements GameBuilder {
 			System.exit(1);
 		}
 		
-		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		GamePlayer p = (GamePlayer) getPlayers().get(playerIndex-1);
 		((FirestoneHero) p.getHero()).setMaxHealth(maxHealth);
 		((FirestoneHero) p.getHero()).setHealth(maxHealth);
 		
@@ -125,6 +125,10 @@ public class FirestoneBuilder implements GameBuilder {
 	
 	public List<Player> getPlayers() {
 		return players;
+	}
+	
+	public void setPlayers(List<Player> players){
+		this.players = players;
 	}
 
 }

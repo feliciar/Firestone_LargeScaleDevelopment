@@ -1,5 +1,6 @@
 package kth.firestone.card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import kth.firestone.player.Player;
 
 public class PlayCardHandler {
 	
+	List<Event> events = new ArrayList<>();
 	GameData gameData;
 	public static int MAX_CARDS_ALLOWED_ON_THE_BOARD = 8;
 	
@@ -63,10 +65,14 @@ public class PlayCardHandler {
     	hero.setMana(hero.getMana()-card.getManaCost());
     	player.getHand().remove(card);
     	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card,gameData);
-    	player.getActiveMinions().add(position, minion);
+    	int cardPosition = position;
+    	if (position > player.getActiveMinions().size() + 1) {
+    		cardPosition = player.getActiveMinions().size(); // add to end
+    	}
+    	player.getActiveMinions().add(cardPosition, minion);
     	
     	//TODO Put the card in a discard pile
-    	return null;
+    	return events;
     }
 
     /**

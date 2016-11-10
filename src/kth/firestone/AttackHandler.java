@@ -106,7 +106,7 @@ public class AttackHandler {
 			Player adversary = getAdversary(player.getId());
 			FirestoneMinion targetMinion = (FirestoneMinion) findMinion(adversary.getActiveMinions(), targetId);
 			FirestoneHero targetHero = null;
-			if (targetMinion == null) {// det var inte en minion som var target
+			if (targetMinion == null) {// The target was not a minion
 				if (adversary.getHero().getId().equals(targetId)) {
 					targetHero = (FirestoneHero) adversary.getHero();
 				}				
@@ -115,9 +115,19 @@ public class AttackHandler {
 			if(targetMinion != null) {// target was minion
 				targetMinion.reduceHealth(attacker.getAttack());
 				attacker.reduceHealth(targetMinion.getAttack());
+				
+				//Remove the minions that were killed 
+				if(targetMinion.getHealth()<=0){
+					adversary.getActiveMinions().remove(targetMinion);
+				}
+				if(attacker.getHealth()<=0){
+					player.getActiveMinions().remove(attacker);
+				}
 			}else{
 				targetHero.reduceHealth(attacker.getAttack());
 				attacker.reduceHealth(targetHero.getAttack());
+				
+				//TODO check for defeat
 			}
 		}
 		return eventList;

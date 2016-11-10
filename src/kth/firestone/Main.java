@@ -17,7 +17,7 @@ public class Main {
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, 10);
+			  .setStartingMana(i, 1);
 		}
 		Game game = gb.build();
 		game.start(); //TODO do so start deals cards to the players, and sets the starting player
@@ -32,7 +32,7 @@ public class Main {
 	static class Tester {
 		
 		public static void test(Game game){
-			//TODO replace this with a real game loop
+			
 			Player playerInTurn = game.getPlayerInTurn();
 			System.out.println("Started game. ");
 			printAllInfoOfPlayer(playerInTurn);
