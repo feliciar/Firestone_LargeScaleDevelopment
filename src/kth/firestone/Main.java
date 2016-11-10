@@ -42,8 +42,12 @@ public class Main {
 			System.out.println("Will play card 1: " + cardToPlay3);
 			if(game.isPlayCardValid(playerInTurn, cardToPlay1))
 				game.playMinionCard(playerInTurn, cardToPlay1, 0);
+			else
+				System.out.println("Could not play card");
 			if(game.isPlayCardValid(playerInTurn, cardToPlay3))
 				game.playMinionCard(playerInTurn, cardToPlay3, 1);
+			else
+				System.out.println("Could not play card");
 			printAllInfoOfPlayer(playerInTurn);
 			game.endTurn(playerInTurn);
 			System.out.println("End turn"+"\n");
@@ -54,6 +58,8 @@ public class Main {
 			System.out.println("Will play card 2: "+cardToPlay2);
 			if(game.isPlayCardValid(playerInTurn, cardToPlay2))
 				game.playMinionCard(playerInTurn, cardToPlay2, 0);
+			else
+				System.out.println("Could not play card");
 			printAllInfoOfPlayer(playerInTurn);
 			game.endTurn(playerInTurn);
 			System.out.println("End turn"+"\n");
@@ -66,6 +72,8 @@ public class Main {
 			System.out.println("Will attack "+m2.getName()+ " with "+ m1.getName());
 			if(game.isAttackValid(game.getPlayerInTurn(), m1.getId(), m2.getId()))
 				game.attack(game.getPlayerInTurn(), m1.getId(), m2.getId());
+			else
+				System.out.println("Could not attack");
 			printAllInfoOfPlayer(game.getPlayerInTurn());
 			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
@@ -81,6 +89,8 @@ public class Main {
 			assert(game.getPlayerInTurn().getId().equals("1"));
 			if(game.isAttackValid(game.getPlayerInTurn(), m3.getId(), "2"))
 				game.attack(game.getPlayerInTurn(), m3.getId(), "2");
+			else
+				System.out.println("Could not attack");
 			printAllInfoOfPlayer(game.getPlayerInTurn());
 			
 			System.out.println();

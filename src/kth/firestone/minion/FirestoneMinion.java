@@ -100,7 +100,9 @@ public class FirestoneMinion implements Minion {
 	}
 
 	public String toString(){
-		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") race: "+race+ "is sleepy: "+sleepy;
+		String raceString = (race == MinionRace.NONE) ? "" : race.toString();
+		String sleepString = isSleepy() ? "Zzz" : "";
+		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") " + raceString +" " + sleepString;
 	}
 
 }
