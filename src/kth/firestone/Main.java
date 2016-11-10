@@ -32,7 +32,7 @@ public class Main {
 	static class Tester {
 		
 		public static void test(Game game){
-			//TODO replace this with a real game loop
+			
 			Player playerInTurn = game.getPlayerInTurn();
 			System.out.println("Started game. ");
 			printAllInfoOfPlayer(playerInTurn);
