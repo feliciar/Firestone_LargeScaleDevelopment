@@ -8,6 +8,7 @@ import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
+import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 import kth.firestone.player.GamePlayer;
@@ -119,21 +120,32 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public List<Event> endTurn(Player player) {
-		if (((FirestoneDeck) player.getDeck()).size() == 0) {
-			((FirestoneHero) player.getHero()).decreaseHealth();
-		}
+		
 		if (getPlayerInTurn().equals(player)) {
+			Player nextPlayer;
 			if (player.getId().equals("1")) {
 				playerIndexInTurn = 2;
+				nextPlayer = getPlayers().get(1);
 			} else {
 				playerIndexInTurn = 1;
+				nextPlayer = getPlayers().get(0);
 			}
-			// draw new card for next player
-			Card drawnCard = ((FirestoneDeck) player.getDeck()).getCards().pop();
-	
-			List<Card> hand = player.getHand();
-			hand.add(drawnCard);
-			((GamePlayer) player).setHand(hand);
+			//Draw card if there is one to draw
+			if (((FirestoneDeck) player.getDeck()).size() == 0) {
+				((FirestoneHero) player.getHero()).decreaseHealth();
+			}else{
+				// draw new card for next player
+				Card drawnCard = ((FirestoneDeck) nextPlayer.getDeck()).getCards().pop();
+		
+				List<Card> hand = nextPlayer.getHand();
+				hand.add(drawnCard);
+				((GamePlayer) nextPlayer).setHand(hand);
+			}
+			
+			//Make all of this player's minions not sleepy
+			for(Minion m : nextPlayer.getActiveMinions()){
+				((FirestoneMinion)m).setSleepy(false);
+			}
 		}
 		return events;
 	}
