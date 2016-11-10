@@ -21,6 +21,7 @@ public class AttackHandler {
 		if (minion.getStates().contains("FROZEN")) {
 			return false;
 		} else if (minion.isSleepy()){//Utlagd nyss
+			System.err.println("Minion was sleepy, cannot attack");
 			return false;
 		}
 		// Kan ej attackera om redan attackerat
@@ -52,6 +53,7 @@ public class AttackHandler {
 						return true;
 					}
 				}	
+				System.err.println("Could not find target, cannot attack");
 				return false;
 			}
 			return true;
