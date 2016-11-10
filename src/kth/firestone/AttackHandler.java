@@ -3,7 +3,9 @@ package kth.firestone;
 import java.util.ArrayList;
 import java.util.List;
 
+import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;
+import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
@@ -100,13 +102,13 @@ public class AttackHandler {
 		List<Event> eventList = new ArrayList<Event>();
 		boolean acceptedAttack = isAttackValid(player, attackerId, targetId);
 		if (acceptedAttack){
-			Minion attacker = findMinion(player.getActiveMinions(), attackerId);
+			FirestoneMinion attacker = (FirestoneMinion)findMinion(player.getActiveMinions(), attackerId);
 			Player adversary = getAdversary(player.getId());
-			Minion targetMinion = findMinion(adversary.getActiveMinions(), targetId);
-			Hero targetHero = null;
+			FirestoneMinion targetMinion = (FirestoneMinion) findMinion(adversary.getActiveMinions(), targetId);
+			FirestoneHero targetHero = null;
 			if (targetMinion == null) {// det var inte en minion som var target
 				if (adversary.getHero().getId().equals(targetId)) {
-					targetHero = adversary.getHero();
+					targetHero = (FirestoneHero) adversary.getHero();
 				}				
 			}
 			
