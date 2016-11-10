@@ -14,10 +14,11 @@ public class Main {
 		GameBuilder gb = new FirestoneBuilder(new GameData());
 		// set starting state
 		for (int i = 1; i < 3; i++) {
+			int startingMana = (i == 1) ? i : 0;
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, 1);
+			  .setStartingMana(i, startingMana);
 		}
 		Game game = gb.build();
 		game.start(); //TODO do so start deals cards to the players, and sets the starting player
@@ -33,37 +34,55 @@ public class Main {
 		
 		public static void test(Game game){
 			
-			Player playerInTurn = game.getPlayerInTurn();
+			//Play two cards if possible
 			System.out.println("Started game. ");
-			printAllInfoOfPlayer(playerInTurn);
-			Card cardToPlay1 = playerInTurn.getHand().get(0);
-			Card cardToPlay3 = playerInTurn.getHand().get(1);
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			Card cardToPlay1 = game.getPlayerInTurn().getHand().get(0);
+			Card cardToPlay3 = game.getPlayerInTurn().getHand().get(1);
 			System.out.println("Will play card 0: " + cardToPlay1);
 			System.out.println("Will play card 1: " + cardToPlay3);
-			if(game.isPlayCardValid(playerInTurn, cardToPlay1))
-				game.playMinionCard(playerInTurn, cardToPlay1, 0);
+			if(game.isPlayCardValid(game.getPlayerInTurn(), cardToPlay1))
+				game.playMinionCard(game.getPlayerInTurn(), cardToPlay1, 0);
 			else
 				System.out.println("Could not play card");
-			if(game.isPlayCardValid(playerInTurn, cardToPlay3))
-				game.playMinionCard(playerInTurn, cardToPlay3, 1);
+			if(game.isPlayCardValid(game.getPlayerInTurn(), cardToPlay3))
+				game.playMinionCard(game.getPlayerInTurn(), cardToPlay3, 1);
 			else
 				System.out.println("Could not play card");
-			printAllInfoOfPlayer(playerInTurn);
-			game.endTurn(playerInTurn);
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
 			
-			playerInTurn = game.getPlayerInTurn();
-			printAllInfoOfPlayer(playerInTurn);
-			Card cardToPlay2 = playerInTurn.getHand().get(2);
-			System.out.println("Will play card 2: "+cardToPlay2);
-			if(game.isPlayCardValid(playerInTurn, cardToPlay2))
-				game.playMinionCard(playerInTurn, cardToPlay2, 0);
+			
+			
+			
+			//Play 1 card
+	
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			Card cardToPlay2 = game.getPlayerInTurn().getHand().get(0);
+			System.out.println("Will play card 0: "+cardToPlay2);
+			if(game.isPlayCardValid(game.getPlayerInTurn(), cardToPlay2))
+				game.playMinionCard(game.getPlayerInTurn(), cardToPlay2, 0);
 			else
 				System.out.println("Could not play card");
-			printAllInfoOfPlayer(playerInTurn);
-			game.endTurn(playerInTurn);
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
 
+
+			//Attack the hero
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			Minion m3 = game.getPlayers().get(0).getActiveMinions().get(0);
+			System.out.println("Will attack the other player's hero with "+ m3);
+			assert(game.getPlayerInTurn().getId().equals("1"));
+			if(game.isAttackValid(game.getPlayerInTurn(), m3.getId(), "2"))
+				game.attack(game.getPlayerInTurn(), m3.getId(), "2");
+			else
+				System.out.println("Could not attack");
+			printAllInfoOfPlayer(game.getPlayerInTurn());
+			
+			System.out.println();
+			printAllInfoOfPlayer(game.getPlayers().get(1));
 			
 			//Attack another minion
 			printAllInfoOfPlayer(game.getPlayerInTurn());
@@ -78,23 +97,10 @@ public class Main {
 			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
 			
-			//Attack the hero
-			printAllInfoOfPlayer(game.getPlayerInTurn());
-			game.endTurn(game.getPlayerInTurn());
-			System.out.println("End turn"+"\n");
+			
 			
 			printAllInfoOfPlayer(game.getPlayerInTurn());
-			Minion m3 = game.getPlayers().get(0).getActiveMinions().get(0);
-			System.out.println("Will attack the other player's hero with "+ m3);
-			assert(game.getPlayerInTurn().getId().equals("1"));
-			if(game.isAttackValid(game.getPlayerInTurn(), m3.getId(), "2"))
-				game.attack(game.getPlayerInTurn(), m3.getId(), "2");
-			else
-				System.out.println("Could not attack");
-			printAllInfoOfPlayer(game.getPlayerInTurn());
-			
-			System.out.println();
-			printAllInfoOfPlayer(game.getPlayers().get(1));
+
 			
 
 			
