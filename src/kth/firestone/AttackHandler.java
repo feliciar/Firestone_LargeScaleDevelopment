@@ -104,12 +104,19 @@ public class AttackHandler {
 			Player adversary = getAdversary(player.getId());
 			Minion targetMinion = findMinion(adversary.getActiveMinions(), targetId);
 			Hero targetHero = null;
-			if (targetMinion == null){// det var inte en minion som var target
-				if (adversary.getHero().getId().equals(targetId)){
+			if (targetMinion == null) {// det var inte en minion som var target
+				if (adversary.getHero().getId().equals(targetId)) {
 					targetHero = adversary.getHero();
 				}				
 			}
 			
+			if(targetMinion != null) {// target was minion
+				targetMinion.reduceHealth(attacker.getAttack());
+				attacker.reduceHealth(targetMinion.getAttack());
+			}else{
+				targetHero.reduceHealth(attacker.getAttack());
+				attacker.reduceHealth(targetHero.getAttack());
+			}
 		}
 		return eventList;
 	}
