@@ -146,6 +146,9 @@ public class FirestoneGame implements Game {
 			for(Minion m : nextPlayer.getActiveMinions()){
 				((FirestoneMinion)m).setSleepy(false);
 			}
+			
+			//Restore mana of the hero
+			((FirestoneHero)nextPlayer.getHero()).restoreAllMana();
 		}
 		return events;
 	}

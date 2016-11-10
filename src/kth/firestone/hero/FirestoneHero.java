@@ -100,5 +100,9 @@ public class FirestoneHero implements Hero {
 	public void decreaseHealth() {
 		health--;
 	}
+	
+	public void restoreAllMana(){
+		mana = maxMana;
+	}
 
 }
