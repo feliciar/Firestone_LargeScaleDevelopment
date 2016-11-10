@@ -151,6 +151,8 @@ public class FirestoneGame implements Game {
 			//Restore mana of the hero
 			hero.restoreAllMana();
 			
+		}else{
+			System.err.println("The player trying to end turn was not the player in turn");
 		}
 		return events;
 	}
