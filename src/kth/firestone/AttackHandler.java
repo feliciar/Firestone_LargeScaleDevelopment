@@ -7,6 +7,7 @@ import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
+import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
 
 public class AttackHandler {
@@ -16,29 +17,46 @@ public class AttackHandler {
 		this.players = players;
 	}
 	
-	/*
+	/**
 	 * Check if the minion is able to attack.
 	 */
 	public boolean canAttack(Player player, Minion minion) {
-		if (minion.getStates().contains("FROZEN")) {
+		if (!player.getActiveMinions().contains(minion)) {
+			System.err.println("Minion does not belong to player. Cannot attack");
+			return false;
+		} else if (minion.getStates().contains(MinionState.FROZEN)) {
 			System.err.println("Minion was FROZEN, cannot attack");
 			return false;
-		} else if (minion.isSleepy()){//Utlagd nyss
+		} else if (minion.isSleepy()) {
 			System.err.println("Minion was sleepy, cannot attack");
 			return false;
 		}
-		// Kan ej attackera om redan attackerat
+		// TODO check if player has used this minion this turn.
 		
 		return true;
 	}
 	
-	/*
+	/**
 	 * Check if an attack is valid to perform.
 	 */
 	public boolean isAttackValid(Player player, String attackerId, String targetId) {
-		List<Minion> activeMinions= player.getActiveMinions();
-		Minion minion = findMinion(activeMinions, attackerId);
 		
+		if (player.getHero().getId().equals(attackerId)) {
+			return isHeroAttackValid(player, attackerId, targetId);
+		} else {
+			return isMinionAttackValid(player, attackerId, targetId);
+		}
+	}
+	
+	public boolean isHeroAttackValid(Player player, String attackerId, String targetId) {
+		// TODO implement hero attacks
+		return false;
+	}
+	
+	public boolean isMinionAttackValid(Player player, String attackerId, String targetId) {
+		List<Minion> activeMinions = player.getActiveMinions();
+
+		Minion minion = findMinion(activeMinions, attackerId);
 		if(minion == null){
 			System.err.println("This minion did not exist and therefore cannot attack another minion");
 			return false;
@@ -48,10 +66,11 @@ public class AttackHandler {
 			Player adversary = getAdversary(player.getId());
 		
 			// Find if the adversary has a TAUNT on the board and who it is.
-			List<Minion> tauntingMinions = getAdversaryMinionswithTaunt(adversary);
+			List<Minion> tauntingMinions = getAdversaryMinionsWithTaunt(adversary);
 			
-			if (tauntingMinions.size() != 0){// There was at least one taunt minion
-				for(Minion m : tauntingMinions){
+			if (tauntingMinions.size() != 0) {
+				// There was at least one taunt minion
+				for (Minion m : tauntingMinions){
 					if (m.getId().equals(targetId)){
 						return true;
 					}
@@ -65,21 +84,18 @@ public class AttackHandler {
 		return false;
 	}
 	
-	private Player getAdversary(String playerId){
-		Player adversary;
-		if(playerId.equals(players.get(0).getId())) {
-			adversary = players.get(1);
-		}else{
-			adversary = players.get(0);
-		}
-		return adversary;
+	public Player getAdversary(String playerId) {
+		if (playerId.equals(players.get(0).getId())) {
+			return players.get(1);
+		} 
+		return players.get(0);
 	}
 	
-	private List<Minion> getAdversaryMinionswithTaunt(Player adversary){
+	public List<Minion> getAdversaryMinionsWithTaunt(Player adversary) {
 		List<Minion> adversaryActiveMinions = adversary.getActiveMinions();
 		List<Minion> tauntingMinions = new ArrayList<Minion>();
 		for(Minion m : adversaryActiveMinions){
-			if (m.getStates().contains("TAUNT")){
+			if (m.getStates().contains(MinionState.TAUNT)){
 				tauntingMinions.add(m);
 			}	
 		}
@@ -87,7 +103,7 @@ public class AttackHandler {
 		return tauntingMinions;
 	}
 	
-	private Minion findMinion(List<Minion> activeMinions, String minionId){
+	public Minion findMinion(List<Minion> activeMinions, String minionId) {
 		Minion minion = null;
 		for(Minion m : activeMinions) {
 			if (m.getId().equals(minionId)) {
@@ -99,37 +115,41 @@ public class AttackHandler {
 	}
 	
 	public List<Event> attack(Player player, String attackerId, String targetId) {
-		List<Event> eventList = new ArrayList<Event>();
-		boolean acceptedAttack = isAttackValid(player, attackerId, targetId);
-		if (acceptedAttack){
-			FirestoneMinion attacker = (FirestoneMinion)findMinion(player.getActiveMinions(), attackerId);
-			Player adversary = getAdversary(player.getId());
-			FirestoneMinion targetMinion = (FirestoneMinion) findMinion(adversary.getActiveMinions(), targetId);
-			FirestoneHero targetHero = null;
-			if (targetMinion == null) {// The target was not a minion
-				if (adversary.getHero().getId().equals(targetId)) {
-					targetHero = (FirestoneHero) adversary.getHero();
-				}				
-			}
-			
-			if(targetMinion != null) {// target was minion
-				targetMinion.reduceHealth(attacker.getAttack());
-				attacker.reduceHealth(targetMinion.getAttack());
-				
-				//Remove the minions that were killed 
-				if(targetMinion.getHealth()<=0){
-					adversary.getActiveMinions().remove(targetMinion);
-				}
-				if(attacker.getHealth()<=0){
-					player.getActiveMinions().remove(attacker);
-				}
-			}else{
-				targetHero.reduceHealth(attacker.getAttack());
-				attacker.reduceHealth(targetHero.getAttack());
-				
-				//TODO check for defeat
-			}
+		List<Event> events = new ArrayList<Event>();
+		if (!isAttackValid(player, attackerId, targetId)) {
+			return events;
 		}
-		return eventList;
+		// TODO check if hero is attacking.
+		
+		FirestoneMinion attacker = (FirestoneMinion) findMinion(player.getActiveMinions(), attackerId);
+		Player adversary = getAdversary(player.getId());
+		FirestoneMinion targetMinion = (FirestoneMinion) findMinion(adversary.getActiveMinions(), targetId);
+		FirestoneHero targetHero = null;
+		if (targetMinion == null) {
+			// Target was not a minion
+			if (adversary.getHero().getId().equals(targetId)) {
+				targetHero = (FirestoneHero) adversary.getHero();
+			}				
+		}
+		
+		if (targetMinion != null) {
+			// Target was minion
+			targetMinion.reduceHealth(attacker.getAttack());
+			attacker.reduceHealth(targetMinion.getAttack());
+			
+			//Remove the minions that were killed 
+			if (targetMinion.getHealth() <= 0) {
+				adversary.getActiveMinions().remove(targetMinion);
+			}
+			if (attacker.getHealth() <= 0) {
+				player.getActiveMinions().remove(attacker);
+			}
+		} else {
+			targetHero.reduceHealth(attacker.getAttack());
+			attacker.reduceHealth(targetHero.getAttack());
+			
+			//TODO check for defeat (hero)
+		}
+		return events;
 	}
 }
