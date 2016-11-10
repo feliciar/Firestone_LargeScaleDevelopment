@@ -79,7 +79,7 @@ public class FirestoneCard implements Card {
 	}
 	
 	public String toString(){
-		return name+" ("+health.get()+"/"+originalHealth.get()+", "+attack.get()+"/"+originalAttack.get()+")";
+		return name + "(" + manaCost + ") ("+health.get()+"/"+originalHealth.get()+", "+attack.get()+"/"+originalAttack.get()+")";
 	}
 
 }
