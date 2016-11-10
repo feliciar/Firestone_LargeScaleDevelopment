@@ -15,39 +15,35 @@ import kth.firestone.card.FirestoneCard;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
+import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
 public class AttackHandlerTest {
 	private List<Player> createPlayers(){
-		GameData gameData = new GameData();
-		gameData.populate();
+		//Mock data
 		List<Player> players = new ArrayList<>();
 		Player player1 = new GamePlayer("1", new FirestoneHero("1", 30));
 		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30));
-		Card cardPlayer1 = new FirestoneCard("10", "Boulderfist Ogre", 
-				"7", "6", "6", "MINION", "");
-		Card cardPlayer11 = new FirestoneCard("11", "Imp", 
-				"1", "1", "1", "MINION", "");
-		Card cardPlayer12 = new FirestoneCard("11", "Imp", 
-				"1", "1", "1", "MINION", "");
-		Card cardPlayer2 = new FirestoneCard("20", "Boulderfist Ogre", 
-				"7", "6", "6", "MINION", "");
-		Card cardPlayer21 = new FirestoneCard("21", "Imp", 
-				"1", "1", "1", "MINION", "");
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", cardPlayer1, gameData);
+		
+		List<MinionState> state0 = new ArrayList<>();
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0 );
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", cardPlayer11, gameData);
-		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", cardPlayer12, gameData);
+		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0);
+		List<MinionState> state1 = new ArrayList<>();
+		state1.add(MinionState.FROZEN);
+		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", "Imp", 1,1,1,1,MinionRace.DEMON, state1);
 		minionPlayer12.setSleepy(false);
 		minionPlayer12.getStates().add((MinionState.FROZEN));
 		
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", cardPlayer2, gameData);
+		List<MinionState> state2 = new ArrayList<>();
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, state2 );
 		minionPlayer2.setSleepy(false);
-		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", cardPlayer21, gameData);
+		List<MinionState> state3 = new ArrayList<>();
+		state3.add(MinionState.TAUNT);
+		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1,1,1,1,MinionRace.DEMON, state3);
 		minionPlayer21.setSleepy(false);
-		minionPlayer21.getStates().add((MinionState.TAUNT));
 
 		player1.getActiveMinions().add(0, minionPlayer1);
 		player1.getActiveMinions().add(1, minionPlayer11);
@@ -95,52 +91,72 @@ public class AttackHandlerTest {
 		assertEquals(adversary.getId(), "2");
 	}
 	
+	@Test
 	public void testgetAdversaryMinionswithTaunt() {
 		List<Player> players = createPlayers();
 		AttackHandler ah = new AttackHandler(players);
 		List<Minion> minionsTaunt = ah.getAdversaryMinionsWithTaunt(players.get(1));
-		int count = 0;
-		for(Minion m : minionsTaunt){
-			if (m.getStates().contains(MinionState.TAUNT)){
-				count++;
-			}	
-		}
-		assertEquals(count, 1);
+		assertEquals(minionsTaunt.size(), 1);
 		
 		List<Minion> minionsNonTaunt = ah.getAdversaryMinionsWithTaunt(players.get(0));
-		count = 0;
-		for(Minion m : minionsNonTaunt){
-			if (m.getStates().contains(MinionState.TAUNT)){
-				count++;
-			}	
-		}
-		assertEquals(count, 0);
+		assertEquals(minionsNonTaunt.size(), 0);
 	}
 	
 	@Test
 	public void testfindMinion() {
-		GameData gameData = new GameData();
-		gameData.populate();
 		List<Player> players = new ArrayList<>();
 		AttackHandler ah = new AttackHandler(players);
 		List<Minion> minions = new ArrayList<>();
+		List<MinionState> state = new ArrayList<>();
 		
-		Card cardPlayer1 = new FirestoneCard("10", "Boulderfist Ogre", 
-				"7", "6", "6", "MINION", "");
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", cardPlayer1, gameData);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, state );
 		minions.add(minionPlayer1);
 		assertEquals(minionPlayer1, ah.findMinion(minions, "100"));
 
 	}
 	
+	@Test
 	public void testisMinionAttackValid() {
 		List<Player> players = createPlayers();
 		AttackHandler ah = new AttackHandler(players);
-		//TODO
+		
+		//Test if minion with Taunt as a state is attackable
+		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "210"));
+		//Test if minion, which is not Taunt but there is a Taunt on the board, is attackable
+		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "200"));
+		//Test if the hero, but a Taunt is on the board, is attackable
+		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "2"));
+		
+		players.get(1).getActiveMinions().get(1).getStates().clear(); //Taunt is no more on the board
+		//Test if minion is attackable
+		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "200"));
+		//Test if the hero of the adversary is attackable
+		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "2"));
+		
+		//Test if a minion of the player is attackable
+		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "120"));
+		//Test if the hero of the player is attackable
+		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "1"));
 	}
 	
+	@Test
 	public void testattack() {
-		//TODO
+		List<Player> players = createPlayers();
+		AttackHandler ah = new AttackHandler(players);
+		
+		// Test to kill the Taunt minion
+		ah.attack(players.get(0), "100", "210");
+		assertEquals(players.get(1).getActiveMinions().size(), 1);
+		assertEquals(players.get(0).getActiveMinions().get(0).getHealth(), 7);
+		
+		//Test to attack other Ogre see that health is reduced
+		ah.attack(players.get(0), "100", "200");
+		assertEquals(players.get(1).getActiveMinions().get(0).getHealth(), 1);
+		assertEquals(players.get(0).getActiveMinions().get(0).getHealth(), 1);
+		
+		//Test to attack the hero see that health is reduced
+		ah.attack(players.get(0), "100", "2");
+		assertEquals(players.get(1).getHero().getHealth(), 24);
 	}
 	
 	
