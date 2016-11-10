@@ -6,6 +6,9 @@ public class GameData {
 	public final HashMap<String, HashMap<String, String>> cards 
 						= new HashMap<String, HashMap<String, String>>();
 	
+	public GameData() {
+		populate();
+	}
 	public void populate() {
 		HashMap<String, String> card = new HashMap<>();
 		card.put("name", "Imp");

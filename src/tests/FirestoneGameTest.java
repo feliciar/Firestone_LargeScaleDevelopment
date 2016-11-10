@@ -3,27 +3,12 @@ package tests;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import kth.firestone.AttackHandler;
 import kth.firestone.FirestoneBuilder;
 import kth.firestone.FirestoneGame;
-import kth.firestone.Game;
 import kth.firestone.GameBuilder;
 import kth.firestone.GameData;
-import kth.firestone.card.Card;
-import kth.firestone.card.FirestoneCard;
-import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
-import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
-import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
-import kth.firestone.minion.MinionState;
-import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
 public class FirestoneGameTest {
@@ -33,11 +18,12 @@ public class FirestoneGameTest {
 	public FirestoneGameTest() {
 		GameBuilder gb = new FirestoneBuilder(new GameData());
 		// set starting state
+		int startingMana = 0;
 		for (int i = 1; i < 3; i++) {
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, 1);
+			  .setStartingMana(i, startingMana++);
 		}
 		fg = (FirestoneGame) gb.build();
 	}
@@ -101,12 +87,22 @@ public class FirestoneGameTest {
 
 	@Test
 	public void testStartPlayer() {
-		
-	}
-	
-	@Test
-	public void testIsActive() {
-		// TODO Implement test
+		Player player1 = fg.getPlayers().get(0);
+		Player player2 = fg.getPlayers().get(1);
+		// check player1's deck decreased by 4 and hand contains 4 cards
+		int deckBefore = player1.getDeck().size();
+		fg.start(player1);
+		int deckAfter = player1.getDeck().size();
+		int handAfter = player1.getHand().size();
+		assertEquals(deckBefore-deckAfter, 4);
+		assertEquals(handAfter, 4);
+		// check player2's deck decreased by 3 and hand contains 3 cards
+		deckBefore = player2.getDeck().size();
+		fg.start(player2);
+		deckAfter = player2.getDeck().size();
+		handAfter = player2.getHand().size();
+		assertEquals(deckBefore-deckAfter, 3);
+		assertEquals(handAfter, 3);
 	}
 
 }

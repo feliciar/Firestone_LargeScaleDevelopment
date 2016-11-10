@@ -12,17 +12,19 @@ import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.card.PlayCardHandler;
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
+import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.GamePlayer;
 
 public class PlayCardHandlerTest {
 	
+	GameData gameData;
 
 	
 	public PlayCardHandlerTest(){
+		gameData = new GameData();
 	}
 
 	@Test
@@ -38,8 +40,7 @@ public class PlayCardHandlerTest {
 	@Test
 	public void testPlayMinionCardPlayerCardInt() {
 		//Create PlayCardHandler
-		GameData gameData = new GameData();
-		gameData.populate();
+		
 		PlayCardHandler pch = new PlayCardHandler(gameData);
 		
 		//Mock player.getHand()
@@ -70,8 +71,13 @@ public class PlayCardHandlerTest {
 		pch.playMinionCard(player, card, index1);
 		
 		//Assert
+		MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
+		List<MinionState> states = getMinionStates(card);
 		hand.remove(card);
-		minions.add(index1, new FirestoneMinion(UUID.randomUUID().toString(), card,gameData));
+		minions.add(index1, new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
+    			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
+    			card.getAttack().get(), race, states));
+		
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
 		
@@ -79,15 +85,14 @@ public class PlayCardHandlerTest {
 		int index2 = 4;
 		pch.playMinionCard(player, card, index2);
 		
-		
 		//Assert
 		hand.remove(card);
-		minions.add(index2, new FirestoneMinion(UUID.randomUUID().toString(), card,gameData));
+		minions.add(index2, new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
+    			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
+    			card.getAttack().get(), race, states));
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
 		assertEquals(player.getHero().getMana(), startMana-manaCost*2);
-		
-		
 		
 	}
 
@@ -105,5 +110,15 @@ public class PlayCardHandlerTest {
 	public void testPlayWeaponCardPlayerCardString() {
 		// TODO Implement test
 	}
-
+	
+	public List<MinionState> getMinionStates(Card card) {
+    	List<MinionState> states = new ArrayList<>();
+    	String stateStrings = gameData.getCards().get(card.getName()).get("state");
+		if(stateStrings!=null && !stateStrings.equals("")){
+			for(String state : stateStrings.split(", ")){
+				states.add(MinionState.valueOf(state));
+			}
+		}
+		return states;
+    }
 }

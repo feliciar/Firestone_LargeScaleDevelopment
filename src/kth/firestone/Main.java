@@ -7,33 +7,26 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
 public class Main {
-	
-	
 
 	public static void main(String[] args) {
 		GameBuilder gb = new FirestoneBuilder(new GameData());
 		// set starting state
+		int startingMana = 0;
 		for (int i = 1; i < 3; i++) {
-			int startingMana = (i == 1) ? i : 0;
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, startingMana);
+			  .setStartingMana(i, startingMana++);
 		}
 		Game game = gb.build();
-		game.start(); //TODO do so start deals cards to the players, and sets the starting player
+		game.start();
 		
 		Tester.test(game);
-		
-
-		
-		
 	}
 	
 	static class Tester {
 		
 		public static void test(Game game){
-			
 			//Play two cards if possible
 			System.out.println("Started game. ");
 			printAllInfoOfPlayer(game.getPlayerInTurn());
@@ -52,12 +45,8 @@ public class Main {
 			printAllInfoOfPlayer(game.getPlayerInTurn());
 			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
-			
-			
-			
-			
+
 			//Play 1 card
-	
 			printAllInfoOfPlayer(game.getPlayerInTurn());
 			Card cardToPlay2 = game.getPlayerInTurn().getHand().get(0);
 			System.out.println("Will play card 0: "+cardToPlay2);
@@ -68,7 +57,6 @@ public class Main {
 			printAllInfoOfPlayer(game.getPlayerInTurn());
 			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
-
 
 			//Attack the hero
 			printAllInfoOfPlayer(game.getPlayerInTurn());
@@ -97,15 +85,7 @@ public class Main {
 			game.endTurn(game.getPlayerInTurn());
 			System.out.println("End turn"+"\n");
 			
-			
-			
 			printAllInfoOfPlayer(game.getPlayerInTurn());
-
-			
-
-			
-			
-			
 		}
 
 		public static void printAllInfoOfPlayer(Player playerInTurn){
@@ -121,11 +101,6 @@ public class Main {
 			for(Minion m : playerInTurn.getActiveMinions())
 				System.out.print(m+", ");
 			System.out.println("");
-
 		}
-        
     }
-	
-	
-
 }
