@@ -94,6 +94,10 @@ public class FirestoneMinion implements Minion {
 	public boolean isSleepy() {
 		return sleepy;
 	}
+	
+	public void setSleepy(boolean sleepy){
+		this.sleepy = sleepy;
+	}
 
 	public String toString(){
 		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") race: "+race+ "is sleepy: "+sleepy;
