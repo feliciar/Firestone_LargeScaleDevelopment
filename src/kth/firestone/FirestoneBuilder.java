@@ -24,7 +24,6 @@ public class FirestoneBuilder implements GameBuilder {
 	
 	public FirestoneBuilder(GameData gameData) {
 		this.gameData = gameData;
-		gameData.populate();
 		this.players = createPlayers();
 	}
 	

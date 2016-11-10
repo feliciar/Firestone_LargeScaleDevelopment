@@ -7,10 +7,10 @@ import java.util.UUID;
 import kth.firestone.Event;
 import kth.firestone.GameData;
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
-import kth.firestone.player.GamePlayer;
+import kth.firestone.minion.MinionRace;
+import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
 
 public class PlayCardHandler {
@@ -22,7 +22,6 @@ public class PlayCardHandler {
 	public PlayCardHandler(GameData gameData){
 		this.gameData = gameData;
 	}
-
 	
 	/**
      * Playing a spell card without a target.
@@ -35,6 +34,7 @@ public class PlayCardHandler {
     	//TODO
     	return null;
     }
+    
     /**
      * Playing a spell card with a target.
      * 
@@ -64,7 +64,13 @@ public class PlayCardHandler {
     	FirestoneHero hero = (FirestoneHero)player.getHero();
     	hero.setMana(hero.getMana()-card.getManaCost());
     	player.getHand().remove(card);
-    	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card,gameData);
+    	
+    	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
+    	List<MinionState> states = getMinionStates(card);
+    	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
+    			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
+    			card.getAttack().get(), race, states);
+    	
     	int cardPosition = position;
     	if (position > player.getActiveMinions().size() + 1) {
     		cardPosition = player.getActiveMinions().size(); // add to end
@@ -118,7 +124,6 @@ public class PlayCardHandler {
     	return null;
     }
     
-    
     /**
      * Determines if the given card can be played without a target.
      * 
@@ -153,7 +158,16 @@ public class PlayCardHandler {
     	//TODO
     	return true;
     }
-
-   
-	
+    
+    public List<MinionState> getMinionStates(Card card) {
+    	List<MinionState> states = new ArrayList<>();
+    	String stateStrings = gameData.getCards().get(card.getName()).get("state");
+		if(stateStrings!=null && !stateStrings.equals("")){
+			for(String state : stateStrings.split(", ")){
+				states.add(MinionState.valueOf(state));
+			}
+		}
+		return states;
+    }
+    
 }

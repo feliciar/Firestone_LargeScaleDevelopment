@@ -2,8 +2,6 @@ package kth.firestone.hero;
 
 import java.util.List;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 public class FirestoneHero implements Hero {
 	private String id;
 	private String name;

@@ -59,5 +59,4 @@ public class GamePlayer implements Player {
 		this.deck = deck;
 	}
 	
-	
 }

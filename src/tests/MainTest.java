@@ -13,7 +13,8 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
 public class MainTest {
-
+	private final int STARTING_MANA = 10;
+	
 	@Test
 	public void integrationTest() {
 		GameBuilder gb = new FirestoneBuilder(new GameData());
@@ -22,7 +23,7 @@ public class MainTest {
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, 10);
+			  .setStartingMana(i, STARTING_MANA);
 		}
 		Game game = gb.build();
 		game.start(); 
@@ -60,7 +61,6 @@ public class MainTest {
 		assertEquals(game.getPlayerInTurn().getActiveMinions().get(0).getName(),m2);
 		assertEquals(game.getPlayerInTurn().getHand().size(), 3); 
 
-		
 		//Attack another minion
 		Minion minion1 = game.getPlayerInTurn().getActiveMinions().get(0);
 		Minion minion2 = game.getPlayers().get(1).getActiveMinions().get(0);
@@ -82,7 +82,6 @@ public class MainTest {
 		game.endTurn(game.getPlayerInTurn());
 		assertEquals(game.getPlayerInTurn().getId(), "1");
 		
-		
 		//Attack the hero
 		Minion minion3 = game.getPlayers().get(0).getActiveMinions().get(0);
 		int minionHealth = minion3.getHealth();
@@ -91,7 +90,6 @@ public class MainTest {
 		game.attack(game.getPlayerInTurn(), minion3.getId(), "2");
 		assertEquals(game.getPlayers().get(1).getHero().getHealth(), heroHealth - minion3.getAttack());		
 		assertEquals(minion3.getHealth(), minionHealth - game.getPlayers().get(1).getHero().getAttack());		
-	
 	}
 	
 	public void testPlayCard(Game game, Player player, int cardIndex, int position){

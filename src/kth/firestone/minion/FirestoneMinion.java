@@ -19,25 +19,19 @@ public class FirestoneMinion implements Minion {
 	private List<BuffDescription> buffDescriptions;
 	private boolean sleepy = true;
 	
-	public FirestoneMinion(String id, Card card, GameData gameData){
+	public FirestoneMinion(String id, String name, int health, int originalHealth, 
+			int originalAttack, int attack, MinionRace race, List<MinionState> states) {
 		this.id = id;
-		this.name = card.getName();
-		this.health = card.getHealth().get();
-		this.maxHealth = this.health; //TODO This might be something else
-		this.originalHealth = card.getOriginalHealth().get();
-		this.originalAttack = card.getOriginalAttack().get();
-		this.attack = card.getAttack().get();
-		this.race = MinionRace.valueOf(gameData.getCards().get(this.name).get("race"));
-		this.states = new ArrayList<MinionState>();
-		//Add the states
-		String stateStrings = gameData.getCards().get(this.name).get("state");
-		if(stateStrings!=null && !stateStrings.equals("")){
-			for(String state : stateStrings.split(", ")){
-				this.states.add(MinionState.valueOf(state));
-			}
-		}
-		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)
-		
+		this.name = name;
+		this.health = health;
+		this.maxHealth = health;
+		this.originalHealth = originalHealth;
+		this.originalAttack = originalAttack;
+		this.attack = attack;
+		this.race = race;
+		this.states = states;
+
+		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
 	}
 	
 	@Override
@@ -108,4 +102,5 @@ public class FirestoneMinion implements Minion {
 	public void reduceHealth(int val) {
 		health -= val;
 	}
+	
 }

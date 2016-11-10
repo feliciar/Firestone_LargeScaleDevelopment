@@ -19,6 +19,8 @@ public class FirestoneGame implements Game {
 	private PlayCardHandler playCardHandler;
 	private AttackHandler attackHandler;
 	private int playerIndexInTurn = 1;	// first player starts by default
+	private final String PLAYER_1_ID = "1";
+	private final String PLAYER_2_ID = "2";
 	
 	public FirestoneGame(List<Player> players, 
 			PlayCardHandler playCardHandler,
@@ -121,26 +123,25 @@ public class FirestoneGame implements Game {
 	@Override
 	public List<Event> endTurn(Player player) {
 		if (getPlayerInTurn().equals(player)) {
-			if (player.getId().equals("1")) {
+			if (player.getId().equals(PLAYER_1_ID)) {
 				playerIndexInTurn = 2;
 			} else {
 				playerIndexInTurn = 1;
 			}
 			Player nextPlayer = getPlayers().get(playerIndexInTurn-1);
 			FirestoneHero hero = (FirestoneHero) nextPlayer.getHero();
-			//Draw card if there is one to draw
+			// Draw card if there is one to draw
 			if (((FirestoneDeck) nextPlayer.getDeck()).size() == 0) {
 				hero.reduceHealth(1);
 			} else {
-				// draw new card for next player
+				// Draw new card for next player
 				Card drawnCard = ((FirestoneDeck) nextPlayer.getDeck()).getCards().pop();
 		
 				List<Card> hand = nextPlayer.getHand();
 				hand.add(drawnCard);
 				((GamePlayer) nextPlayer).setHand(hand);
 			}
-			
-			//Make all of this player's minions not sleepy
+			// Make all of this player's minions not sleepy
 			for (Minion m : nextPlayer.getActiveMinions()) {
 				((FirestoneMinion) m).setSleepy(false);
 			}
@@ -148,10 +149,9 @@ public class FirestoneGame implements Game {
 			if (hero.getMaxMana() < 10) {
 				hero.setMaxMana(hero.getMaxMana()+1);
 			}
-			//Restore mana of the hero
+			// Restore mana of the hero
 			hero.restoreAllMana();
-			
-		}else{
+		} else {
 			System.err.println("The player trying to end turn was not the player in turn");
 		}
 		return events;
@@ -167,15 +167,13 @@ public class FirestoneGame implements Game {
 	public void start(Player player) {
 		// deal cards at the start of the game
 		int nCardsToDeal = 4;
-		if (player.getId().equals("2")) {
+		if (player.getId().equals(PLAYER_2_ID)) {
 			nCardsToDeal = 3;
 		}
 		
 		List<Card> hand = new ArrayList<>();
 		ArrayDeque<Card> deck = ((FirestoneDeck) player.getDeck()).getCards();
-		if (player.getHand().size() != 0 || deck.size() < 4) {
-			System.exit(1);
-		}
+
 		for (int i = 0; i < nCardsToDeal; i++) {
 			hand.add(deck.pop());
 		}
