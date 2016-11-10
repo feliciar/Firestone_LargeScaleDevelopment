@@ -120,20 +120,18 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public List<Event> endTurn(Player player) {
-		
 		if (getPlayerInTurn().equals(player)) {
-			Player nextPlayer;
 			if (player.getId().equals("1")) {
 				playerIndexInTurn = 2;
-				nextPlayer = getPlayers().get(1);
 			} else {
 				playerIndexInTurn = 1;
-				nextPlayer = getPlayers().get(0);
 			}
+			Player nextPlayer = getPlayers().get(playerIndexInTurn-1);
+			FirestoneHero hero = (FirestoneHero) nextPlayer.getHero();
 			//Draw card if there is one to draw
-			if (((FirestoneDeck) player.getDeck()).size() == 0) {
-				((FirestoneHero) player.getHero()).reduceHealth(1);
-			}else{
+			if (((FirestoneDeck) nextPlayer.getDeck()).size() == 0) {
+				hero.reduceHealth(1);
+			} else {
 				// draw new card for next player
 				Card drawnCard = ((FirestoneDeck) nextPlayer.getDeck()).getCards().pop();
 		
@@ -143,12 +141,16 @@ public class FirestoneGame implements Game {
 			}
 			
 			//Make all of this player's minions not sleepy
-			for(Minion m : nextPlayer.getActiveMinions()){
-				((FirestoneMinion)m).setSleepy(false);
+			for (Minion m : nextPlayer.getActiveMinions()) {
+				((FirestoneMinion) m).setSleepy(false);
 			}
-			
+			// Increase mana
+			if (hero.getMaxMana() < 10) {
+				hero.setMaxMana(hero.getMaxMana()+1);
+			}
 			//Restore mana of the hero
-			((FirestoneHero)nextPlayer.getHero()).restoreAllMana();
+			hero.restoreAllMana();
+			
 		}
 		return events;
 	}
