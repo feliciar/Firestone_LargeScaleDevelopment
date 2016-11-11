@@ -20,8 +20,8 @@ public class AttackHandler {
 	/**
 	 * Check if the minion is able to attack.
 	 */
-	public boolean canAttack(Player player, Minion minion) {
-		if (!player.getActiveMinions().contains(minion)) {
+	public boolean canAttack(List<Minion> playersActiveMinions, Minion minion) {
+		if (!playersActiveMinions.contains(minion)) {
 			System.err.println("Minion does not belong to player. Cannot attack");
 			return false;
 		} else if (minion.getStates().contains(MinionState.FROZEN)) {
@@ -66,7 +66,7 @@ public class AttackHandler {
 			return false;
 		}
 		
-		if(canAttack(player, minion)) {
+		if(canAttack(player.getActiveMinions(), minion)) {
 			Player adversary = getAdversary(player.getId());
 		
 			// Find if the adversary has a TAUNT on the board and who it is.
