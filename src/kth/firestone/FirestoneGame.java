@@ -73,7 +73,7 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public boolean canAttack(Player player, Minion minion) {
-		return attackHandler.canAttack(player, minion);
+		return attackHandler.canAttack(player.getActiveMinions(), minion);
 	}
 
 	@Override
