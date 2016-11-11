@@ -66,7 +66,7 @@ public class AttackHandler {
 			return false;
 		}
 		
-		if(canAttack(player.getActiveMinions(), minion)) {
+		if(canAttack(activeMinions, minion)) {
 			Player adversary = getAdversary(player.getId());
 		
 			// Find if the adversary has a TAUNT on the board and who it is.
