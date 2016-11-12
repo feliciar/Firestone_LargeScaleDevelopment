@@ -119,6 +119,7 @@ public class AttackHandlerTest {
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null );
 		minions.add(minionPlayer1);
 		assertEquals(minionPlayer1, ah.findMinion(minions, "100"));
+		assertEquals(null, ah.findMinion(minions, "900"));
 
 	}
 	
