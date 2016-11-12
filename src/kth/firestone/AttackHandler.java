@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionState;
