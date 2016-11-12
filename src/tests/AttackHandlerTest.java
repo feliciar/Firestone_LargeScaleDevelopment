@@ -154,24 +154,24 @@ public class AttackHandlerTest {
 		AttackHandler ah = new AttackHandler(players);
 		
 		//Test if minion, which is not Taunt but there is a Taunt on the board, is attackable
-		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "200"));
+		assertEquals(false, ah.isMinionAttackValid(player1, "100", "200"));
 		//Test if the hero, but a Taunt is on the board, is attackable
-		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "2"));
+		assertEquals(false, ah.isMinionAttackValid(player1, "100", "2"));
 		//Test if minion with Taunt as a state is attackable
-		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "210"));
+		assertEquals(true, ah.isMinionAttackValid(player1, "100", "210"));
 		
-		players.get(1).getActiveMinions().get(1).getStates().clear(); //Taunt is no more on the board
+		player2.getActiveMinions().get(1).getStates().clear(); //Taunt is no more on the board
 		//Test if minion is attackable
-		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "200"));
+		assertEquals(true, ah.isMinionAttackValid(player1, "100", "200"));
 		//Test if the hero of the adversary is attackable
-		assertEquals(true, ah.isMinionAttackValid(players.get(0), "100", "2"));
+		assertEquals(true, ah.isMinionAttackValid(player1, "100", "2"));
 		
 		//Test if a minion of the player is attackable
-		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "120"));
+		assertEquals(false, ah.isMinionAttackValid(player1, "100", "120"));
 		//Test if the hero of the player is attackable
-		assertEquals(false, ah.isMinionAttackValid(players.get(0), "100", "1"));
+		assertEquals(false, ah.isMinionAttackValid(player1, "100", "1"));
 		//Test if an minion that does not exist for the player is used to attack
-		assertEquals(false, ah.isMinionAttackValid(players.get(0), "200", "210"));
+		assertEquals(false, ah.isMinionAttackValid(player1, "200", "210"));
 	}
 	
 	@Test
