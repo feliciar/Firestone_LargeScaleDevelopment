@@ -2,6 +2,8 @@ package kth.firestone.card;
 
 import java.util.Optional;
 
+import kth.firestone.minion.MinionRace;
+
 /**
  * Describes a playable card.
  */
@@ -72,4 +74,9 @@ public interface Card {
      * @return the description of the card.
      */
     public String getDescription();
+    
+    /**
+     * @return the minion race of the card if the card is of type minion
+     */
+    public Optional<MinionRace> getRace();
 }
