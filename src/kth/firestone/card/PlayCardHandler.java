@@ -1,11 +1,15 @@
 package kth.firestone.card;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
+import kth.firestone.buff.BuffDescription;
+import kth.firestone.buff.FirestoneBuffDescription;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -67,9 +71,19 @@ public class PlayCardHandler {
     	
     	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
     	List<MinionState> states = getMinionStates(card);
+    	List<BuffDescription> buffDescriptions = new ArrayList<>();
+    	
+    	Map<String, String> cardData = gameData.getCards().get(card.getName());
+    	if(cardData.containsKey("buff")){
+	    	String[] buffStrings = cardData.get("buff").split(". ");
+	    	for(int i=0; i<buffStrings.length; ++i){
+	    		buffDescriptions.add(new FirestoneBuffDescription(buffStrings[i], ""));
+	    	}
+    	}
+    	
     	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
-    			card.getAttack().get(), race, states);
+    			card.getAttack().get(), race, states, buffDescriptions);
     	
     	int cardPosition = position;
     	if (position > player.getActiveMinions().size() + 1) {
