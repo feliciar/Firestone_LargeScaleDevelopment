@@ -7,17 +7,17 @@ import kth.firestone.player.Player;
 
 public class DamageHandler {
 
-	public void minionHeroAttack(FirestoneMinion attacker, FirestoneHero target){
+	public void dealDamageToMinionAndHero(FirestoneMinion attacker, FirestoneHero target){
 		target.reduceHealth(attacker.getAttack());
 		attacker.reduceHealth(target.getAttack());
 	}
 	
-	public void minionMinionAttack(FirestoneMinion attacker, FirestoneMinion target){
+	public void dealDamageToMinions(FirestoneMinion attacker, FirestoneMinion target){
 		target.reduceHealth(attacker.getAttack());
 		attacker.reduceHealth(target.getAttack());
 	}
 	
-	public void removeTheDeadMinionMinionAttack(Minion attacker, Minion target, Player player, Player adversary){
+	public void removeDeadMinions(Minion attacker, Minion target, Player player, Player adversary){
 		if (target.getHealth() <= 0) {
 			adversary.getActiveMinions().remove(target);
 		}
