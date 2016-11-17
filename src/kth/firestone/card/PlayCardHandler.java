@@ -1,7 +1,6 @@
 package kth.firestone.card;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -35,8 +34,10 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playSpellCard(Player player, Card card){
-    	//TODO
-    	return null;
+    	updateMana((FirestoneHero) player.getHero(), card);
+    	player.getHand().remove(card);
+    	// TODO: finish...
+    	return events;
     }
     
     /**
@@ -65,27 +66,12 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position){
-    	FirestoneHero hero = (FirestoneHero)player.getHero();
-    	hero.setMana(hero.getMana()-card.getManaCost());
+    	updateMana((FirestoneHero) player.getHero(), card);
     	player.getHand().remove(card);
     	
     	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
     	List<MinionState> states = getMinionStates(card);
-    	List<BuffDescription> buffDescriptions = new ArrayList<>();
-    	
-    	Map<String, String> cardData = gameData.getCards().get(card.getName());
-    	if(cardData.containsKey("buff")){
-	    	String[] buffStrings = cardData.get("buff").split(". ");
-	    	for(int i=0; i<buffStrings.length; ++i){
-	    		if(buffStrings[i].equals("")){
-	    			break;
-	    		}
-	    		if( ! buffStrings[i].endsWith(".")){
-	    			buffStrings[i] = buffStrings[i] + ".";
-	    		}
-	    		buffDescriptions.add(new FirestoneBuffDescription(buffStrings[i], ""));
-	    	}
-    	}
+    	List<BuffDescription> buffDescriptions = getBuffDescriptions(gameData.getCards().get(card.getName()));
     	
     	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
@@ -188,6 +174,18 @@ public class PlayCardHandler {
 			}
 		}
 		return states;
+    }
+    
+    public void updateMana(FirestoneHero h, Card c) {
+    	h.setMana(h.getMana() - c.getManaCost());
+    }
+    
+    public List<BuffDescription> getBuffDescriptions(Map<String, String> cardData) {
+    	List<BuffDescription> result = new ArrayList<>(); 
+    	BuffDescription bd = new FirestoneBuffDescription(cardData.get("buff_name"), cardData.get("buff"));
+    	result.add(bd);
+
+    	return result;
     }
     
 }
