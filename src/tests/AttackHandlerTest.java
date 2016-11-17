@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import kth.firestone.AttackHandler;
+import kth.firestone.DamageHandler;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -20,7 +21,7 @@ public class AttackHandlerTest {
 	
 	@Test 
 	public void testcanAttack() {
-		AttackHandler ah = new AttackHandler(null);
+		AttackHandler ah = new AttackHandler(null, null);
 		//Mock player's minions
 		List<MinionState> state0 = new ArrayList<>();
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0 );
@@ -69,7 +70,7 @@ public class AttackHandlerTest {
 		Player player2 = new GamePlayer("2", null);
 		players.add(player1);
 		players.add(player2);
-		AttackHandler ah = new AttackHandler(players);
+		AttackHandler ah = new AttackHandler(players, null);
 		
 		Player adversary = ah.getAdversary("1");
 		assertEquals(adversary.getId(), "2");
@@ -103,7 +104,7 @@ public class AttackHandlerTest {
 		playersActiveMinions.add(1, minionPlayer11);
 		playersActiveMinions.add(2, minionPlayer12);
 		
-		AttackHandler ah = new AttackHandler(null);
+		AttackHandler ah = new AttackHandler(null, null);
 		List<Minion> minionsTaunt = ah.getAdversaryMinionsWithTaunt(adversaryActiveMinions);
 		assertEquals(minionsTaunt.size(), 1);
 		
@@ -113,7 +114,7 @@ public class AttackHandlerTest {
 	
 	@Test 
 	public void testfindMinion() {
-		AttackHandler ah = new AttackHandler(null);
+		AttackHandler ah = new AttackHandler(null, null);
 		List<Minion> minions = new ArrayList<>();
 		
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null );
@@ -151,7 +152,7 @@ public class AttackHandlerTest {
 		players.add(player1);
 		players.add(player2);
 		
-		AttackHandler ah = new AttackHandler(players);
+		AttackHandler ah = new AttackHandler(players, null);
 		
 		//Test if minion, which is not Taunt but there is a Taunt on the board, is attackable
 		assertEquals(false, ah.isMinionAttackValid(player1, "100", "200"));
@@ -197,7 +198,8 @@ public class AttackHandlerTest {
 		players.add(player1);
 		players.add(player2);
 		
-		AttackHandler ah = new AttackHandler(players);
+		DamageHandler dh = new DamageHandler();
+		AttackHandler ah = new AttackHandler(players, dh);
 		
 		// Test to kill the Taunt minion
 		ah.attack(player1, "100", "210");
