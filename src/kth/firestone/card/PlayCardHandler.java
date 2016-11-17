@@ -77,6 +77,12 @@ public class PlayCardHandler {
     	if(cardData.containsKey("buff")){
 	    	String[] buffStrings = cardData.get("buff").split(". ");
 	    	for(int i=0; i<buffStrings.length; ++i){
+	    		if(buffStrings[i].equals("")){
+	    			break;
+	    		}
+	    		if( ! buffStrings[i].endsWith(".")){
+	    			buffStrings[i] = buffStrings[i] + ".";
+	    		}
 	    		buffDescriptions.add(new FirestoneBuffDescription(buffStrings[i], ""));
 	    	}
     	}
