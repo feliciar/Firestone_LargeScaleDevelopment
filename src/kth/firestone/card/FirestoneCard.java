@@ -2,6 +2,8 @@ package kth.firestone.card;
 
 import java.util.Optional;
 
+import kth.firestone.minion.MinionRace;
+
 public class FirestoneCard implements Card {
 	
 	private String id;
@@ -80,6 +82,12 @@ public class FirestoneCard implements Card {
 	
 	public String toString(){
 		return name + "(" + manaCost + ") ("+health.get()+"/"+originalHealth.get()+", "+attack.get()+"/"+originalAttack.get()+")";
+	}
+
+	@Override
+	public Optional<MinionRace> getRace() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
