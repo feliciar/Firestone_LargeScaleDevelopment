@@ -14,12 +14,14 @@ public class GamePlayer implements Player {
 	private List<Card> hand;
 	private List<Minion> activeMinions;
 	private Deck deck;
+	private List<Card> discardPile;
 	
 	public GamePlayer(String id, Hero hero) {
 		this.id = id;
 		this.hero = hero;
 		hand = new ArrayList<Card>();
 		activeMinions = new ArrayList<Minion>();
+		discardPile = new ArrayList<Card>();
 	}
 	
 	@Override
@@ -57,6 +59,18 @@ public class GamePlayer implements Player {
 	
 	public void setDeck(Deck deck) {
 		this.deck = deck;
+	}
+	
+	public void addToDiscardPile(Card card){
+		discardPile.add(card);
+	}
+	
+	public void resetDiscardPile(){
+		discardPile.isEmpty();
+	}
+	
+	public List<Card> getDiscardPile(){
+		return discardPile;
 	}
 	
 }
