@@ -87,6 +87,19 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
+		card = new HashMap<>();
+		
+		card.put("name", "Edwin VanCleef");
+		card.put("health", "2");
+		card.put("attack", "2");
+		card.put("mana", "3");
+		card.put("race", "NONE");
+		card.put("description", "");
+		card.put("state", "");
+		card.put("buff", "Combo: Gain +2/+2 for each card played earlier this turn.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
+		
 	}
 	
 	public HashMap<String, HashMap<String, String>> getCards() {
