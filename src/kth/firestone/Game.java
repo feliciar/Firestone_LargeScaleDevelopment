@@ -170,7 +170,7 @@ public interface Game {
     public List<Event> endTurn(Player player);
 
     /**
-     * Starts the game.
+     * Starts the game with a (pseudo)random player.
      */
     public void start();
 

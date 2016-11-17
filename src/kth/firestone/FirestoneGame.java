@@ -3,6 +3,7 @@ package kth.firestone;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
@@ -159,25 +160,18 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public void start() {
-		start(players.get(0));
-		start(players.get(1));
+		start(players.get(new Random().nextInt(2)));
 	}
 
 	@Override
 	public void start(Player player) {
-		// deal cards at the start of the game
-		int nCardsToDeal = 4;
-		if (player.getId().equals(PLAYER_2_ID)) {
-			nCardsToDeal = 3;
+		((GamePlayer) player).setHand(createHand(((FirestoneDeck) player.getDeck()).getCards(), 4));
+		int otherPlayerIndex = 0;
+		if (player.getId().equals(PLAYER_1_ID)) {
+			otherPlayerIndex = 1;
 		}
-		
-		List<Card> hand = new ArrayList<>();
-		ArrayDeque<Card> deck = ((FirestoneDeck) player.getDeck()).getCards();
-
-		for (int i = 0; i < nCardsToDeal; i++) {
-			hand.add(deck.pop());
-		}
-		((GamePlayer) player).setHand(hand);
+		Player otherPlayer = players.get(otherPlayerIndex);
+		((GamePlayer) otherPlayer).setHand(createHand(((FirestoneDeck) otherPlayer.getDeck()).getCards(), 3));
 	}
 
 	@Override
@@ -187,6 +181,14 @@ public class FirestoneGame implements Game {
 			return true;
 		}
 		return false;
+	}
+	
+	public List<Card> createHand(ArrayDeque<Card> deck, int nCardsToDeal) {
+		List<Card> hand = new ArrayList<>();
+		for (int i = 0; i < nCardsToDeal; i++) {
+			hand.add(deck.pop());
+		}
+		return hand;
 	}
 
 }

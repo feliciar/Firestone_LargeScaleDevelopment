@@ -89,20 +89,26 @@ public class FirestoneGameTest {
 	public void testStartPlayer() {
 		Player player1 = fg.getPlayers().get(0);
 		Player player2 = fg.getPlayers().get(1);
-		// check player1's deck decreased by 4 and hand contains 4 cards
-		int deckBefore = player1.getDeck().size();
+		
+		// check player1/player2's deck decreased by 4/3 and 
+		// player1/player2's hand contains 4/3 cards
+		
+		int p1DeckBefore = player1.getDeck().size();
+		int p2DeckBefore = player2.getDeck().size();
+		
 		fg.start(player1);
-		int deckAfter = player1.getDeck().size();
-		int handAfter = player1.getHand().size();
-		assertEquals(deckBefore-deckAfter, 4);
-		assertEquals(handAfter, 4);
-		// check player2's deck decreased by 3 and hand contains 3 cards
-		deckBefore = player2.getDeck().size();
-		fg.start(player2);
-		deckAfter = player2.getDeck().size();
-		handAfter = player2.getHand().size();
-		assertEquals(deckBefore-deckAfter, 3);
-		assertEquals(handAfter, 3);
+		
+		int p1DeckAfter = player1.getDeck().size();
+		int p2DeckAfter = player2.getDeck().size();
+		
+		int p1HandAfter = player1.getHand().size();
+		int p2HandAfter = player2.getHand().size();
+		
+		assertEquals(4, p1DeckBefore-p1DeckAfter);
+		assertEquals(3, p2DeckBefore-p2DeckAfter);
+
+		assertEquals(4, p1HandAfter);
+		assertEquals(3, p2HandAfter);
 	}
 
 }

@@ -26,7 +26,7 @@ public class MainTest {
 			  .setStartingMana(i, STARTING_MANA);
 		}
 		Game game = gb.build();
-		game.start(); 
+		game.start(game.getPlayers().get(0));	// start with player 1
 		
 		assertEquals(game.getPlayerInTurn().getId(), "1");
 		
