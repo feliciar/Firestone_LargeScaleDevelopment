@@ -108,8 +108,9 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public Game build() {
+		DamageHandler damageHandler = new DamageHandler();
 		return new FirestoneGame(players, 
-				new PlayCardHandler(gameData), new AttackHandler(players));
+				new PlayCardHandler(gameData), new AttackHandler(players, damageHandler));
 	}
 	
 	private List<Player> createPlayers() {

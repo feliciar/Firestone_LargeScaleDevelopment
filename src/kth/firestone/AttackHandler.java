@@ -11,9 +11,11 @@ import kth.firestone.player.Player;
 
 public class AttackHandler {
 	private List<Player> players;
+	private DamageHandler damageHandler;
 	
-	public AttackHandler(List<Player> players) {
+	public AttackHandler(List<Player> players, DamageHandler damageHandler) {
 		this.players = players;
+		this.damageHandler = damageHandler;
 	}
 	
 	/**
@@ -136,19 +138,12 @@ public class AttackHandler {
 		
 		if (targetMinion != null) {
 			// Target was minion
-			targetMinion.reduceHealth(attacker.getAttack());
-			attacker.reduceHealth(targetMinion.getAttack());
+			damageHandler.minionMinionAttack(attacker, targetMinion);
 			
 			//Remove the minions that were killed 
-			if (targetMinion.getHealth() <= 0) {
-				adversary.getActiveMinions().remove(targetMinion);
-			}
-			if (attacker.getHealth() <= 0) {
-				player.getActiveMinions().remove(attacker);
-			}
+			damageHandler.removeTheDeadMinionMinionAttack(attacker, targetMinion, player, adversary);
 		} else {
-			targetHero.reduceHealth(attacker.getAttack());
-			attacker.reduceHealth(targetHero.getAttack());
+			damageHandler.minionHeroAttack(attacker, targetHero);
 			
 			//TODO check for defeat (hero)
 		}
