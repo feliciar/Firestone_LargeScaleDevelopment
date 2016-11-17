@@ -138,12 +138,12 @@ public class AttackHandler {
 		
 		if (targetMinion != null) {
 			// Target was minion
-			damageHandler.minionMinionAttack(attacker, targetMinion);
+			damageHandler.dealDamageToMinions(attacker, targetMinion);
 			
 			//Remove the minions that were killed 
-			damageHandler.removeTheDeadMinionMinionAttack(attacker, targetMinion, player, adversary);
+			damageHandler.removeDeadMinions(attacker, targetMinion, player, adversary);
 		} else {
-			damageHandler.minionHeroAttack(attacker, targetHero);
+			damageHandler.dealDamageToMinionAndHero(attacker, targetHero);
 			
 			//TODO check for defeat (hero)
 		}
