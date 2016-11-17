@@ -1,14 +1,17 @@
 package kth.firestone;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kth.firestone.card.Card;
+import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
 		GameBuilder gb = new FirestoneBuilder(new GameData());
 		// set starting state
 		int startingMana = 0;
@@ -21,7 +24,7 @@ public class Main {
 		Game game = gb.build();
 		game.start();
 		
-		Tester.test(game);
+		//Tester.test(game);
 	}
 	
 	static class Tester {
