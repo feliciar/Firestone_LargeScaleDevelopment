@@ -24,8 +24,8 @@ public class DamageHandlerTest {
 		minionPlayer1.setSleepy(false);
 		
 		dh.dealDamageToMinionAndHero(minionPlayer1, hero);
-		//Test to attack the hero see that health is reduced
 		assertEquals(hero.getHealth(), 24);
+		assertEquals(minionPlayer1.getHealth(),7);
 	}
 	
 	@Test
