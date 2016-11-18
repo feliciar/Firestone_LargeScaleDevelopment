@@ -17,6 +17,16 @@ public class DamageHandler {
 		attacker.reduceHealth(target.getAttack());
 	}
 	
+	public void dealDamageToOneMinion(FirestoneMinion minion, int damage) {
+		minion.reduceHealth(damage);
+	}
+	
+	public void dealOneDamageToSeveralMinion(FirestoneMinion... minions){
+		for (FirestoneMinion m : minions){
+			m.reduceHealth(1);
+		}
+	}
+	
 	public void removeDeadMinions(Minion attacker, Minion target, Player player, Player adversary){
 		if (target.getHealth() <= 0) {
 			adversary.getActiveMinions().remove(target);
