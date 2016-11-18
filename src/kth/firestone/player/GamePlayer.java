@@ -66,7 +66,7 @@ public class GamePlayer implements Player {
 	}
 	
 	public void resetDiscardPile(){
-		discardPile.isEmpty();
+		discardPile = new ArrayList<Card>();
 	}
 	
 	public List<Card> getDiscardPile(){
