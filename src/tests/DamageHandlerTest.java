@@ -59,7 +59,7 @@ public class DamageHandlerTest {
 		FirestoneMinion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
 		FirestoneMinion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
 		FirestoneMinion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
-		dh.dealOneDamageToSeveralMinion(minion1, minion2, minion3);
+		dh.dealOneDamageToSeveralMinions(minion1, minion2, minion3);
 		
 		assertEquals(minion1.getHealth(), 6);
 		assertEquals(minion2.getHealth(), 6);
