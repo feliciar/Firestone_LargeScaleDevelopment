@@ -14,7 +14,7 @@ import org.junit.Test;
 public class DamageHandlerTest {
 
 	@Test
-	public void testDealDamageToMinionAndHero(){
+	public void testDealDamageToMinionAndHero() {
 		DamageHandler dh = new DamageHandler();
 		
 		//Mocked target - Hero
@@ -29,7 +29,7 @@ public class DamageHandlerTest {
 	}
 	
 	@Test
-	public void testDealDamageToMinions(){
+	public void testDealDamageToMinions() {
 		DamageHandler dh = new DamageHandler();
 		//Minions
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
@@ -43,8 +43,31 @@ public class DamageHandlerTest {
 		assertEquals(minionPlayer2.getHealth(), 1);
 		
 	}
+	
 	@Test
-	public void testRemoveDeadMinions(){
+	public void testDealDamageToOneMinion() {
+		DamageHandler dh = new DamageHandler();
+		FirestoneMinion minion = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		
+		dh.dealDamageToOneMinion(minion, 2);
+		assertEquals(minion.getHealth(), 5);
+	}
+	
+	@Test
+	public void testdealOneDamageToSeveralMinions() {
+		DamageHandler dh = new DamageHandler();
+		FirestoneMinion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		FirestoneMinion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		FirestoneMinion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
+		dh.dealOneDamageToSeveralMinion(minion1, minion2, minion3);
+		
+		assertEquals(minion1.getHealth(), 6);
+		assertEquals(minion2.getHealth(), 6);
+		assertEquals(minion3.getHealth(), 0);
+	}
+	
+	@Test
+	public void testRemoveDeadMinions() {
 		DamageHandler dh = new DamageHandler();
 		
 		//Mock players
@@ -69,7 +92,7 @@ public class DamageHandlerTest {
 	}
 	
 	@Test
-	public void checkDefeat(){
+	public void checkDefeat() {
 		//TODO
 	}
 }
