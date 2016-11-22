@@ -1,6 +1,9 @@
 package tests;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import kth.firestone.DamageHandler;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
@@ -59,7 +62,11 @@ public class DamageHandlerTest {
 		FirestoneMinion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
 		FirestoneMinion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
 		FirestoneMinion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
-		dh.dealOneDamageToSeveralMinions(minion1, minion2, minion3);
+		ArrayList<FirestoneMinion> minionList = new ArrayList<FirestoneMinion>();
+		minionList.add(minion1);
+		minionList.add(minion2);
+		minionList.add(minion3);
+		dh.dealOneDamageToSeveralMinions(minionList);
 		
 		assertEquals(minion1.getHealth(), 6);
 		assertEquals(minion2.getHealth(), 6);
