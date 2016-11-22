@@ -41,7 +41,8 @@ public class FirestoneBuilderTest {
 		data.put("attack", "10");
 		data.put("mana", "10");
 		data.put("type", "MINION");
-		data.put("description", "description1");
+		data.put("buff", "buff1");
+		data.put("buff_name", "buff_name1");
 		
 		HashMap<String, HashMap<String, String>> container = new HashMap<>();
 		container.put(name, data);
