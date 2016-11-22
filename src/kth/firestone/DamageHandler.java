@@ -1,6 +1,7 @@
 package kth.firestone;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
@@ -42,15 +43,27 @@ public class DamageHandler {
 	}
 	
 	/*
-	 * Removes the dead minions from the board.
+	 * Help method to find all dead minions in a list.
 	 */
-	public void removeDeadMinions(Minion attacker, Minion target, Player player, Player adversary){
-		if (target.getHealth() <= 0) {
-			adversary.getActiveMinions().remove(target);
+	public List<Minion> findDeadMinions(List<Minion> minions){
+		List<Minion> deadMinions = new ArrayList<Minion>();
+		for (Minion m : minions){
+			if(m.getHealth() <= 0) {
+				deadMinions.add(m);
+			}
 		}
-		if (attacker.getHealth() <= 0) {
-			player.getActiveMinions().remove(attacker);
+		return deadMinions;
+	}
+	
+	/*
+	 * Removes all dead minions in a list of minions.
+	 */
+	public void removeDeadMinions(List<Minion> minions){
+		List<Minion> deadMinions = findDeadMinions(minions);
+		for (Minion dead : deadMinions){
+			minions.remove(dead);
 		}
+		
 	}
 	
 	public boolean checkDefeat(){
