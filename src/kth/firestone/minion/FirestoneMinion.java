@@ -112,6 +112,14 @@ public class FirestoneMinion implements Minion {
 	public void setSleepy(boolean sleepy){
 		this.sleepy = sleepy;
 	}
+	
+	public void setHealth(int newHealth){
+		health = newHealth;
+	}
+	
+	public void setAttack(int newAttack){
+		attack = newAttack;
+	}
 
 	public String toString(){
 		String raceString = (race == MinionRace.NONE) ? "" : race.toString();
