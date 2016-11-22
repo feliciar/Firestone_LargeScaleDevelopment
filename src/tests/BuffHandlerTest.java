@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import kth.firestone.DamageHandler;
 import kth.firestone.buff.BuffDescription;
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.FirestoneBuffDescription;
@@ -34,10 +35,10 @@ public class BuffHandlerTest {
 		//when(players.get(0).getActiveMinions()).thenReturn(minions1);
 		when(players.get(1).getActiveMinions()).thenReturn(minions2);
 		
-		BuffHandler bh = new BuffHandler();
+		BuffHandler bh = new BuffHandler(new DamageHandler());
 		bh.createBuffMethods();
 		
-		bh.performAllBuffs(players, null, new FirestoneCard("","","0","0","0","MINION","Battlecry: Deal 1 damage."), 0,"","uniqueId2");
+		bh.performBuffsAfterCardPlayed(players, players.get(0), new FirestoneCard("","","0","0","0","MINION","Battlecry: Deal 1 damage."), 0,"uniqueId2");
 		
 		assertEquals(minions2.get(0).getHealth(), 1);
 	}
@@ -57,10 +58,10 @@ public class BuffHandlerTest {
 		when(players.get(0).getActiveMinions()).thenReturn(minions1);
 		when(players.get(1).getActiveMinions()).thenReturn(minions2);
 		
-		BuffHandler bh = new BuffHandler();
+		BuffHandler bh = new BuffHandler(new DamageHandler());
 		bh.createBuffMethods();
 		
-		bh.performAllBuffs(players, null, new FirestoneCard("","","0","0","0","SPELL",""), 0,"","");
+		bh.performBuffsAfterCardPlayed(players, players.get(0), new FirestoneCard("","","0","0","0","SPELL",""), 0,"");
 		
 		assertEquals(minions2.get(0).getHealth(), 1);
 		assertEquals(minions1.get(0).getHealth(), 2);
