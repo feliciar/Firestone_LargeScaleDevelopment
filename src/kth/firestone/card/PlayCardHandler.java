@@ -34,7 +34,7 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playSpellCard(Player player, Card card){
-    	updateMana((FirestoneHero) player.getHero(), card);
+    	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
     	// TODO: finish...
     	return events;
@@ -66,7 +66,7 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position){
-    	updateMana((FirestoneHero) player.getHero(), card);
+    	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
     	
     	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
@@ -176,8 +176,8 @@ public class PlayCardHandler {
 		return states;
     }
     
-    public void updateMana(FirestoneHero h, Card c) {
-    	h.setMana(h.getMana() - c.getManaCost());
+    public void decreaseMana(FirestoneHero h, int manaCost) {
+    	h.setMana(h.getMana() - manaCost);
     }
     
     public List<BuffDescription> getBuffDescriptions(Map<String, String> cardData) {
