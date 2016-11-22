@@ -7,6 +7,7 @@ import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionState;
+import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
 public class AttackHandler {
@@ -141,7 +142,8 @@ public class AttackHandler {
 			damageHandler.dealDamageToMinions(attacker, targetMinion);
 			
 			//Remove the minions that were killed 
-			damageHandler.removeDeadMinions(attacker, targetMinion, player, adversary);
+			damageHandler.removeDeadMinions(player.getActiveMinions());
+			damageHandler.removeDeadMinions(adversary.getActiveMinions());
 		} else {
 			damageHandler.dealDamageToMinionAndHero(attacker, targetHero);
 			
