@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import kth.firestone.buff.BuffHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
@@ -19,13 +20,15 @@ public class FirestoneGame implements Game {
 	private List<Event> events;
 	private PlayCardHandler playCardHandler;
 	private AttackHandler attackHandler;
+	private BuffHandler buffHandler;
 	private int playerIndexInTurn = 1;	// first player starts by default
 	private final String PLAYER_1_ID = "1";
 	private final String PLAYER_2_ID = "2";
 	
 	public FirestoneGame(List<Player> players, 
 			PlayCardHandler playCardHandler,
-			AttackHandler attackHandler) {
+			AttackHandler attackHandler,
+			BuffHandler buffHandler) {
 		this.players = players;
 		this.playCardHandler = playCardHandler;
 		this.attackHandler = attackHandler;

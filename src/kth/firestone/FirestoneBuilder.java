@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import kth.firestone.buff.BuffHandler;
+import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.card.PlayCardHandler;
@@ -116,8 +118,11 @@ public class FirestoneBuilder implements GameBuilder {
 	@Override
 	public Game build() {
 		DamageHandler damageHandler = new DamageHandler();
+		BuffMethods buffMethods = new BuffMethods();
 		return new FirestoneGame(players, 
-				new PlayCardHandler(gameData), new AttackHandler(players, damageHandler));
+				new PlayCardHandler(gameData), 
+				new AttackHandler(players, damageHandler),
+				new BuffHandler(damageHandler, buffMethods));
 	}
 	
 	private List<Player> createPlayers() {
