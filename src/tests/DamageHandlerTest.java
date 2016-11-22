@@ -61,10 +61,10 @@ public class DamageHandlerTest {
 	@Test
 	public void testdealOneDamageToSeveralMinions() {
 		DamageHandler dh = new DamageHandler();
-		FirestoneMinion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
-		FirestoneMinion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
-		FirestoneMinion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
-		ArrayList<FirestoneMinion> minionList = new ArrayList<FirestoneMinion>();
+		Minion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		Minion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		Minion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
+		ArrayList<Minion> minionList = new ArrayList<Minion>();
 		minionList.add(minion1);
 		minionList.add(minion2);
 		minionList.add(minion3);
