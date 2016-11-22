@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import kth.firestone.DamageHandler;
 import kth.firestone.Event;
 import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
