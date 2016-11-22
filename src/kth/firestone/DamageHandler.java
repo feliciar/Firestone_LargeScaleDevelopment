@@ -1,5 +1,7 @@
 package kth.firestone;
 
+import java.util.ArrayList;
+
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -33,7 +35,7 @@ public class DamageHandler {
 	/*
 	 * Deals one damage to several minions.
 	 */
-	public void dealOneDamageToSeveralMinions(FirestoneMinion... minions){
+	public void dealOneDamageToSeveralMinions(ArrayList<FirestoneMinion> minions){
 		for (FirestoneMinion m : minions){
 			m.reduceHealth(1);
 		}
