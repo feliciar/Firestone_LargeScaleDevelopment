@@ -3,6 +3,7 @@ package kth.firestone.buff;
 import java.util.ArrayList;
 import java.util.List;
 
+import kth.firestone.DamageHandler;
 import kth.firestone.card.Card;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
@@ -12,9 +13,10 @@ import kth.firestone.player.Player;
 
 public class BuffMethods {
 	
-	public BuffMethods() {
+	public BuffMethods(DamageHandler damageHandler) {
 		
 	}
+	
 	
 	
 	
