@@ -50,15 +50,16 @@ public class FirestoneBuilder implements GameBuilder {
 			HashMap<String, HashMap<String, String>> t = gameData.getCards();
 			HashMap<String, String> data = t.get(s);
 			
-			String cardDescription = data.get("buff_name");
+			StringBuilder sb = new StringBuilder();
+			sb.append(data.get("buff_name"));
 			if (!data.get("buff_name").equals("")) {
-				cardDescription += ": ";
+				sb.append(": ");
 			}
-			cardDescription += data.get("buff");
+			sb.append(data.get("buff"));
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					cardDescription);
+					sb.toString());
 			cards.add(card);
 		}
 		
