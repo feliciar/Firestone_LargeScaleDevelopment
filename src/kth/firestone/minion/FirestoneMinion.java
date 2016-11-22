@@ -1,10 +1,7 @@
 package kth.firestone.minion;
 
-import java.util.ArrayList;
 import java.util.List;
-import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
-import kth.firestone.card.Card;
 
 public class FirestoneMinion implements Minion {
 	private String id;
