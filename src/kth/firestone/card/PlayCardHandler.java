@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import kth.firestone.DamageHandler;
 import kth.firestone.Event;
 import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
@@ -36,7 +37,7 @@ public class PlayCardHandler {
     public List<Event> playSpellCard(Player player, Card card){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
-    	// TODO: finish...
+    	// TODO: use buffHandler
     	return events;
     }
     
@@ -49,8 +50,10 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playSpellCard(Player player, Card card, String targetId){
-    	//TODO
-    	return null;
+    	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
+    	player.getHand().remove(card);
+    	// TODO: use buffHandler
+    	return events;
     }
 
     /**
