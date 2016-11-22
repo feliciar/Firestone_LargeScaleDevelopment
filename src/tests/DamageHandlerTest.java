@@ -11,7 +11,6 @@ import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
 import kth.firestone.player.GamePlayer;
-import kth.firestone.player.Player;
 
 import org.junit.Test;
 
