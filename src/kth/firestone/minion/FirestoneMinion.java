@@ -1,9 +1,12 @@
 package kth.firestone.minion;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 import kth.firestone.buff.BuffDescription;
 
-public class FirestoneMinion implements Minion {
+public class FirestoneMinion implements Minion, Observer {
 	private String id;
 	private String name;
 	private int health;
@@ -17,7 +20,8 @@ public class FirestoneMinion implements Minion {
 	private boolean sleepy = true;
 	
 	public FirestoneMinion(String id, String name, int health, int originalHealth, 
-			int originalAttack, int attack, MinionRace race, List<MinionState> states, List<BuffDescription> buffDescriptions) {
+			int originalAttack, int attack, MinionRace race, List<MinionState> states, 
+			List<BuffDescription> buffDescriptions) {
 		this.id = id;
 		this.name = name;
 		this.health = health;
@@ -30,26 +34,7 @@ public class FirestoneMinion implements Minion {
 		this.buffDescriptions = buffDescriptions;
 
 		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
-		
 	}
-	
-	//TODO remove this constructor
-	public FirestoneMinion(String id, String name, int health, int originalHealth, 
-			int originalAttack, int attack, MinionRace race, List<MinionState> states) {
-		this.id = id;
-		this.name = name;
-		this.health = health;
-		this.maxHealth = health;
-		this.originalHealth = originalHealth;
-		this.originalAttack = originalAttack;
-		this.attack = attack;
-		this.race = race;
-		this.states = states;
-
-		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
-		
-	}
-	
 	
 	@Override
 	public String getId() {
@@ -126,6 +111,11 @@ public class FirestoneMinion implements Minion {
 	
 	public void reduceHealth(int val) {
 		health -= val;
+	}
+
+	@Override
+	public void update(Observable observable, Object arg) {
+		// TODO
 	}
 	
 }

@@ -2,6 +2,7 @@ package kth.firestone;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;

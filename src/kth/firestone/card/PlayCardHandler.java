@@ -3,6 +3,7 @@ package kth.firestone.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.UUID;
 
 import kth.firestone.Event;
@@ -16,7 +17,7 @@ import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
 
-public class PlayCardHandler {
+public class PlayCardHandler extends Observable {
 	
 	List<Event> events = new ArrayList<>();
 	GameData gameData;
