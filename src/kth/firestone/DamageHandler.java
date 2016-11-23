@@ -36,7 +36,7 @@ public class DamageHandler {
 	/*
 	 * Deals one damage to several minions.
 	 */
-	public void dealOneDamageToSeveralMinions(ArrayList<Minion> minions) {
+	public void dealOneDamageToSeveralMinions(List<Minion> minions) {
 		for (Minion m : minions){
 			((FirestoneMinion) m).reduceHealth(1);
 		}
