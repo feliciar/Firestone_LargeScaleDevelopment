@@ -37,8 +37,8 @@ public class FirestoneBuilder implements GameBuilder {
 		Collection<Card> cards = new ArrayList<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
 		for (String s : cardNames) {
-			HashMap<String, HashMap<String, String>> t = gameData.getCards();
 			HashMap<String, String> data = t.get(s);
 			
 			StringBuilder sb = new StringBuilder();
@@ -61,7 +61,32 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public GameBuilder setDeck(int playerIndex, int numberOfCards, String cardName) {
-		return null;
+		if (playerIndex < 1) {
+			System.exit(1);
+		}
+		Collection<Card> cards = new ArrayList<>();
+		
+		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
+		HashMap<String, String> data = t.get(cardName);
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(data.get("buff_name"));
+		if (!data.get("buff_name").equals("")) {
+			sb.append(": ");
+		}
+		sb.append(data.get("buff"));
+		
+		for (int i = 0; i < numberOfCards; i++) {			
+			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
+					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
+					sb.toString());
+			cards.add(card);
+		}
+		Deck deck = new FirestoneDeck(cards);
+		p.setDeck(deck);
+	
+		return this;
 	}
 
 	@Override
