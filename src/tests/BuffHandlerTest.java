@@ -15,7 +15,6 @@ import kth.firestone.FirestoneBuilder;
 import kth.firestone.GameData;
 import kth.firestone.buff.BuffDescription;
 import kth.firestone.buff.BuffHandler;
-import kth.firestone.buff.FirestoneBuffDescription;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.minion.FirestoneMinion;
