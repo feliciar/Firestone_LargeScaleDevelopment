@@ -3,8 +3,11 @@ package tests;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.mockito.Mock;
@@ -118,6 +121,16 @@ public class BuffHandlerTest {
 		buffHandler.performBuff(action, minions2.get(0));
 		verify(buffMethods, times(0)).dealOneDamage(action, minions2.get(0));
 		
+	}
+	
+	@Test
+	public void testMap(){
+		Map<String, Method> methods = buffHandler.createMethodMap();
+		for(String methodString : methods.keySet()){
+		assertTrue(buffHandler.invokeBuff(new Action(players, players.get(0).getId(), minionCard.getId(), null, 
+				-1, null, Action.Type.PLAYED_CARD), minions1.get(0), methodString));
+	
+		}
 	}
 	
 	
