@@ -123,30 +123,37 @@ public class MainTest {
 		assertEquals(27-6, game.getPlayers().get(1).getHero().getHealth());
 		assertEquals(26, game.getPlayers().get(0).getHero().getHealth());
 		
-		//Test play spell card and init buff "After you cast a spell, deal 1 damage to ALL minions."
+		//Test play spell card and activate buff "After you cast a spell, deal 1 damage to ALL minions."
+		//Play Wild Pyromancer
 		game.playMinionCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(6), 0);
 		assertEquals("Wild Pyromancer", game.getPlayerInTurn().getActiveMinions().get(0).getName());
 		
+		//Play Ironforge Rifleman
 		game.playMinionCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(0), 0);
 		assertEquals("Ironforge Rifleman", game.getPlayerInTurn().getActiveMinions().get(0).getName());
 		
+		//End turn
 		game.endTurn(game.getPlayerInTurn());
+		//Play Ironforge Rifleman
 		game.playMinionCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(0), 0);
 		assertEquals("Ironforge Rifleman", game.getPlayerInTurn().getActiveMinions().get(1).getName());
-		
+		//End turn
 		game.endTurn(game.getPlayerInTurn());
 		assertEquals(25, game.getPlayers().get(0).getHero().getHealth());
 		assertEquals(20, game.getPlayers().get(1).getHero().getHealth());
 		
+		//Play spell card and activate the buff
 		assertEquals(2, game.getPlayers().get(0).getActiveMinions().get(0).getHealth());
 		assertEquals("Ironforge Rifleman", game.getPlayers().get(1).getActiveMinions().get(1).getName());
 		assertEquals(2, game.getPlayers().get(1).getActiveMinions().get(1).getHealth());
 		game.playSpellCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(5));
 		assertEquals(1, game.getPlayers().get(0).getActiveMinions().get(0).getHealth());
 		assertEquals(1, game.getPlayers().get(1).getActiveMinions().get(0).getHealth());
-		assertEquals("Ironforge Rifleman", game.getPlayers().get(1).getActiveMinions().get(0).getName());		
-		
+		assertEquals("Ironforge Rifleman", game.getPlayers().get(1).getActiveMinions().get(0).getName());	
+		assertEquals(25, game.getPlayers().get(0).getHero().getHealth());
+		assertEquals(20, game.getPlayers().get(1).getHero().getHealth());
 	}
+	
 	
 
 
