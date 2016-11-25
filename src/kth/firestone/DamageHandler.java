@@ -11,7 +11,7 @@ import kth.firestone.minion.Minion;
 
 public class DamageHandler {
 
-	/*
+	/**
 	 * Deals damage when a minion and hero battles.
 	 */
 	public void dealDamageToMinionAndHero(Minion attacker, Hero target) {
@@ -19,7 +19,7 @@ public class DamageHandler {
 		((FirestoneMinion) attacker).reduceHealth(target.getAttack());
 	}
 	
-	/*
+	/**
 	 * Deals damage to minions when two minions battle.
 	 */
 	public void dealDamageToMinions(Minion attacker, Minion target) {
@@ -27,14 +27,14 @@ public class DamageHandler {
 		((FirestoneMinion) attacker).reduceHealth(target.getAttack());
 	}
 	
-	/*
+	/**
 	 * Deals specified amount of damage to a minion.
 	 */
 	public void dealDamageToOneMinion(Minion minion, int damage) {
 		((FirestoneMinion) minion).reduceHealth(damage);
 	}
 	
-	/*
+	/**
 	 * Deals one damage to several minions.
 	 */
 	public void dealOneDamageToSeveralMinions(List<Minion> minions) {
@@ -43,7 +43,7 @@ public class DamageHandler {
 		}
 	}
 	
-	/*
+	/**
 	 * Help method to find all dead minions in a list.
 	 */
 	public List<Minion> findDeadMinions(List<Minion> minions) {
@@ -56,7 +56,7 @@ public class DamageHandler {
 		return deadMinions;
 	}
 	
-	/*
+	/**
 	 * Removes all dead minions in a list of minions.
 	 */
 	public void removeDeadMinions(List<Minion> minions) {
@@ -65,6 +65,24 @@ public class DamageHandler {
 			minions.remove(dead);
 		}
 		
+	}
+	
+	/**
+	 * Checks if a minion is dead.
+	 */
+	public boolean isDead(Minion minion) {
+		if (minion.getHealth() <= 0) {
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * Removes a dead minion.
+	 */
+	public void removeDeadMinion(List<Minion> minions, Minion minion) {
+		if (isDead(minion)) {
+			minions.remove(minion);
+		}
 	}
 	
 	public boolean checkDefeat(){
