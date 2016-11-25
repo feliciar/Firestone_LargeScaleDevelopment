@@ -131,7 +131,6 @@ public class BuffMethods {
 				return;
 			}
 		}
-		
 	}
 	
 	/**
@@ -208,6 +207,8 @@ public class BuffMethods {
 							// this is the card we want to return
 							((FirestoneCard) c).setManaCost(c.getOriginalManaCost() - 2);
 							currentPlayer.getHand().add(c);
+							// remove minion from the board
+							currentPlayer.getActiveMinions().remove(m);
 							return;
 						}
 					}
