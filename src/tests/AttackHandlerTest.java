@@ -167,10 +167,10 @@ public class AttackHandlerTest {
 		//Test if the hero of the adversary is attackable
 		assertTrue(ah.isMinionAttackValid(player1, "100", "2"));
 		
-		//Test if a minion of the player is attackable
-		assertFalse(ah.isMinionAttackValid(player1, "100", "120"));
-		//Test if the hero of the player is attackable
-		assertFalse(ah.isMinionAttackValid(player1, "100", "1"));
+		//Test if a minion of the player is attackable, which is ok
+		assertTrue(ah.isMinionAttackValid(player1, "100", "120"));
+		//Test if the hero of the player is attackable, which is ok
+		assertTrue(ah.isMinionAttackValid(player1, "100", "1"));
 		//Test if an minion that does not exist for the player is used to attack
 		assertFalse(ah.isMinionAttackValid(player1, "200", "210"));
 	}
