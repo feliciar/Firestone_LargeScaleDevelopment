@@ -1,7 +1,7 @@
 package kth.firestone.deck;
 
 import java.util.ArrayDeque;
-import java.util.Collection;
+import java.util.Deque;
 
 import kth.firestone.card.Card;
 
@@ -9,7 +9,7 @@ public class FirestoneDeck implements Deck {
 	
 	private ArrayDeque<Card> cards;
 	
-	public FirestoneDeck(Collection<Card> cards) {
+	public FirestoneDeck(Deque<Card> cards) {
 		this.cards = new ArrayDeque<>(cards);
 	}
 	
