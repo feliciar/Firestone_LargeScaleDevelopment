@@ -28,7 +28,7 @@ public class PlayCardHandler {
 	}
 	
 	/**
-     * Playing a spell card without a target.
+     * Playing a spell card.
      * 
      * @param player the player playing the card 
      * @param card the card to play
@@ -41,23 +41,10 @@ public class PlayCardHandler {
     	return events;
     }
     
-    /**
-     * Playing a spell card with a target.
-     * 
-     * @param player the player playing the card 
-     * @param card the card to play
-     * @param targetId the id of the target of the card
-     * @return a list of all events that has happened.
-     */
-    public List<Event> playSpellCard(Player player, Card card, String targetId){
-    	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
-    	player.getHand().remove(card);
-    	((GamePlayer) player).addToDiscardPile(card);
-    	return events;
-    }
+
 
     /**
-     * Playing a minion without a target.
+     * Playing a minion.
      * Removes the card from the players hand,
      * reduces the mana,
      * creates the minion, and puts it on the board
@@ -85,28 +72,9 @@ public class PlayCardHandler {
     		cardPosition = player.getActiveMinions().size(); // add to end
     	}
     	player.getActiveMinions().add(cardPosition, minion);
-    	
-    	//TODO Put the card in a discard pile
     	return events;
     }
 
-    /**
-     * Playing a minion that requires a target.
-     * Removes the card from the players hand,
-     * creates the minion, and puts it on the board
-     * performs its buff on the target.
-     * Then discard the card
-     * 
-     * @param player the player playing the card
-     * @param card the card to play
-     * @param position the position on the board where the minion will be positioned
-     * @param targetId the id of the target of the card
-     * @return a list of all events that has happened.
-     */
-    public List<Event> playMinionCard(Player player, Card card, int position, String targetId){
-    	//TODO discard the played card
-    	return null;
-    }
 
     /**
      * Playing a weapon card without a target.
