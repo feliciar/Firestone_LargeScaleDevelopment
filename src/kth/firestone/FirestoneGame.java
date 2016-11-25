@@ -196,6 +196,9 @@ public class FirestoneGame extends Observable implements Game {
 			}
 			// Restore mana of the hero
 			hero.restoreAllMana();
+			// save discard pile for this turn and clear
+			((GamePlayer) player).getDiscardPile().add(((GamePlayer) player).getDiscardPileThisTurn());
+			((GamePlayer) player).getDiscardPileThisTurn().clear();
 		} else {
 			System.err.println("The player trying to end turn was not the player in turn");
 		}
