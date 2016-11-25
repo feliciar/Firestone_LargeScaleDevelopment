@@ -44,7 +44,7 @@ public class FirestoneBuilder implements GameBuilder {
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -68,7 +68,7 @@ public class FirestoneBuilder implements GameBuilder {
 		for (int i = 0; i < numberOfCards; i++) {			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -93,7 +93,7 @@ public class FirestoneBuilder implements GameBuilder {
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		
