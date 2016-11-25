@@ -153,10 +153,11 @@ public class FirestoneBuilder implements GameBuilder {
 	public Game build() {
 		DamageHandler damageHandler = new DamageHandler();
 		BuffMethods buffMethods = new BuffMethods(damageHandler);
+		BuffHandler buffHandler = new BuffHandler(buffMethods);
 		return new FirestoneGame(players, 
-				new PlayCardHandler(gameData), 
+				new PlayCardHandler(gameData, buffHandler), 
 				new AttackHandler(players, damageHandler),
-				new BuffHandler(buffMethods));
+				buffHandler);
 	}
 	
 	private List<Player> createPlayers() {
