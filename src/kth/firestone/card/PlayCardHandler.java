@@ -13,6 +13,7 @@ import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
+import kth.firestone.player.GamePlayer;
 
 public class PlayCardHandler {
 	
@@ -36,6 +37,7 @@ public class PlayCardHandler {
     public List<Event> playSpellCard(Player player, Card card){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
+    	((GamePlayer) player).addToDiscardPile(card);
     	return events;
     }
     
@@ -50,6 +52,7 @@ public class PlayCardHandler {
     public List<Event> playSpellCard(Player player, Card card, String targetId){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
+    	((GamePlayer) player).addToDiscardPile(card);
     	return events;
     }
 
@@ -68,6 +71,7 @@ public class PlayCardHandler {
     public List<Event> playMinionCard(Player player, Card card, int position){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
+    	((GamePlayer) player).addToDiscardPile(card);
     	
     	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
     	List<MinionState> states = getMinionStates(card);
