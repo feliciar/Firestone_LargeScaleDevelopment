@@ -55,8 +55,8 @@ public class BuffHandlerTest {
 		String buff2 = "Battlecry: Deal 1 damage.";
 		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff, buffHandler));
 		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),buff2, buffHandler));
-		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION",buff2);
-		spellCard = new FirestoneCard("","","0","0","0","SPELL","");
+		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION",buff2, "NONE");
+		spellCard = new FirestoneCard("","","0","0","0","SPELL","","NONE");
 		
 		when(p1.getId()).thenReturn("1");
 		when(p2.getId()).thenReturn("2");
