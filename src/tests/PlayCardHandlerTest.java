@@ -76,7 +76,7 @@ public class PlayCardHandlerTest {
 		hand.remove(card);
 		minions.add(index1, new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
-    			card.getAttack().get(), race, states,null));
+    			card.getAttack().get(), race, states, null, null));
 		
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
@@ -89,7 +89,7 @@ public class PlayCardHandlerTest {
 		hand.remove(card);
 		minions.add(index2, new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
-    			card.getAttack().get(), race, states,null));
+    			card.getAttack().get(), race, states, null, null));
 		assertEquals(hand,player.getHand());
 		assertEquals(minions, player.getActiveMinions());
 		assertEquals(player.getHero().getMana(), startMana-manaCost*2);
