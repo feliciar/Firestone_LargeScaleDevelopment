@@ -228,6 +228,7 @@ public class BuffMethods {
 					// this is the minion we want to deal damage to
 					if (m.getOriginalHealth() == m.getHealth()) {
 						damageHandler.dealDamageToOneMinion(m, 2);
+						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
 						return;
 					}
 				}
