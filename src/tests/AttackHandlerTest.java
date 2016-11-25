@@ -24,12 +24,12 @@ public class AttackHandlerTest {
 		AttackHandler ah = new AttackHandler(null, null);
 		//Mock player's minions
 		List<MinionState> state0 = new ArrayList<>();
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null);
+		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null, null);
 		List<MinionState> state1 = new ArrayList<>();
 		state1.add(MinionState.FROZEN);
-		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", "Imp", 1,1,1,1,MinionRace.DEMON, state1, null);
+		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", "Imp", 1,1,1,1,MinionRace.DEMON, state1, null, null);
 		minionPlayer12.setSleepy(false);
 		
 		List<Minion> playersActiveMinions = new ArrayList<>();
@@ -38,7 +38,7 @@ public class AttackHandlerTest {
 		playersActiveMinions.add(2, minionPlayer12);
 		
 		//Mock adversary's minion
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
 		minionPlayer2.setSleepy(false);
 		
 		//Test minion which is not sleepy, not frozen and not the adversary's
@@ -80,11 +80,11 @@ public class AttackHandlerTest {
 	public void testgetAdversaryMinionswithTaunt() {
 		//Mock minions of adversary
 		List<MinionState> state2 = new ArrayList<>();
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, state2, null);
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, state2, null, null);
 		minionPlayer2.setSleepy(false);
 		List<MinionState> state3 = new ArrayList<>();
 		state3.add(MinionState.TAUNT);
-		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1,1,1,1,MinionRace.DEMON, state3, null);
+		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1,1,1,1,MinionRace.DEMON, state3, null, null);
 		minionPlayer21.setSleepy(false);
 		List<Minion> adversaryActiveMinions = new ArrayList<>();
 		adversaryActiveMinions.add(0, minionPlayer2);
@@ -92,12 +92,12 @@ public class AttackHandlerTest {
 		
 		//Mock minions of player
 		List<MinionState> state0 = new ArrayList<>();
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null);
+		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null, null);
 		List<MinionState> state1 = new ArrayList<>();
 		state1.add(MinionState.FROZEN);
-		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", "Imp", 1,1,1,1,MinionRace.DEMON, state1, null);
+		FirestoneMinion minionPlayer12 = new FirestoneMinion("120", "Imp", 1,1,1,1,MinionRace.DEMON, state1, null, null);
 		minionPlayer12.setSleepy(false);
 		List<Minion> playersActiveMinions = new ArrayList<>();
 		playersActiveMinions.add(0, minionPlayer1);
@@ -117,7 +117,7 @@ public class AttackHandlerTest {
 		AttackHandler ah = new AttackHandler(null, null);
 		List<Minion> minions = new ArrayList<>();
 		
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minions.add(minionPlayer1);
 		assertEquals(minionPlayer1, ah.findMinion(minions, "100"));
 		assertEquals(null, ah.findMinion(minions, "900"));
@@ -132,17 +132,17 @@ public class AttackHandlerTest {
 		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30));
 		//Mock player1's minion
 		List<MinionState> state0 = new ArrayList<>();
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer11 = new FirestoneMinion("120", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state0, null);
+		FirestoneMinion minionPlayer11 = new FirestoneMinion("120", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state0, null, null);
 		minionPlayer11.setSleepy(false);
 		//Mock player2's minions
 		List<MinionState> state2 = new ArrayList<>();
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, state2, null);
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, state2, null, null);
 		minionPlayer2.setSleepy(false);
 		List<MinionState> state3 = new ArrayList<>();
 		state3.add(MinionState.TAUNT);
-		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state3, null);
+		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state3, null, null);
 		minionPlayer21.setSleepy(false);
 		
 		player1.getActiveMinions().add(0, minionPlayer1);
@@ -183,16 +183,16 @@ public class AttackHandlerTest {
 		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30));
 		//Player1 minion
 		List<MinionState> state0 = new ArrayList<>();
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null);
+		FirestoneMinion minionPlayer11 = new FirestoneMinion("110", "Imp", 1,1,1,1,MinionRace.DEMON, state0, null, null);
 		//Player2 minions
 		List<MinionState> state2 = new ArrayList<>();
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, state2, null);
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, state2, null, null);
 		minionPlayer2.setSleepy(false);
 		List<MinionState> state3 = new ArrayList<>();
 		state3.add(MinionState.TAUNT);
-		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state3, null);
+		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 1, 1, 1, 1, MinionRace.DEMON, state3, null, null);
 		minionPlayer21.setSleepy(false);
 		
 		

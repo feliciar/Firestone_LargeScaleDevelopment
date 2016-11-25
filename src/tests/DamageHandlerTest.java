@@ -10,7 +10,6 @@ import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
-import kth.firestone.player.GamePlayer;
 
 import org.junit.Test;
 
@@ -24,7 +23,7 @@ public class DamageHandlerTest {
 		//Mocked target - Hero
 		FirestoneHero hero = new FirestoneHero("2", 30);
 		//Mock attacker - Minion
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minionPlayer1.setSleepy(false);
 		
 		dh.dealDamageToMinionAndHero(minionPlayer1, hero);
@@ -36,9 +35,9 @@ public class DamageHandlerTest {
 	public void testDealDamageToMinions() {
 		DamageHandler dh = new DamageHandler();
 		//Minions
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null );
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null, null);
 		minionPlayer2.setSleepy(false);
 		
 		//Test to attack other Ogre see that health is reduced
@@ -51,7 +50,7 @@ public class DamageHandlerTest {
 	@Test
 	public void testDealDamageToOneMinion() {
 		DamageHandler dh = new DamageHandler();
-		FirestoneMinion minion = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
+		FirestoneMinion minion = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
 		
 		dh.dealDamageToOneMinion(minion, 2);
 		assertEquals(minion.getHealth(), 5);
@@ -60,9 +59,9 @@ public class DamageHandlerTest {
 	@Test
 	public void testdealOneDamageToSeveralMinions() {
 		DamageHandler dh = new DamageHandler();
-		Minion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
-		Minion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null);
-		Minion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null);
+		Minion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
+		Minion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
+		Minion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null, null);
 		ArrayList<Minion> minionList = new ArrayList<Minion>();
 		minionList.add(minion1);
 		minionList.add(minion2);
@@ -78,9 +77,9 @@ public class DamageHandlerTest {
 	public void testFindDeadMinions(){
 		DamageHandler dh = new DamageHandler();
 		
-		FirestoneMinion minion1 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null);
+		FirestoneMinion minion1 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null, null);
 		minion1.setSleepy(false);
-		FirestoneMinion minion2 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null);
+		FirestoneMinion minion2 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null, null);
 		minion2.setSleepy(false);
 		
 		List<Minion> minionList = new ArrayList<Minion>();
@@ -96,11 +95,11 @@ public class DamageHandlerTest {
 		DamageHandler dh = new DamageHandler();
 		
 		//Mocked minions
-		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
+		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minionPlayer1.setSleepy(false);
-		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null);
+		FirestoneMinion minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null, null);
 		minionPlayer2.setSleepy(false);
-		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null);
+		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null, null);
 		minionPlayer21.setSleepy(false);
 		// Add minions to the players activeMinions list
 		List<Minion> activeMinionsP1 = new ArrayList<Minion>();
