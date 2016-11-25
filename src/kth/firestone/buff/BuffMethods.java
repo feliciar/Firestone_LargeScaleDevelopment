@@ -57,6 +57,12 @@ public class BuffMethods {
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().equals(MinionRace.DRAGON)) {
 				for (Player p : action.getPlayers()) {
+					// if target is a hero
+					if (p.getHero().getId().equals(action.getTargetId())) {
+						damageHandler.dealDamageToHero(p.getHero(), 3);
+						return;
+					}
+					// if target is a minion
 					for (Minion m : p.getActiveMinions()) {
 						if (m.getId().equals(action.getTargetId())) {
 							damageHandler.dealDamageToOneMinion(m, 3);
@@ -175,6 +181,7 @@ public class BuffMethods {
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					damageHandler.dealDamageToOneMinion(m, 3);
+					damageHandler.removeDeadMinion(p.getActiveMinions(), m);
 					m.getStates().add(MinionState.FROZEN);
 					return;
 				}
