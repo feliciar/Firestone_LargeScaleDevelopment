@@ -2,13 +2,10 @@ package kth.firestone.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
-import kth.firestone.buff.BuffDescription;
-import kth.firestone.buff.FirestoneBuffDescription;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -177,14 +174,6 @@ public class PlayCardHandler {
     
     public void decreaseMana(FirestoneHero h, int manaCost) {
     	h.setMana(h.getMana() - manaCost);
-    }
-    
-    public List<BuffDescription> getBuffDescriptions(Map<String, String> cardData) {
-    	List<BuffDescription> result = new ArrayList<>(); 
-    	BuffDescription bd = new FirestoneBuffDescription(cardData.get("buff_name"), cardData.get("buff"));
-    	result.add(bd);
-
-    	return result;
     }
     
 }
