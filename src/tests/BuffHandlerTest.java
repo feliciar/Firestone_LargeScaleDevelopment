@@ -44,10 +44,9 @@ public class BuffHandlerTest {
 		players.add(p2);
 		minions1 = new ArrayList<>();
 		minions2 = new ArrayList<>();
-		List<BuffDescription> buffDescriptions = new ArrayList<BuffDescription>();
-		buffDescriptions.add(new FirestoneBuffDescription("", "After you cast a spell, deal 1 damage to ALL minions."));
-		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buffDescriptions));
-		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),new ArrayList<>()));
+		String buff = "After you cast a spell, deal 1 damage to ALL minions.";
+		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff));
+		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),""));
 		minionCard = new FirestoneCard("","","0","0","0","MINION","Battlecry: Deal 1 damage.");
 		spellCard = new FirestoneCard("","","0","0","0","SPELL","");
 	}

@@ -16,12 +16,11 @@ public class FirestoneMinion implements Minion, Observer {
 	private int attack;
 	private MinionRace race;
 	private List<MinionState> states;
-	private List<BuffDescription> buffDescriptions;
+	private String buff;
 	private boolean sleepy = true;
 	
-	public FirestoneMinion(String id, String name, int health, int originalHealth, 
-			int originalAttack, int attack, MinionRace race, List<MinionState> states, 
-			List<BuffDescription> buffDescriptions) {
+	public FirestoneMinion(String id, String name, int health, int originalHealth, int originalAttack, 
+			int attack, MinionRace race, List<MinionState> states, String buff) {
 		this.id = id;
 		this.name = name;
 		this.health = health;
@@ -31,7 +30,7 @@ public class FirestoneMinion implements Minion, Observer {
 		this.attack = attack;
 		this.race = race;
 		this.states = states;
-		this.buffDescriptions = buffDescriptions;
+		this.buff = buff;
 
 		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
 	}
@@ -82,13 +81,12 @@ public class FirestoneMinion implements Minion, Observer {
 	}
 
 	@Override
-	public List<BuffDescription> getBuffDescriptions() {
-		return buffDescriptions;
-	}
-
-	@Override
 	public boolean isSleepy() {
 		return sleepy;
+	}
+
+	public String getBuff() {
+		return buff;
 	}
 	
 	public void setSleepy(boolean sleepy){
@@ -116,6 +114,12 @@ public class FirestoneMinion implements Minion, Observer {
 	@Override
 	public void update(Observable observable, Object arg) {
 		// TODO
+	}
+
+	@Override
+	public List<BuffDescription> getBuffDescriptions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

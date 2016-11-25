@@ -71,11 +71,10 @@ public class PlayCardHandler {
     	
     	MinionRace race = MinionRace.valueOf(gameData.getCards().get(card.getName()).get("race"));
     	List<MinionState> states = getMinionStates(card);
-    	List<BuffDescription> buffDescriptions = getBuffDescriptions(gameData.getCards().get(card.getName()));
     	
     	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
-    			card.getAttack().get(), race, states, buffDescriptions);
+    			card.getAttack().get(), race, states, card.getDescription());
     	
     	int cardPosition = position;
     	if (position > player.getActiveMinions().size() + 1) {
