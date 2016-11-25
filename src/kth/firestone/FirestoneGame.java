@@ -71,15 +71,18 @@ public class FirestoneGame extends Observable implements Game {
 		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
 		playCardHandler.playMinionCard(player, card, position);
 		
-		String playedMinionId = null;
+		Minion playedMinion = null;
 		for(Minion m : player.getActiveMinions()){
 			if(!minionsBefore.contains(m)){
-				playedMinionId = m.getId();
+				playedMinion = m;
 			}
 		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinionId, position, null, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, null, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
+		if(playedMinion != null){
+			this.addObserver((FirestoneMinion)playedMinion);
+		}
 		return null;
 	}
 
@@ -88,15 +91,18 @@ public class FirestoneGame extends Observable implements Game {
 		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
 		playCardHandler.playMinionCard(player, card, position, targetId);
 		
-		String playedMinionId = null;
+		Minion playedMinion = null;
 		for(Minion m : player.getActiveMinions()){
 			if(!minionsBefore.contains(m)){
-				playedMinionId = m.getId();
+				playedMinion = m;
 			}
 		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinionId, position, targetId, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, targetId, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
+		if(playedMinion != null){
+			this.addObserver((FirestoneMinion)playedMinion);
+		}
 		return null;
 	}
 
