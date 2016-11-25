@@ -32,6 +32,7 @@ public class FirestoneBuilder implements GameBuilder {
 	@Override
 	public GameBuilder setDeck(int playerIndex, List<String> cardNames) {
 		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
 		Collection<Card> cards = new ArrayList<>();
@@ -62,6 +63,7 @@ public class FirestoneBuilder implements GameBuilder {
 	@Override
 	public GameBuilder setDeck(int playerIndex, int numberOfCards, String cardName) {
 		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
 		Collection<Card> cards = new ArrayList<>();
@@ -92,14 +94,15 @@ public class FirestoneBuilder implements GameBuilder {
 	@Override
 	public GameBuilder setDeck(int playerIndex, String... cardNames) {
 		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
 		
 		Collection<Card> cards = new ArrayList<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
 		for (String s : cardNames) {
-			HashMap<String, HashMap<String, String>> t = gameData.getCards();
 			HashMap<String, String> data = t.get(s);
 			
 			StringBuilder sb = new StringBuilder();
