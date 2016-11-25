@@ -1,6 +1,7 @@
 package kth.firestone.buff;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import kth.firestone.Action;
@@ -44,8 +45,16 @@ public class BuffMethods {
 	 * @param minion the minion that this buff belongs to
 	 */
 	public void whenHoldingDragonDealThreeDamage(Action action, Minion minion) {
-		
-		// TODO
+		Player currentPlayer = getCurrentPlayer(action);
+		if (currentPlayer == null) {
+			System.err.println("Error: There is no current player.");
+			System.exit(1);
+		}
+		/*for (Iterator itr = currentPlayer.getDeck().iterator(); itr.hasNext();) {
+			//Card c : ) {
+		}
+			
+		}*/
 		
 	}
 	
@@ -103,6 +112,20 @@ public class BuffMethods {
 	 */
 	public void afterSpellDealOneDamageToAllMinions(Action action, Minion minion) {
 		// TODO
+		/*if (minion == null) return;
+		if (playedCard.getType().equals(Card.Type.SPELL)) {
+			List<Minion> minionsToDealDamageTo = new ArrayList<>();
+			for (Player p : players) {
+				for (Minion m : p.getActiveMinions()) {
+					if (m.equals(minion)) continue;
+					minionsToDealDamageTo.add(m);
+				}
+			}
+			damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
+			for (Player p : players) {
+				damageHandler.removeDeadMinions(p.getActiveMinions());
+			}
+		}*/
 	}
 	
 	/**
