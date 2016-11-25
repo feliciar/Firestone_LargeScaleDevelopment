@@ -41,7 +41,7 @@ public class PlayCardHandlerTest {
 		//Mock player.getHand()
 		GamePlayer player = mock(GamePlayer.class);
 		int manaCost = 5;
-		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "");
+		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "", "NONE");
 		List<Card> hand = new ArrayList<Card>();
 		hand.add(card);
 		when(player.getHand()).thenReturn(hand);
