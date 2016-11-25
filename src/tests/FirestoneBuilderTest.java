@@ -15,7 +15,6 @@ import kth.firestone.FirestoneBuilder;
 import kth.firestone.GameData;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 

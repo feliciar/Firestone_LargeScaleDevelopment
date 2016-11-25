@@ -10,7 +10,6 @@ import kth.firestone.GameBuilder;
 import kth.firestone.GameData;
 import kth.firestone.card.Card;
 import kth.firestone.minion.Minion;
-import kth.firestone.player.Player;
 
 public class MainTest {
 	private final int STARTING_MANA = 1;
@@ -32,7 +31,7 @@ public class MainTest {
 		assertEquals(game.getPlayerInTurn().getId(), "1");
 		
 		String m1 = "Imp";
-		String m2 = "Boulderfist Ogre";
+		//String m2 = "Boulderfist Ogre";
 		
 		//Play card "Imp"
 		Card cardToPlay1 = game.getPlayerInTurn().getHand().get(0);
