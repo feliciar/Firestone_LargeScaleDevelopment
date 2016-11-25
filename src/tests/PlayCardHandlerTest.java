@@ -93,12 +93,12 @@ public class PlayCardHandlerTest {
 
 	@Test
 	public void testPlayWeaponCardPlayerCard() {
-		// TODO Implement test
+		// TODO When we have weapon cards
 	}
 
 	@Test
 	public void testPlayWeaponCardPlayerCardString() {
-		// TODO Implement test
+		// TODO When we have weapon cards
 	}
 	
 	public List<MinionState> getMinionStates(Card card) {

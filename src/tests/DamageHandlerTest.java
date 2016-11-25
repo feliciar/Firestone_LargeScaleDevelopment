@@ -117,6 +117,6 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void checkDefeat() {
-		//TODO
+		//TODO Check defeat for heros
 	}
 }

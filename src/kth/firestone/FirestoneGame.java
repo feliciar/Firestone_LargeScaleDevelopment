@@ -147,25 +147,25 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public boolean isUseOfHeroPowerValid(Player player) {
-		// TODO Auto-generated method stub
+		// TODO When we have hero powers
 		return false;
 	}
 
 	@Override
 	public boolean isUseOfHeroPowerValid(Player player, String targetId) {
-		// TODO Auto-generated method stub
+		// TODO When we have hero powers
 		return false;
 	}
 
 	@Override
 	public List<Event> useHeroPower(Player player) {
-		// TODO Auto-generated method stub
+		// TODO When we have hero powers
 		return null;
 	}
 
 	@Override
 	public List<Event> useHeroPower(Player player, String targetId) {
-		// TODO Auto-generated method stub
+		// TODO When we have hero powers
 		return null;
 	}
 
