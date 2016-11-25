@@ -50,12 +50,10 @@ public class BuffMethods {
 			System.err.println("Error: There is no current player.");
 			System.exit(1);
 		}
-		/*for (Iterator itr = currentPlayer.getDeck().iterator(); itr.hasNext();) {
-			//Card c : ) {
-		}
+/*		for (Iterator itr = currentPlayer.getDeck().iterator(); itr.hasNext();) {
 			
 		}*/
-		
+
 	}
 	
 	/**
