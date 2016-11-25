@@ -38,7 +38,7 @@ public class BuffHandler {
 		Card playedCard =null;
 		for(Player p : action.getPlayers()){
 			if(p.getId().equals(action.getCurrentPlayerId())){
-				for(Card c : ((GamePlayer) p).getDiscardPile()){
+				for(Card c : ((GamePlayer) p).getDiscardPileThisTurn()){
 					if(c.getId().equals(action.getPlayedCardId())){
 						buff = c.getDescription();
 						playedCard = c;

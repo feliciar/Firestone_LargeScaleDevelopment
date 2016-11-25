@@ -46,7 +46,7 @@ public class BuffHandlerTest {
 	List<Minion> minions1, minions2;
 	
 	BuffHandler buffHandler;
-	List<Card> discardPile;
+	ArrayList<Card> discardPile;
 	
 	public BuffHandlerTest() {
 		MockitoAnnotations.initMocks(this);
@@ -79,7 +79,7 @@ public class BuffHandlerTest {
 	@Test
 	public void testPerformBuffOnPlayedMinionCard(){
 		
-		when(p1.getDiscardPile()).thenReturn(discardPile);
+		when(p1.getDiscardPileThisTurn()).thenReturn(discardPile);
 		when(p1.getActiveMinions()).thenReturn(minions1);
 		when(p2.getActiveMinions()).thenReturn(minions2);
 		
@@ -93,7 +93,7 @@ public class BuffHandlerTest {
 	
 	@Test
 	public void testPerformBuffOnPlayedSpellCard(){
-		when(p1.getDiscardPile()).thenReturn(discardPile);
+		when(p1.getDiscardPileThisTurn()).thenReturn(discardPile);
 		when(p1.getActiveMinions()).thenReturn(minions1);
 		when(p2.getActiveMinions()).thenReturn(minions2);
 		

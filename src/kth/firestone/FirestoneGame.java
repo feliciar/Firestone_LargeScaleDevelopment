@@ -194,6 +194,11 @@ public class FirestoneGame extends Observable implements Game {
 			for (Minion m : nextPlayer.getActiveMinions()) {
 				((FirestoneMinion) m).setSleepy(false);
 			}
+			// Make all of this player's minions not used
+			for (Minion m : nextPlayer.getActiveMinions()) {
+				((FirestoneMinion) m).setUsedThisTurn(false);
+			}
+			
 			// Increase mana
 			if (hero.getMaxMana() < 10) {
 				hero.setMaxMana(hero.getMaxMana()+1);
