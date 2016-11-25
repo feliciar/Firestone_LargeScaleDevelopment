@@ -65,7 +65,7 @@ public class AttackHandlerTest {
 	
 	@Test
 	public void testisHeroAttackValid() {
-		//TODO implement test
+		//TODO implement when we have hero attacks
 	}
 	
 	@Test 

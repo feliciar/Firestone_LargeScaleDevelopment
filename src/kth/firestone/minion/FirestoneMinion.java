@@ -37,7 +37,7 @@ public class FirestoneMinion implements Minion, Observer {
 		this.buff = buff;
 		this.buffHandler = buffHandler;
 
-		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
+		//TODO When we have the Charge ability, check if minion should not be sleepy		
 	}
 	
 	@Override
@@ -132,7 +132,6 @@ public class FirestoneMinion implements Minion, Observer {
 
 	@Override
 	public List<BuffDescription> getBuffDescriptions() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
