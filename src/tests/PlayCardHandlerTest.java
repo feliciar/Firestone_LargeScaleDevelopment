@@ -33,11 +33,6 @@ public class PlayCardHandlerTest {
 	}
 
 	@Test
-	public void testPlaySpellCardPlayerCardString() {
-		// TODO Implement test
-	}
-
-	@Test
 	public void testPlayMinionCardPlayerCardInt() {
 		//Create PlayCardHandler
 		
@@ -94,11 +89,6 @@ public class PlayCardHandlerTest {
 		assertEquals(minions, player.getActiveMinions());
 		assertEquals(player.getHero().getMana(), startMana-manaCost*2);
 		
-	}
-
-	@Test
-	public void testPlayMinionCardPlayerCardIntString() {
-		// TODO Implement test
 	}
 
 	@Test
