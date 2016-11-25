@@ -134,7 +134,7 @@ public class AttackHandler {
 		
 		if (targetMinion != null) {
 			// Target was minion
-			damageHandler.dealDamageToMinions(attacker, targetMinion);
+			damageHandler.dealDamageToTwoMinions(attacker, targetMinion);
 			
 			//Remove the minions that were killed 
 			damageHandler.removeDeadMinions(player.getActiveMinions());
