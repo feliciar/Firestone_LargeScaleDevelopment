@@ -2,6 +2,9 @@ package tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +20,48 @@ import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.GamePlayer;
+import kth.firestone.player.Player;
 
 public class PlayCardHandlerTest {
 	
 	GameData gameData;
+	
+	@Mock
+	GamePlayer player;
 
 	
 	public PlayCardHandlerTest(){
+		MockitoAnnotations.initMocks(this);
 		gameData = new GameData();
 	}
 
 	@Test
 	public void testPlaySpellCardPlayerCard() {
-		// TODO Implement test
+		PlayCardHandler pch = new PlayCardHandler(null, null);
+		//Mock hero
+		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), 30);
+		int startMana = 10;
+		hero.setMana(startMana);
+		when(player.getHero()).thenReturn(hero);
+		
+		int manaCost = 5;
+		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "SPELL", "", "NONE");
+		List<Card> hand = new ArrayList<Card>();
+		hand.add(card);
+		hand.add(new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "SPELL", "", "NONE"));
+		when(player.getHand()).thenReturn(hand);
+		
+		ArrayList<Card> discardPile = new ArrayList<>();
+		discardPile.add(new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "SPELL", "", "NONE"));
+		when(player.getDiscardPileThisTurn()).thenReturn(discardPile);
+		
+		pch.playSpellCard(player, card);
+		
+		assertEquals(startMana-manaCost, hero.getMana());
+		assertFalse(player.getHand().contains(card));
+		assertTrue(player.getDiscardPileThisTurn().contains(card));
+		assertEquals(2, player.getDiscardPileThisTurn().size());
+		
 	}
 
 	@Test
@@ -38,8 +70,6 @@ public class PlayCardHandlerTest {
 		
 		PlayCardHandler pch = new PlayCardHandler(gameData, null);
 		
-		//Mock player.getHand()
-		GamePlayer player = mock(GamePlayer.class);
 		int manaCost = 5;
 		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "", "NONE");
 		List<Card> hand = new ArrayList<Card>();
