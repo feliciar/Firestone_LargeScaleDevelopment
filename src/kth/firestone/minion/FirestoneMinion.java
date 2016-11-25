@@ -20,6 +20,7 @@ public class FirestoneMinion implements Minion, Observer {
 	private List<MinionState> states;
 	private String buff;
 	private boolean sleepy = true;
+	private boolean usedThisTurn = false;
 	private BuffHandler buffHandler;
 	
 	public FirestoneMinion(String id, String name, int health, int originalHealth, int originalAttack, 
@@ -88,9 +89,17 @@ public class FirestoneMinion implements Minion, Observer {
 	public boolean isSleepy() {
 		return sleepy;
 	}
+	
+	public boolean wasUsedThisTurn(){
+		return usedThisTurn;
+	}
 
 	public String getBuff() {
 		return buff;
+	}
+	
+	public void setUsedThisTurn(boolean usedThisTurn){
+		this.usedThisTurn = usedThisTurn;
 	}
 	
 	public void setSleepy(boolean sleepy){
