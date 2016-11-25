@@ -95,9 +95,6 @@ public class DamageHandlerTest {
 	public void testRemoveDeadMinions() {
 		DamageHandler dh = new DamageHandler();
 		
-		//Mock players
-		GamePlayer player1 = new GamePlayer("1", new FirestoneHero("1", 30));
-		GamePlayer player2 = new GamePlayer("2", new FirestoneHero("2", 30));
 		//Mocked minions
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null);
 		minionPlayer1.setSleepy(false);
@@ -106,15 +103,17 @@ public class DamageHandlerTest {
 		FirestoneMinion minionPlayer21 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null);
 		minionPlayer21.setSleepy(false);
 		// Add minions to the players activeMinions list
-		player1.getActiveMinions().add(0, minionPlayer1);
-		player2.getActiveMinions().add(0, minionPlayer2);
-		player2.getActiveMinions().add(1, minionPlayer21);
+		List<Minion> activeMinionsP1 = new ArrayList<Minion>();
+		List<Minion> activeMinionsP2 = new ArrayList<Minion>();
+		activeMinionsP1.add(0, minionPlayer1);
+		activeMinionsP2.add(0, minionPlayer2);
+		activeMinionsP2.add(1, minionPlayer21);
 		
-		dh.removeDeadMinions(player1.getActiveMinions());
-		dh.removeDeadMinions(player2.getActiveMinions());
-		assertEquals(player1.getActiveMinions().size(), 1);
-		assertEquals(player2.getActiveMinions().size(), 1);
-		assertFalse(player2.getActiveMinions().contains(minionPlayer21));
+		dh.removeDeadMinions(activeMinionsP1);
+		dh.removeDeadMinions(activeMinionsP2);
+		assertEquals(activeMinionsP1.size(), 1);
+		assertEquals(activeMinionsP2.size(), 1);
+		assertFalse(activeMinionsP2.contains(minionPlayer21));
 	}
 	
 	@Test
