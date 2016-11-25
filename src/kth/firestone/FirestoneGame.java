@@ -26,7 +26,7 @@ public class FirestoneGame extends Observable implements Game {
 	private BuffHandler buffHandler;
 	private int playerIndexInTurn = 1;	// first player starts by default
 	private final String PLAYER_1_ID = "1";
-	private final String PLAYER_2_ID = "2";
+	//private final String PLAYER_2_ID = "2";
 	private List<Minion> observers;
 	
 	public FirestoneGame(List<Player> players, 

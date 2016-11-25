@@ -1,10 +1,7 @@
 package kth.firestone;
 
-import java.util.HashMap;
 import java.util.List;
-
 import kth.firestone.card.Card;
-import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
