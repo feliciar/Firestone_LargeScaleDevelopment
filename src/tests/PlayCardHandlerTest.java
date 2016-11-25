@@ -20,7 +20,6 @@ import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.GamePlayer;
-import kth.firestone.player.Player;
 
 public class PlayCardHandlerTest {
 	
