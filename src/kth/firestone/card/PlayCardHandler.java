@@ -3,7 +3,6 @@ package kth.firestone.card;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.UUID;
 
 import kth.firestone.Event;
@@ -17,7 +16,7 @@ import kth.firestone.minion.MinionRace;
 import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
 
-public class PlayCardHandler extends Observable {
+public class PlayCardHandler {
 	
 	List<Event> events = new ArrayList<>();
 	GameData gameData;
@@ -37,7 +36,6 @@ public class PlayCardHandler extends Observable {
     public List<Event> playSpellCard(Player player, Card card){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
-    	// TODO: use buffHandler
     	return events;
     }
     
@@ -52,7 +50,6 @@ public class PlayCardHandler extends Observable {
     public List<Event> playSpellCard(Player player, Card card, String targetId){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
-    	// TODO: use buffHandler
     	return events;
     }
 
