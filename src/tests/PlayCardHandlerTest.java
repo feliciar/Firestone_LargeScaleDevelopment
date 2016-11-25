@@ -41,7 +41,7 @@ public class PlayCardHandlerTest {
 	public void testPlayMinionCardPlayerCardInt() {
 		//Create PlayCardHandler
 		
-		PlayCardHandler pch = new PlayCardHandler(gameData);
+		PlayCardHandler pch = new PlayCardHandler(gameData, null);
 		
 		//Mock player.getHand()
 		GamePlayer player = mock(GamePlayer.class);
