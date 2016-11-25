@@ -61,52 +61,52 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testWhenHoldingDragonDealThreeDamage() {
-		
+		// TODO(Dina)
 	}
 	
 	@Test
 	public void testGainOneHealthForCardsInHand() {
-		
+		// TODO(Dina)
 	}
 	
 	@Test
 	public void testGainTwoForCardsPlayedThisTurn() {
-		
+		// TODO(Dina)
 	}
 	
 	@Test
 	public void testGainOneAttackForEachOtherCardInHand() {
-		
+		// TODO(Dina)
 	}
 	
 	@Test
 	public void testWhenHoldingDragonGainOneAttackAndTaunt() {
-		
+		// TODO(Jenny)
 	}
 	
 	@Test
 	public void testAfterSpellDealOneDamageToAllMinions() {
-		
+		// TODO(Jenny)
 	}
 	
 	@Test
 	public void testDealThreeDamageToAndFreezeCharacter() {
-		
+		// TODO(Jenny)
 	}
 	
 	@Test
 	public void testReturnOwnMinionToHand() {
-		
+		// TODO(Felicia)
 	}
 	
 	@Test
 	public void testDealTwoDamageToUndamagedMinion() {
-		
+		// TODO(Felicia)
 	}
 	
 	@Test
 	public void testChangeHealthOfAllMinionsToOne() {
-		
+		// TODO(Felicia)
 	}
 	
 }
