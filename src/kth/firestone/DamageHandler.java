@@ -22,7 +22,7 @@ public class DamageHandler {
 	/**
 	 * Deals damage to minions when two minions battle.
 	 */
-	public void dealDamageToMinions(Minion attacker, Minion target) {
+	public void dealDamageToTwoMinions(Minion attacker, Minion target) {
 		((FirestoneMinion) target).reduceHealth(attacker.getAttack());
 		((FirestoneMinion) attacker).reduceHealth(target.getAttack());
 	}
@@ -32,6 +32,13 @@ public class DamageHandler {
 	 */
 	public void dealDamageToOneMinion(Minion minion, int damage) {
 		((FirestoneMinion) minion).reduceHealth(damage);
+	}
+	
+	/**
+	 * Deals specified amount of damage to a hero.
+	 */
+	public void dealDamageToHero(Hero hero, int damage) {
+		((FirestoneHero) hero).reduceHealth(damage);
 	}
 	
 	/**

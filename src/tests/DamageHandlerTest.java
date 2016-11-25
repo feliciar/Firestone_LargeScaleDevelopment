@@ -41,7 +41,7 @@ public class DamageHandlerTest {
 		minionPlayer2.setSleepy(false);
 		
 		//Test to attack other Ogre see that health is reduced
-		dh.dealDamageToMinions(minionPlayer1, minionPlayer2);
+		dh.dealDamageToTwoMinions(minionPlayer1, minionPlayer2);
 		assertEquals(minionPlayer1.getHealth(), 1);
 		assertEquals(minionPlayer2.getHealth(), 1);
 		
