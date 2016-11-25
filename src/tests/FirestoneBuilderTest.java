@@ -30,6 +30,75 @@ public class FirestoneBuilderTest {
 		MockitoAnnotations.initMocks(this);
 		fb = new FirestoneBuilder(gameData);
 	}
+	@Test
+	public void testSetDeckIndStringList(){
+		HashMap<String, String> data1 = new HashMap<String,String>();
+		String name1 = "name1";
+		data1.put("name", name1);
+		data1.put("health", "10");
+		data1.put("attack", "10");
+		data1.put("mana", "10");
+		data1.put("type", "MINION");
+		data1.put("buff", "buff1");
+		data1.put("buff_name", "buff_name1");
+		
+		HashMap<String, String> data2 = new HashMap<String,String>();
+		String name2 = "name2";
+		data2.put("name", name2);
+		data2.put("health", "9");
+		data2.put("attack", "9");
+		data2.put("mana", "9");
+		data2.put("type", "MINION");
+		data2.put("buff", "buff2");
+		data2.put("buff_name", "buff_name2");
+		
+		HashMap<String, HashMap<String, String>> container = new HashMap<>();
+		container.put(name1, data1);
+		container.put(name2, data2);
+		
+		when(gameData.getCards()).thenReturn(container);
+		List<String> stringList = new ArrayList<String>();
+		stringList.add(name1);
+		stringList.add(name2);
+		fb.setDeck(1, stringList);
+		
+		verify(gameData).getCards();
+		
+		Player p = fb.getPlayers().get(0);
+		
+		FirestoneDeck deck = (FirestoneDeck) p.getDeck();
+		assertEquals(deck.size(), 2);
+		assertTrue(deck.getCards().pop().getName().equals(name1));
+		assertTrue(deck.getCards().pop().getName().equals(name2));
+	}
+	
+	@Test
+	public void testSetDeckIntString(){
+		HashMap<String, String> data = new HashMap<String,String>();
+		String name = "name1";
+		data.put("name", name);
+		data.put("health", "10");
+		data.put("attack", "10");
+		data.put("mana", "10");
+		data.put("type", "MINION");
+		data.put("buff", "buff1");
+		data.put("buff_name", "buff_name1");
+		
+		HashMap<String, HashMap<String, String>> container = new HashMap<>();
+		container.put(name, data);
+
+		when(gameData.getCards()).thenReturn(container);
+		fb.setDeck(1, 2, name);
+		
+		verify(gameData).getCards();
+		
+		Player p = fb.getPlayers().get(0);
+		FirestoneDeck deck = (FirestoneDeck) p.getDeck();
+		
+		assertEquals(deck.size(), 2);
+		assertTrue(deck.getCards().pop().getName().equals(name));
+		assertTrue(deck.getCards().pop().getName().equals(name));
+	}
 	
 	@Test
 	public void testSetDeckIntStringArray() {
