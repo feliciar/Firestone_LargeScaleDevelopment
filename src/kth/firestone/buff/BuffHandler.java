@@ -24,6 +24,7 @@ public class BuffHandler {
 	
 	public BuffHandler(BuffMethods buffMethods){
 		this.buffMethods = buffMethods;	
+		methodMap = createMethodMap();
 	}
 
 	/**
@@ -31,18 +32,27 @@ public class BuffHandler {
 	 * @param action
 	 */
 	public void performBuffOnPlayedCard(Action action){
-		//Find the buff
+		//Find the buff and the minion (if there was one)
 		String buff = "";
+		Minion minion = null;
 		for(Player p : action.getPlayers()){
 			if(p.getId().equals(action.getCurrentPlayerId())){
 				for(Card c : ((GamePlayer) p).getDiscardPile()){
-					if(c.equals(action.getPlayedCardId())){
+					if(c.getId().equals(action.getPlayedCardId())){
 						buff = c.getDescription();
 					}
 				}
+				if(action.getMinionCreatedId()!=null){
+					for(Minion  m : p.getActiveMinions()){
+						if(m.getId().equals(action.getMinionCreatedId())){
+							minion = m;
+						}
+					}
+				}
 			}
+			
 		}
-		invokeBuff(action, null, buff);
+		invokeBuff(action, minion, buff);
 	}
 	
 	/**
@@ -58,20 +68,27 @@ public class BuffHandler {
 	
 	public void invokeBuff(Action action, Minion minion, String buff){
 		try {
+			if( ! methodMap.containsKey(buff)){
+				System.err.println("The buff did not exist in BuffHandler's method map. Buff: "+buff);
+				return;
+			}
 			methodMap.get(buff).invoke(buffMethods, action, minion);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void createMap() {
-		methodMap = new HashMap<>();
+	private Map<String, Method> createMethodMap() {
+		Map<String, Method> methodMap = new HashMap<>();
 		try {
 			methodMap.put("Battlecry: Deal 1 damage.", 
-					BuffMethods.class.getDeclaredMethod("battleCryDealOneDamage", Action.class, Minion.class));
+					BuffMethods.class.getDeclaredMethod("dealOneDamage", Action.class, Minion.class));
+			methodMap.put("After you cast a spell, deal 1 damage to ALL minions.", 
+					BuffMethods.class.getDeclaredMethod("afterSpellDealOneDamageToAllMinions", Action.class, Minion.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
+		return methodMap;
 	}
 
 }
