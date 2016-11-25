@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 import kth.firestone.Action.Type;
@@ -26,6 +27,7 @@ public class FirestoneGame extends Observable implements Game {
 	private int playerIndexInTurn = 1;	// first player starts by default
 	private final String PLAYER_1_ID = "1";
 	private final String PLAYER_2_ID = "2";
+	private List<Minion> observers;
 	
 	public FirestoneGame(List<Player> players, 
 			PlayCardHandler playCardHandler,
@@ -36,6 +38,7 @@ public class FirestoneGame extends Observable implements Game {
 		this.attackHandler = attackHandler;
 		this.buffHandler = buffHandler;
 		this.events = new ArrayList<>();
+		observers = new ArrayList<>();
 	}
 	
 	@Override
@@ -57,6 +60,7 @@ public class FirestoneGame extends Observable implements Game {
 		return null;
 	}
 
+	
 	@Override
 	public List<Event> playSpellCard(Player player, Card card, String targetId) {
 		playCardHandler.playSpellCard(player, card);
@@ -236,6 +240,30 @@ public class FirestoneGame extends Observable implements Game {
 			hand.add(deck.pop());
 		}
 		return hand;
+	}
+	
+	@Override
+	public void notifyObservers(Object o){
+		updateObserverList();
+		super.notifyObservers(o);
+		updateObserverList();
+	}
+	
+	@Override
+	public void addObserver(Observer o){
+		super.addObserver(o);
+		observers.add((Minion)o);
+	}
+	
+	public void updateObserverList(){
+		List<Minion> observersToRemove = new ArrayList<>();
+		for(Minion m : observers){
+			if(!players.get(0).getActiveMinions().contains(m) && !players.get(1).getActiveMinions().contains(m)){
+				this.deleteObserver((FirestoneMinion)m);
+				observersToRemove.add(m);
+			}
+		}
+		observers.removeAll(observersToRemove);
 	}
 
 }
