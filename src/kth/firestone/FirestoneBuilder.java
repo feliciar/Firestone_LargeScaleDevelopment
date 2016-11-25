@@ -1,5 +1,6 @@
 package kth.firestone;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class FirestoneBuilder implements GameBuilder {
 			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
-		Collection<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayDeque<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
 		HashMap<String, HashMap<String, String>> t = gameData.getCards();
@@ -66,7 +67,7 @@ public class FirestoneBuilder implements GameBuilder {
 			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
-		Collection<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayDeque<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
 		HashMap<String, HashMap<String, String>> t = gameData.getCards();
@@ -98,7 +99,7 @@ public class FirestoneBuilder implements GameBuilder {
 			System.exit(1);
 		}
 		
-		Collection<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayDeque<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
 		HashMap<String, HashMap<String, String>> t = gameData.getCards();
