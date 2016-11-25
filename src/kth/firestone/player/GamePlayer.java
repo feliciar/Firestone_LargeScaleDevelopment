@@ -14,14 +14,17 @@ public class GamePlayer implements Player {
 	private List<Card> hand;
 	private List<Minion> activeMinions;
 	private Deck deck;
-	private List<Card> discardPile;
+	private ArrayList<Card> discardPileThisTurn;
+	private List<ArrayList<Card>> discardPile;
+	
 	
 	public GamePlayer(String id, Hero hero) {
 		this.id = id;
 		this.hero = hero;
 		hand = new ArrayList<Card>();
 		activeMinions = new ArrayList<Minion>();
-		discardPile = new ArrayList<Card>();
+		discardPile = new ArrayList<ArrayList<Card>>();
+		discardPileThisTurn = new ArrayList<>();
 	}
 	
 	@Override
@@ -61,16 +64,12 @@ public class GamePlayer implements Player {
 		this.deck = deck;
 	}
 	
-	public void addToDiscardPile(Card card){
-		discardPile.add(card);
-	}
-	
-	public void resetDiscardPile(){
-		discardPile = new ArrayList<Card>();
-	}
-	
-	public List<Card> getDiscardPile(){
+	public List<ArrayList<Card>> getDiscardPile(){
 		return discardPile;
+	}
+	
+	public ArrayList<Card> getDiscardPileThisTurn(){
+		return discardPileThisTurn;
 	}
 	
 }
