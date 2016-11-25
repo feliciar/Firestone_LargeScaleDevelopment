@@ -43,16 +43,9 @@ public class FirestoneBuilder implements GameBuilder {
 		for (String s : cardNames) {
 			HashMap<String, String> data = t.get(s);
 			
-			StringBuilder sb = new StringBuilder();
-			sb.append(data.get("buff_name"));
-			if (!data.get("buff_name").equals("")) {
-				sb.append(": ");
-			}
-			sb.append(data.get("buff"));
-			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					sb.toString());
+					data.get("buff"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -73,17 +66,10 @@ public class FirestoneBuilder implements GameBuilder {
 		HashMap<String, HashMap<String, String>> t = gameData.getCards();
 		HashMap<String, String> data = t.get(cardName);
 		
-		StringBuilder sb = new StringBuilder();
-		sb.append(data.get("buff_name"));
-		if (!data.get("buff_name").equals("")) {
-			sb.append(": ");
-		}
-		sb.append(data.get("buff"));
-		
 		for (int i = 0; i < numberOfCards; i++) {			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					sb.toString());
+					data.get("buff"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -106,16 +92,9 @@ public class FirestoneBuilder implements GameBuilder {
 		for (String s : cardNames) {
 			HashMap<String, String> data = t.get(s);
 			
-			StringBuilder sb = new StringBuilder();
-			sb.append(data.get("buff_name"));
-			if (!data.get("buff_name").equals("")) {
-				sb.append(": ");
-			}
-			sb.append(data.get("buff"));
-			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					sb.toString());
+					data.get("buff"));
 			cards.add(card);
 		}
 		
