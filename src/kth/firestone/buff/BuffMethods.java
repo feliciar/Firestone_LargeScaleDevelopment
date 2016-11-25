@@ -1,16 +1,11 @@
 package kth.firestone.buff;
 
 import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
-
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
-import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.HeroState;
 import kth.firestone.minion.FirestoneMinion;

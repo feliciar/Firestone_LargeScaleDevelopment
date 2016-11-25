@@ -84,7 +84,7 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playWeaponCard(Player player, Card card){
-    	//TODO
+    	//TODO When we have weapon cards
     	return null;
     }
 
@@ -97,7 +97,7 @@ public class PlayCardHandler {
      * @return a list of all events that has happened.
      */
     public List<Event> playWeaponCard(Player player, Card card, String targetId){
-    	//TODO
+    	//TODO When we have weaponCard
     	return null;
     }
     
@@ -132,7 +132,7 @@ public class PlayCardHandler {
      * @return true if the play is valid
      */
     public boolean isPlayCardValid(Player player, Card card, String targetId){
-    	//TODO
+    	//TODO Implement if we have taunts
     	return true;
     }
     

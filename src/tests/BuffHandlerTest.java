@@ -3,7 +3,6 @@ package tests;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +14,7 @@ import org.mockito.MockitoAnnotations;
 
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
-import kth.firestone.FirestoneBuilder;
-import kth.firestone.GameData;
-import kth.firestone.buff.BuffDescription;
+
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
@@ -25,7 +22,6 @@ import kth.firestone.card.FirestoneCard;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
-import kth.firestone.minion.MinionState;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
@@ -59,8 +55,8 @@ public class BuffHandlerTest {
 		String buff2 = "Battlecry: Deal 1 damage.";
 		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff, buffHandler));
 		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),buff2, buffHandler));
-		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION",buff2);
-		spellCard = new FirestoneCard("","","0","0","0","SPELL","");
+		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION",buff2, "NONE");
+		spellCard = new FirestoneCard("","","0","0","0","SPELL","","NONE");
 		
 		when(p1.getId()).thenReturn("1");
 		when(p2.getId()).thenReturn("2");

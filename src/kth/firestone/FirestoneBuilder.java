@@ -2,12 +2,10 @@ package kth.firestone;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
@@ -46,7 +44,7 @@ public class FirestoneBuilder implements GameBuilder {
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -70,7 +68,7 @@ public class FirestoneBuilder implements GameBuilder {
 		for (int i = 0; i < numberOfCards; i++) {			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		Deck deck = new FirestoneDeck(cards);
@@ -95,7 +93,7 @@ public class FirestoneBuilder implements GameBuilder {
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					data.get("buff"));
+					data.get("buff"), data.get("race"));
 			cards.add(card);
 		}
 		
@@ -120,19 +118,19 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, List<String> activeMinionNames) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, int numberOfMinions, String cardName) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, String... activeMinionNames) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 

@@ -15,7 +15,6 @@ import kth.firestone.FirestoneBuilder;
 import kth.firestone.GameData;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.Hero;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
@@ -40,6 +39,7 @@ public class FirestoneBuilderTest {
 		data1.put("mana", "10");
 		data1.put("type", "MINION");
 		data1.put("buff", "buff1");
+		data1.put("race", "DEMON");
 		
 		HashMap<String, String> data2 = new HashMap<String,String>();
 		String name2 = "name2";
@@ -49,6 +49,7 @@ public class FirestoneBuilderTest {
 		data2.put("mana", "9");
 		data2.put("type", "MINION");
 		data2.put("buff", "buff2");
+		data2.put("race", "DEMON");
 		
 		HashMap<String, HashMap<String, String>> container = new HashMap<>();
 		container.put(name1, data1);
@@ -80,6 +81,7 @@ public class FirestoneBuilderTest {
 		data.put("mana", "10");
 		data.put("type", "MINION");
 		data.put("buff", "buff1");
+		data.put("race", "DEMON");
 		
 		HashMap<String, HashMap<String, String>> container = new HashMap<>();
 		container.put(name, data);
@@ -108,6 +110,7 @@ public class FirestoneBuilderTest {
 		data.put("mana", "10");
 		data.put("type", "MINION");
 		data.put("buff", "buff1");
+		data.put("race", "DEMON");
 		
 		HashMap<String, HashMap<String, String>> container = new HashMap<>();
 		container.put(name, data);

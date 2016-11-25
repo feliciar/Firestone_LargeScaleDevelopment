@@ -2,16 +2,10 @@ package kth.firestone.buff;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 import kth.firestone.Action;
-import kth.firestone.DamageHandler;
-import kth.firestone.Main;
 import kth.firestone.card.Card;
-import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.GamePlayer;
