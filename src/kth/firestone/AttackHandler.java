@@ -56,10 +56,6 @@ public class AttackHandler {
 	
 	public boolean isMinionAttackValid(Player player, String attackerId, String targetId) {
 		List<Minion> activeMinions = player.getActiveMinions();
-		if (player.getHero().getId().equals(targetId) || findMinion(activeMinions, targetId) != null) {
-			System.err.println("Target belongs to player. No valid attack");
-			return false;
-		}
 
 		Minion minion = findMinion(activeMinions, attackerId);
 		if(minion == null){
