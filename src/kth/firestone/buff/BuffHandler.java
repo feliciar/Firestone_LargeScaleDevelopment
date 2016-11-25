@@ -35,11 +35,13 @@ public class BuffHandler {
 		//Find the buff and the minion (if there was one)
 		String buff = "";
 		Minion minion = null;
+		Card playedCard =null;
 		for(Player p : action.getPlayers()){
 			if(p.getId().equals(action.getCurrentPlayerId())){
 				for(Card c : ((GamePlayer) p).getDiscardPile()){
 					if(c.getId().equals(action.getPlayedCardId())){
 						buff = c.getDescription();
+						playedCard = c;
 					}
 				}
 				if(action.getMinionCreatedId()!=null){
@@ -52,7 +54,8 @@ public class BuffHandler {
 			}
 			
 		}
-		invokeBuff(action, minion, buff);
+		if(playedCard.getType()==Card.Type.SPELL || buff.startsWith("Battlecry") || buff.startsWith("Combo"))
+			invokeBuff(action, minion, buff);
 	}
 	
 	/**
@@ -61,30 +64,53 @@ public class BuffHandler {
 	 */
 	public void performBuff(Action action, Minion minion){
 		String buff = ((FirestoneMinion) minion).getBuff();
-		if( ! buff.startsWith("Battlecry: ")){
+		if( ! buff.startsWith("Battlecry: ") && ! buff.startsWith("Combo: ")){
 			invokeBuff(action, minion, buff);
 		}
 	}
 	
-	public void invokeBuff(Action action, Minion minion, String buff){
+	public boolean invokeBuff(Action action, Minion minion, String buff){
 		try {
 			if( ! methodMap.containsKey(buff)){
 				System.err.println("The buff did not exist in BuffHandler's method map. Buff: "+buff);
-				return;
+				return false;
 			}
-			methodMap.get(buff).invoke(buffMethods, action, minion);
+			if(! buff.equals("")){
+				methodMap.get(buff).invoke(buffMethods, action, minion);
+				return true;
+			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return false;
 	}
 	
-	private Map<String, Method> createMethodMap() {
+	public Map<String, Method> createMethodMap() {
 		Map<String, Method> methodMap = new HashMap<>();
 		try {
 			methodMap.put("Battlecry: Deal 1 damage.", 
 					BuffMethods.class.getDeclaredMethod("dealOneDamage", Action.class, Minion.class));
+			methodMap.put("Battlecry: If you're holding a Dragon, deal 3 damage.", 
+					BuffMethods.class.getDeclaredMethod("whenHoldingDragonDealThreeDamage", Action.class, Minion.class));
+			methodMap.put("Battlecry: Gain +1 Health for each card in your hand.",
+					BuffMethods.class.getDeclaredMethod("gainOneHealthForCardsInHand", Action.class, Minion.class));
+			methodMap.put("Combo: Gain +2/+2 for each card played earlier this turn.",
+					BuffMethods.class.getDeclaredMethod("gainTwoForCardsPlayedThisTurn", Action.class, Minion.class));
+			methodMap.put("Battlecry: Gain +1 Attack for each other card in your hand.",
+					BuffMethods.class.getDeclaredMethod("gainOneAttackForEachOtherCardInHand", Action.class, Minion.class));
+			methodMap.put("Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt.",
+					BuffMethods.class.getDeclaredMethod("whenHoldingDragonGainOneAttackAndTaunt", Action.class, Minion.class));
 			methodMap.put("After you cast a spell, deal 1 damage to ALL minions.", 
 					BuffMethods.class.getDeclaredMethod("afterSpellDealOneDamageToAllMinions", Action.class, Minion.class));
+			methodMap.put("Deal 3 damage to a character and Freeze it.",
+					BuffMethods.class.getDeclaredMethod("dealThreeDamageToAndFreezeCharacter", Action.class, Minion.class));
+			methodMap.put("Return a friendly minion to your hand. It costs (2) less.",
+					BuffMethods.class.getDeclaredMethod("returnOwnMinionToHand", Action.class, Minion.class));
+			methodMap.put("Deal 2 damage to an undamaged minion.",
+					BuffMethods.class.getDeclaredMethod("dealTwoDamageToUndamagedMinion", Action.class, Minion.class));
+			methodMap.put("Change the Health of ALL minions to 1.",
+					BuffMethods.class.getDeclaredMethod("changeHealthOfAllMinionsToOne", Action.class, Minion.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
