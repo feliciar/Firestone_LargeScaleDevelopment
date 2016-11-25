@@ -3,8 +3,10 @@ package kth.firestone;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 
+import kth.firestone.Action.Type;
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
@@ -15,7 +17,7 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 import kth.firestone.player.GamePlayer;
 
-public class FirestoneGame implements Game {
+public class FirestoneGame extends Observable implements Game {
 	private List<Player> players;
 	private List<Event> events;
 	private PlayCardHandler playCardHandler;
@@ -32,6 +34,7 @@ public class FirestoneGame implements Game {
 		this.players = players;
 		this.playCardHandler = playCardHandler;
 		this.attackHandler = attackHandler;
+		this.buffHandler = buffHandler;
 		this.events = new ArrayList<>();
 	}
 	
@@ -47,22 +50,54 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public List<Event> playSpellCard(Player player, Card card) {
-		return playCardHandler.playSpellCard(player, card);
+		playCardHandler.playSpellCard(player, card);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		this.notifyObservers(action);
+		return null;
 	}
 
 	@Override
 	public List<Event> playSpellCard(Player player, Card card, String targetId) {
-		return playCardHandler.playSpellCard(player, card, targetId);
+		playCardHandler.playSpellCard(player, card, targetId);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		this.notifyObservers(action);
+		return null;
 	}
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position) {
-		return playCardHandler.playMinionCard(player, card, position);
+		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
+		playCardHandler.playMinionCard(player, card, position);
+		
+		String playedMinionId = null;
+		for(Minion m : player.getActiveMinions()){
+			if(!minionsBefore.contains(m)){
+				playedMinionId = m.getId();
+			}
+		}
+		Action action = new Action(players, player.getId(), card.getId(), playedMinionId, position, null, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		this.notifyObservers(action);
+		return null;
 	}
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position, String targetId) {
-		return playCardHandler.playMinionCard(player, card, position, targetId);
+		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
+		playCardHandler.playMinionCard(player, card, position, targetId);
+		
+		String playedMinionId = null;
+		for(Minion m : player.getActiveMinions()){
+			if(!minionsBefore.contains(m)){
+				playedMinionId = m.getId();
+			}
+		}
+		Action action = new Action(players, player.getId(), card.getId(), playedMinionId, position, targetId, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		this.notifyObservers(action);
+		return null;
 	}
 
 	@Override
