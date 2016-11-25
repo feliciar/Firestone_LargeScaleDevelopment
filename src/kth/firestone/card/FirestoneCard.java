@@ -16,9 +16,10 @@ public class FirestoneCard implements Card {
 	private Optional<Integer> attack;
 	private Type type;
 	private String description;
+	private Optional<MinionRace> race;
 	
 	public FirestoneCard(String id, String name, String health, String attack, 
-			String manaCost, String type, String description) {
+			String manaCost, String type, String description, String race) {
 		this.id = id;
 		this.name = name;
 		this.originalHealth = Optional.of(Integer.parseInt(health));
@@ -28,6 +29,7 @@ public class FirestoneCard implements Card {
 		this.manaCost = Integer.parseInt(manaCost);
 		this.type = Type.valueOf(type);
 		this.description = description;
+		this.race = Optional.of(MinionRace.valueOf(race));
 	}
 	
 	@Override
@@ -86,8 +88,7 @@ public class FirestoneCard implements Card {
 
 	@Override
 	public Optional<MinionRace> getRace() {
-		// TODO Auto-generated method stub
-		return null;
+		return race;
 	}
 	
 	public void setManaCost(int manaCost) {
