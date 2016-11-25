@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import kth.firestone.Event;
 import kth.firestone.GameData;
+import kth.firestone.buff.BuffHandler;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -17,10 +18,12 @@ public class PlayCardHandler {
 	
 	List<Event> events = new ArrayList<>();
 	GameData gameData;
+	BuffHandler buffHandler;
 	public static int MAX_CARDS_ALLOWED_ON_THE_BOARD = 8;
 	
-	public PlayCardHandler(GameData gameData){
+	public PlayCardHandler(GameData gameData, BuffHandler buffHandler){
 		this.gameData = gameData;
+		this.buffHandler = buffHandler;
 	}
 	
 	/**
@@ -71,7 +74,7 @@ public class PlayCardHandler {
     	
     	Minion minion = new FirestoneMinion(UUID.randomUUID().toString(), card.getName(), 
     			card.getHealth().get(), card.getOriginalHealth().get(), card.getOriginalAttack().get(), 
-    			card.getAttack().get(), race, states, card.getDescription());
+    			card.getAttack().get(), race, states, card.getDescription(), buffHandler);
     	
     	int cardPosition = position;
     	if (position > player.getActiveMinions().size() + 1) {
