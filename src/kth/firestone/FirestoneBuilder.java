@@ -1,5 +1,6 @@
 package kth.firestone;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,37 +32,69 @@ public class FirestoneBuilder implements GameBuilder {
 	
 	@Override
 	public GameBuilder setDeck(int playerIndex, List<String> cardNames) {
-		return null;
+		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
+			System.exit(1);
+		}
+		Collection<Card> cards = new ArrayDeque<>();
+		
+		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
+		for (String s : cardNames) {
+			HashMap<String, String> data = t.get(s);
+			
+			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
+					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
+					data.get("buff"));
+			cards.add(card);
+		}
+		Deck deck = new FirestoneDeck(cards);
+		p.setDeck(deck);
+		
+		return this;
 	}
 
 	@Override
 	public GameBuilder setDeck(int playerIndex, int numberOfCards, String cardName) {
-		return null;
+		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
+			System.exit(1);
+		}
+		Collection<Card> cards = new ArrayDeque<>();
+		
+		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
+		HashMap<String, String> data = t.get(cardName);
+		
+		for (int i = 0; i < numberOfCards; i++) {			
+			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
+					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
+					data.get("buff"));
+			cards.add(card);
+		}
+		Deck deck = new FirestoneDeck(cards);
+		p.setDeck(deck);
+	
+		return this;
 	}
 
 	@Override
 	public GameBuilder setDeck(int playerIndex, String... cardNames) {
 		if (playerIndex < 1) {
+			System.err.println("Error: The given ID of the player must be 1 or higher.");
 			System.exit(1);
 		}
 		
-		Collection<Card> cards = new ArrayList<>();
+		Collection<Card> cards = new ArrayDeque<>();
 		
 		GamePlayer p = (GamePlayer) players.get(playerIndex-1);
+		HashMap<String, HashMap<String, String>> t = gameData.getCards();
 		for (String s : cardNames) {
-			HashMap<String, HashMap<String, String>> t = gameData.getCards();
 			HashMap<String, String> data = t.get(s);
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(data.get("buff_name"));
-			if (!data.get("buff_name").equals("")) {
-				sb.append(": ");
-			}
-			sb.append(data.get("buff"));
 			
 			Card card = new FirestoneCard(UUID.randomUUID().toString(), data.get("name"), 
 					data.get("health"), data.get("attack"), data.get("mana"), data.get("type"),
-					sb.toString());
+					data.get("buff"));
 			cards.add(card);
 		}
 		

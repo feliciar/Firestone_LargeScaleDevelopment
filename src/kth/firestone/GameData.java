@@ -18,7 +18,6 @@ public class GameData {
 		card.put("race", "DEMON");
 		card.put("state", "");
 		card.put("buff", "");
-		card.put("buff_name", "");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -31,7 +30,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "");
-		card.put("buff_name", "");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -44,7 +42,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "");
-		card.put("buff_name", "");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -56,8 +53,7 @@ public class GameData {
 		card.put("mana", "3");
 		card.put("race", "NONE");
 		card.put("state", "");
-		card.put("buff", "Deal 1 damage.");
-		card.put("buff_name", "Battlecry");
+		card.put("buff", "Battlecry: Deal 1 damage.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -69,8 +65,7 @@ public class GameData {
 		card.put("mana", "5");
 		card.put("race", "NONE");
 		card.put("state", "");
-		card.put("buff", "If you're holding a Dragon, deal 3 damage.");
-		card.put("buff_name", "Battlecry");
+		card.put("buff", "Battlecry: If you're holding a Dragon, deal 3 damage.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -82,8 +77,7 @@ public class GameData {
 		card.put("mana", "4");
 		card.put("race", "DRAGON");
 		card.put("state", "");
-		card.put("buff", "Gain +1 Health for each card in your hand.");
-		card.put("buff_name", "Battlecry");
+		card.put("buff", "Battlecry: Gain +1 Health for each card in your hand.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -95,8 +89,7 @@ public class GameData {
 		card.put("mana", "3");
 		card.put("race", "NONE");
 		card.put("state", "");
-		card.put("buff", "Gain +2/+2 for each card played earlier this turn.");
-		card.put("buff_name", "Combo");
+		card.put("buff", "Combo: Gain +2/+2 for each card played earlier this turn.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -108,8 +101,7 @@ public class GameData {
 		card.put("mana", "4");
 		card.put("race", "DRAGON");
 		card.put("state", "");
-		card.put("buff", "Gain +1 Attack for each other card in your hand.");
-		card.put("buff_name", "Battlecry");
+		card.put("buff", "Battlecry: Gain +1 Attack for each other card in your hand.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -121,8 +113,7 @@ public class GameData {
 		card.put("mana", "4");
 		card.put("race", "DRAGON");
 		card.put("state", "");
-		card.put("buff", "If you're holding a Dragon, gain +1 Attack and Taunt.");
-		card.put("buff_name", "Battlecry");
+		card.put("buff", "Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 		
@@ -135,7 +126,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "After you cast a spell, deal 1 damage to ALL minions.");
-		card.put("buff_name", "");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 
@@ -148,7 +138,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Deal 3 damage to a character and Freeze it.");
-		card.put("buff_name", "");
 		card.put("type", "SPELL");
 		cards.put(card.get("name"), card);
 		
@@ -161,7 +150,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Return a friendly minion to your hand. It costs (2) less.");
-		card.put("buff_name", "");
 		card.put("type", "SPELL");
 		cards.put(card.get("name"), card);
 		
@@ -174,7 +162,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Deal 2 damage to an undamaged minion.");
-		card.put("buff_name", "");
 		card.put("type", "SPELL");
 		cards.put(card.get("name"), card);
 		
@@ -187,7 +174,6 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Change the Health of ALL minions to 1.");
-		card.put("buff_name", "");
 		card.put("type", "SPELL");
 		cards.put(card.get("name"), card);
 		
