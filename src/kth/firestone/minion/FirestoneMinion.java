@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import kth.firestone.Action;
 import kth.firestone.buff.BuffDescription;
+import kth.firestone.buff.BuffHandler;
 
 public class FirestoneMinion implements Minion, Observer {
 	private String id;
@@ -18,9 +20,10 @@ public class FirestoneMinion implements Minion, Observer {
 	private List<MinionState> states;
 	private String buff;
 	private boolean sleepy = true;
+	private BuffHandler buffHandler;
 	
 	public FirestoneMinion(String id, String name, int health, int originalHealth, int originalAttack, 
-			int attack, MinionRace race, List<MinionState> states, String buff) {
+			int attack, MinionRace race, List<MinionState> states, String buff, BuffHandler buffHandler) {
 		this.id = id;
 		this.name = name;
 		this.health = health;
@@ -31,6 +34,7 @@ public class FirestoneMinion implements Minion, Observer {
 		this.race = race;
 		this.states = states;
 		this.buff = buff;
+		this.buffHandler = buffHandler;
 
 		//TODO get buffDescriptions and if it should be sleepy (should not be sleepy if is has BattleCry)		
 	}
@@ -113,7 +117,8 @@ public class FirestoneMinion implements Minion, Observer {
 
 	@Override
 	public void update(Observable observable, Object arg) {
-		// TODO
+		Action action = (Action)arg;
+		buffHandler.performBuff(action, this);
 	}
 
 	@Override
