@@ -132,7 +132,7 @@ public class PlayCardHandler {
      * @return true if the play is valid
      */
     public boolean isPlayCardValid(Player player, Card card, String targetId){
-    	//TODO
+    	//TODO Implement if we have taunts
     	return true;
     }
     

@@ -118,19 +118,19 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, List<String> activeMinionNames) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, int numberOfMinions, String cardName) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 
 	@Override
 	public GameBuilder setActiveMinions(int playerIndex, String... activeMinionNames) {
-		// TODO Auto-generated method stub
+		// TODO Implement when we want to start the game in the middle
 		return null;
 	}
 
