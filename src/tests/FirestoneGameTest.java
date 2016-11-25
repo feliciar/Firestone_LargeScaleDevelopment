@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import kth.firestone.FirestoneBuilder;
@@ -8,6 +9,7 @@ import kth.firestone.FirestoneGame;
 import kth.firestone.GameBuilder;
 import kth.firestone.GameData;
 import kth.firestone.deck.FirestoneDeck;
+import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
@@ -71,6 +73,14 @@ public class FirestoneGameTest {
 		fg.endTurn(player1);
 		fg.endTurn(player2);
 		assertFalse(minion.isSleepy());
+		
+		// check that the used minion is not used in beginning of a turn
+		Minion minion1 = player1.getActiveMinions().get(0);
+		((FirestoneMinion) minion1).setUsedThisTurn(true);
+		assertTrue(((FirestoneMinion) minion1).wasUsedThisTurn());
+		fg.endTurn(player1);
+		fg.endTurn(player2);
+		assertFalse(((FirestoneMinion)minion1).wasUsedThisTurn());
 		
 		// check that max mana is increased and all mana is restored
 		fg.endTurn(player1);
