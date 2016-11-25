@@ -56,6 +56,11 @@ public class AttackHandlerTest {
 		// Tests if minion of adversary is attacker
 		possibleAttack = ah.canAttack(playersActiveMinions, minionPlayer2);
 		assertFalse(possibleAttack);	
+		
+		//Test if minion that has already attacked tries to attack
+		minionPlayer1.setUsedThisTurn(true);
+		possibleAttack = ah.canAttack(playersActiveMinions, minionPlayer1);
+		assertFalse(possibleAttack);
 	}
 	
 	@Test
@@ -222,11 +227,13 @@ public class AttackHandlerTest {
 		
 		// Test to kill the Taunt minion
 		ah.attack(player1, "100", "210");
+		minionPlayer1.setUsedThisTurn(false);
 		assertEquals(player2.getActiveMinions().size(), 1);
 		assertEquals(player1.getActiveMinions().get(0).getHealth(), 7);
 		
 		//Test to attack other Ogre see that health is reduced
 		ah.attack(player1, "100", "200");
+		minionPlayer1.setUsedThisTurn(false);
 		assertEquals(player2.getActiveMinions().get(0).getHealth(), 1);
 		assertEquals(player1.getActiveMinions().get(0).getHealth(), 1);
 		

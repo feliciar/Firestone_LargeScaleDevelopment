@@ -31,9 +31,10 @@ public class AttackHandler {
 		} else if (minion.isSleepy()) {
 			System.err.println("Minion was sleepy, cannot attack");
 			return false;
+		} else if(((FirestoneMinion) minion).wasUsedThisTurn()){
+			System.err.println("Minion was used this turn, cannot attack");
+			return false;
 		}
-		// TODO check if player has used this minion this turn.
-		
 		return true;
 	}
 	
@@ -135,13 +136,14 @@ public class AttackHandler {
 		if (targetMinion != null) {
 			// Target was minion
 			damageHandler.dealDamageToTwoMinions(attacker, targetMinion);
+			attacker.setUsedThisTurn(true);
 			
 			//Remove the minions that were killed 
 			damageHandler.removeDeadMinions(player.getActiveMinions());
 			damageHandler.removeDeadMinions(adversary.getActiveMinions());
 		} else {
 			damageHandler.dealDamageToMinionAndHero(attacker, targetHero);
-			
+			attacker.setUsedThisTurn(true);
 			//TODO check for defeat (hero)
 		}
 		return events;
