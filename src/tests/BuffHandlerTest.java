@@ -50,8 +50,8 @@ public class BuffHandlerTest {
 		minions1 = new ArrayList<>();
 		minions2 = new ArrayList<>();
 		String buff = "After you cast a spell, deal 1 damage to ALL minions.";
-		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff));
-		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),""));
+		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff, buffHandler));
+		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),"", buffHandler));
 		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION","Battlecry: Deal 1 damage.");
 		spellCard = new FirestoneCard("","","0","0","0","SPELL","");
 		
@@ -74,8 +74,8 @@ public class BuffHandlerTest {
 		when(p1.getDiscardPile()).thenReturn(discardPile);
 		
 		
-		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), minions1.get(0).getId(), -1, null, Action.Type.PLAYED_CARD);
-		;
+		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), minions1.get(0).getId(), 
+				-1, null, Action.Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 	}
 	

@@ -17,10 +17,6 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
-/**
- * @author Felicia Rosell
- *
- */
 public class BuffHandler {
 
 	Map<String, Method> methodMap;
@@ -39,7 +35,7 @@ public class BuffHandler {
 		String buff = "";
 		for(Player p : action.getPlayers()){
 			if(p.getId().equals(action.getCurrentPlayerId())){
-				for(Card c : ((GamePlayer)p).getDiscardPile()){
+				for(Card c : ((GamePlayer) p).getDiscardPile()){
 					if(c.equals(action.getPlayedCardId())){
 						buff = c.getDescription();
 					}
@@ -54,7 +50,7 @@ public class BuffHandler {
 	 * @param action
 	 */
 	public void performBuff(Action action, Minion minion){
-		String buff = ((FirestoneMinion)minion).getBuff();
+		String buff = ((FirestoneMinion) minion).getBuff();
 		if( ! buff.startsWith("Battlecry: ")){
 			invokeBuff(action, minion, buff);
 		}
@@ -62,32 +58,20 @@ public class BuffHandler {
 	
 	public void invokeBuff(Action action, Minion minion, String buff){
 		try {
-			
 			methodMap.get(buff).invoke(buffMethods, action, minion);
-		
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
 	public void createMap() {
 		methodMap = new HashMap<>();
 		try {
-			
-			methodMap.put("Battlecry: Deal 1 damage.", BuffMethods.class.getDeclaredMethod("battleCryDealOneDamage", Action.class, Minion.class));
-		
+			methodMap.put("Battlecry: Deal 1 damage.", 
+					BuffMethods.class.getDeclaredMethod("battleCryDealOneDamage", Action.class, Minion.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public String test2(String s1, String s2){
-		return s1 + " "+ s2;
-	}
-	
-	
-	
 
 }
