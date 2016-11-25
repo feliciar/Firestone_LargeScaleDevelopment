@@ -89,5 +89,9 @@ public class FirestoneCard implements Card {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void setManaCost(int manaCost) {
+		this.manaCost = manaCost;
+	}
 
 }

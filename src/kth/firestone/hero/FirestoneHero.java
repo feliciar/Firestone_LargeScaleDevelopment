@@ -91,6 +91,10 @@ public class FirestoneHero implements Hero {
 		this.maxMana = maxMana;
 	}
 	
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+	
 	public String toString(){
 		return "Hero: id: "+id+" name: "+name + " health: " + health+"/"+maxHealth + " attack: "+ attack+ " mana: "+mana;
 	}
