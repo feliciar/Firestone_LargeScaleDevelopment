@@ -59,7 +59,7 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public List<Event> playSpellCard(Player player, Card card, String targetId) {
-		playCardHandler.playSpellCard(player, card, targetId);
+		playCardHandler.playSpellCard(player, card);
 		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
@@ -89,7 +89,7 @@ public class FirestoneGame extends Observable implements Game {
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position, String targetId) {
 		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
-		playCardHandler.playMinionCard(player, card, position, targetId);
+		playCardHandler.playMinionCard(player, card, position);
 		
 		Minion playedMinion = null;
 		for(Minion m : player.getActiveMinions()){
