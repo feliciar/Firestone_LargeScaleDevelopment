@@ -186,8 +186,6 @@ public class BuffMethods {
 				}
 			}
 		}
-		// character is any minion or hero
-		
 	}
 	
 	/**
