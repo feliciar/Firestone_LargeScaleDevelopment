@@ -250,6 +250,7 @@ public class FirestoneGame extends Observable implements Game {
 	@Override
 	public void notifyObservers(Object o){
 		updateObserverList();
+		setChanged();
 		super.notifyObservers(o);
 		updateObserverList();
 	}
