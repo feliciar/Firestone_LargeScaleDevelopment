@@ -120,7 +120,7 @@ public class BuffMethods {
 		if (minion == null) return;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
-			if (c.getRace().equals(MinionRace.DRAGON)) {
+			if (c.getRace().get().equals(MinionRace.DRAGON)) {
 				((FirestoneMinion) minion).setAttack(minion.getAttack() + 1);
 				minion.getStates().add(MinionState.TAUNT);
 				return;
