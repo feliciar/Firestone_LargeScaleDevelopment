@@ -193,12 +193,13 @@ public class BuffMethods {
 		for (Minion m : currentPlayer.getActiveMinions()) {
 			if (m.getId().equals(action.getTargetId())) {
 				// target id is the id of the minion that player wants to return to hand
-				List<ArrayList<Card>> pile = ((GamePlayer) currentPlayer).getDiscardPile();
-				for (ArrayList<Card> turnPile: pile) {
+				List<List<Card>> pile = ((GamePlayer) currentPlayer).getDiscardPile();
+				for (List<Card> turnPile: pile) {
 					for (Card c : turnPile) {
 						if (c.getName().equals(m.getName())) {
 							// this is the card we want to return
-							((FirestoneCard) c).setManaCost(c.getOriginalManaCost() - 2);
+							int mana = Math.max(0, c.getOriginalManaCost() - 2);
+							((FirestoneCard) c).setManaCost(mana);
 							currentPlayer.getHand().add(c);
 							// remove minion from the board
 							currentPlayer.getActiveMinions().remove(m);

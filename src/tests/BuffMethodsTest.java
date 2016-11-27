@@ -17,10 +17,7 @@ import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
-<<<<<<< HEAD
-=======
 import kth.firestone.hero.FirestoneHero;
->>>>>>> 9e05f6cfda5031645b6545c99f00d64cbe0a1276
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
