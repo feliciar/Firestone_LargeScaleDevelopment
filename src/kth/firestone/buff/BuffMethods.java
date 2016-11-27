@@ -193,8 +193,8 @@ public class BuffMethods {
 		for (Minion m : currentPlayer.getActiveMinions()) {
 			if (m.getId().equals(action.getTargetId())) {
 				// target id is the id of the minion that player wants to return to hand
-				List<List<Card>> pile = ((GamePlayer) currentPlayer).getDiscardPile();
-				for (List<Card> turnPile: pile) {
+				List<ArrayList<Card>> pile = ((GamePlayer) currentPlayer).getDiscardPile();
+				for (ArrayList<Card> turnPile: pile) {
 					for (Card c : turnPile) {
 						if (c.getName().equals(m.getName())) {
 							// this is the card we want to return
