@@ -18,6 +18,7 @@ import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
@@ -49,6 +50,7 @@ public class BuffMethodsTest {
 		minions = new ArrayList<>();
 		minions.add(new FirestoneMinion("uniqueId-1", "Imp", 1,1,1,1,MinionRace.DEMON,new ArrayList<>(), "", buffHandler));
 		minions.add(new FirestoneMinion("uniqueId-2", "War Golem", 7,7,7,7,MinionRace.NONE,new ArrayList<>(), "", buffHandler));
+		minions.add(new FirestoneMinion("uniqueId-3", "Twilight Drake", 1,1,4,4,MinionRace.DRAGON,new ArrayList<>(), "Battlecry: Gain +1 Health for each card in your hand.", buffHandler));
 	}
 	
 	@Test
@@ -56,6 +58,7 @@ public class BuffMethodsTest {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", Action.Type.DAMAGE);
 		Minion minion = new FirestoneMinion("uniqueId", "Ironforge Rifleman", 2,2,2,2,MinionRace.NONE, new ArrayList<>(),"Battlecry: Deal 1 damage.", buffHandler);
 		when(p1.getActiveMinions()).thenReturn(minions);
+		
 		buffMethods.dealOneDamage(action, minion);
 		
 		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 1);
@@ -64,7 +67,26 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testWhenHoldingDragonDealThreeDamage() {
-		// TODO(Dina)
+		Action action1 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetHero", Action.Type.DAMAGE);
+		Action action2 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", Action.Type.DAMAGE);
+		
+		Minion minion = new FirestoneMinion("uniqueId", "Blackwing Corruptor", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"Battlecry: If you're holding a Dragon, deal 3 damage.", buffHandler);
+		Hero hero = new FirestoneHero("targetHero",4);
+		List<Card> hand = new ArrayList<>();
+		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getHand()).thenReturn(hand);
+
+		// When target is hero
+		when(p1.getHero()).thenReturn(hero);
+		buffMethods.whenHoldingDragonDealThreeDamage(action1, minion);
+		verify(damageHandler).dealDamageToHero(hero, 3);
+		
+		// When target is minion
+		when(p1.getActiveMinions()).thenReturn(minions);
+		buffMethods.whenHoldingDragonDealThreeDamage(action2, minion);
+		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 3);
+		verify(damageHandler).removeDeadMinions(minions);
 	}
 	
 	@Test
