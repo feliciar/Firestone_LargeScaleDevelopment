@@ -27,6 +27,7 @@ public class FirestoneCard implements Card {
 		this.originalAttack = Optional.of(Integer.parseInt(attack));
 		this.attack = Optional.of(Integer.parseInt(attack));
 		this.manaCost = Integer.parseInt(manaCost);
+		this.originalManaCost = this.manaCost;
 		this.type = Type.valueOf(type);
 		this.description = description;
 		this.race = Optional.of(MinionRace.valueOf(race));

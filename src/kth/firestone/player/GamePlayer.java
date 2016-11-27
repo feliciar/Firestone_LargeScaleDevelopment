@@ -14,8 +14,8 @@ public class GamePlayer implements Player {
 	private List<Card> hand;
 	private List<Minion> activeMinions;
 	private Deck deck;
-	private ArrayList<Card> discardPileThisTurn;
-	private List<ArrayList<Card>> discardPile;
+	private List<Card> discardPileThisTurn;
+	private List<List<Card>> discardPile;
 	
 	
 	public GamePlayer(String id, Hero hero) {
@@ -23,7 +23,7 @@ public class GamePlayer implements Player {
 		this.hero = hero;
 		hand = new ArrayList<Card>();
 		activeMinions = new ArrayList<Minion>();
-		discardPile = new ArrayList<ArrayList<Card>>();
+		discardPile = new ArrayList<>();
 		discardPileThisTurn = new ArrayList<>();
 	}
 	
@@ -64,11 +64,11 @@ public class GamePlayer implements Player {
 		this.deck = deck;
 	}
 	
-	public List<ArrayList<Card>> getDiscardPile(){
+	public List<List<Card>> getDiscardPile(){
 		return discardPile;
 	}
 	
-	public ArrayList<Card> getDiscardPileThisTurn(){
+	public List<Card> getDiscardPileThisTurn(){
 		return discardPileThisTurn;
 	}
 	
