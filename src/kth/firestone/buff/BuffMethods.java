@@ -187,7 +187,6 @@ public class BuffMethods {
 	 * Method for performing buff: "Return a friendly minion to your hand. It costs (2) less."
 	 * @param action the action that just took place
 	 */
-	//TODO rename this method to for example returnOwnMinionToHandGiveTwoLessManaCost
 	public void returnOwnMinionToHand(Action action, Minion minion) {
 		if (minion != null) return;
 		Player currentPlayer = getCurrentPlayer(action);
@@ -199,8 +198,7 @@ public class BuffMethods {
 					for (Card c : turnPile) {
 						if (c.getName().equals(m.getName())) {
 							// this is the card we want to return
-							int mana = Math.max(0, c.getOriginalManaCost() - 2);
-							((FirestoneCard) c).setManaCost(mana);
+							((FirestoneCard) c).setManaCost(c.getOriginalManaCost() - 2);
 							currentPlayer.getHand().add(c);
 							// remove minion from the board
 							currentPlayer.getActiveMinions().remove(m);
