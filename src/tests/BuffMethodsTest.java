@@ -15,6 +15,8 @@ import kth.firestone.DamageHandler;
 import kth.firestone.Action.Type;
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
+import kth.firestone.card.Card;
+import kth.firestone.card.FirestoneCard;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
@@ -95,17 +97,75 @@ public class BuffMethodsTest {
 	}
 	
 	@Test
-	public void testReturnOwnMinionToHand() {
+	public void testReturnOwnMinionToHand() {		
+		when(p1.getActiveMinions()).thenReturn(minions);
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getHand()).thenReturn(new ArrayList<>());
+		List<List<Card>> dp = new ArrayList<>();
+		List<Card> discardPileThisTurn = new ArrayList<>();
+		dp.add(discardPileThisTurn);
 		
+		//Test return a friendly minion
+		int manaCost = 3;
+		Card c = new FirestoneCard("playedCardId", "War Golem", "2", "2", ""+manaCost, Card.Type.MINION.toString(), "", MinionRace.NONE.toString());
+		Minion m = minions.get(1);
+		discardPileThisTurn.add(c);
+		when(p1.getDiscardPile()).thenReturn(dp);
+		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", null, 0, "uniqueId-2", Action.Type.PLAYED_CARD);
+		Minion minion = null;
+		
+		buffMethods.returnOwnMinionToHand(action, minion);
+		
+		assertTrue(p1.getHand().contains(c));
+		assertEquals(manaCost-2, c.getManaCost());
+		assertFalse(p1.getActiveMinions().contains(m));
+		
+		//Test return a friendly minion with mana less than 2
+		action = new Action(players, "currentPlayerId", "playedCardId", null, 0, "uniqueId-1", Action.Type.PLAYED_CARD);
+		minion = null;
+		
+		manaCost = 1;
+		c = new FirestoneCard("playedCardId", "Imp", "2", "2", ""+manaCost, Card.Type.MINION.toString(), "", MinionRace.NONE.toString());
+		discardPileThisTurn.add(c);
+		
+		buffMethods.returnOwnMinionToHand(action, minion);
+		assertEquals(0, c.getManaCost());		
 	}
 	
 	@Test
 	public void testDealTwoDamageToUndamagedMinion() {
 		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", Action.Type.PLAYED_CARD);
+		Minion minion = null;
+		when(p1.getActiveMinions()).thenReturn(minions);
+		//Verify that the undamaged minion can be killed
+		buffMethods.dealTwoDamageToUndamagedMinion(action, minion);
+		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(0));
+		
+		//Verify that the damaged minion cannot be targeted
+		action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-2", Action.Type.PLAYED_CARD);
+		int minionHealth = 3;
+		((FirestoneMinion)minions.get(1)).setHealth(minionHealth);
+		buffMethods.dealTwoDamageToUndamagedMinion(action, minion);
+		assertEquals(minionHealth, minions.get(1).getHealth());
+		
 	}
 	
 	@Test
 	public void testChangeHealthOfAllMinionsToOne() {
+		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, Action.Type.PLAYED_CARD);
+		Minion minion = null;
+		
+		when(p1.getActiveMinions()).thenReturn(minions);
+		
+		buffMethods.changeHealthOfAllMinionsToOne(action,minion);
+		for(Player p : action.getPlayers()){
+			for(Minion m : p.getActiveMinions()){
+				assertEquals(1, m.getHealth());
+			}
+		}
 		
 	}
 	
