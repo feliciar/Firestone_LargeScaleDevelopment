@@ -47,12 +47,42 @@ Note that we expect the basic rules of the game to function (such as minions not
 
 * Edwin VanCleef (http://hearthstone.gamepedia.com/Edwin_VanCleef)
 * Midnight Drake (http://hearthstone.gamepedia.com/Midnight_Drake)
-* Twilight Guardian (http://hearthstone.gamepedia.com/Twilight_Guardian)
 * Frostbolt (http://hearthstone.gamepedia.com/Frostbolt)
 * Shadowstep (http://hearthstone.gamepedia.com/Shadowstep)
 * Backstab (http://hearthstone.gamepedia.com/Backstab)
 * Equality (http://hearthstone.gamepedia.com/Equality)
 * Wild Pyromancer (http://hearthstone.gamepedia.com/Wild_Pyromancer)
+
+
+# firestone-sprint-3
+
+Sprint 3 should contain all features requested in sprint 2 and 1, and the following new additions. In this sprint you’ll be able to try out your implementation with our view. Observe all bugs you didn't catch with your tests, type checks or compilation steps. You have been added to another repo called `firestone-view` which contains the compiled web view code including instructions how to run it (in the README.md of that repo). You will need to integrate your code with our game server. Please report issues in this repo if you run into troubles.
+
+### SAD
+
+Your team needs to write a software architecture design. You need to guide other people your strategies and how to maintain your code. Not more than six A4 pages.
+
+## New Cards
+
+* Shadowform (http://hearthstone.gamepedia.com/Shadowform)
+* Alexstrasza (http://hearthstone.gamepedia.com/Alexstrasza)
+* Acolyte of Pain (http://hearthstone.gamepedia.com/Acolyte_of_Pain)
+* Lorewalker Cho (http://hearthstone.gamepedia.com/Lorewalker_Cho)
+
+## New Hero Powers
+
+* Life Tap ( http://hearthstone.gamepedia.com/Life_Tap)
+* Fireblast (http://hearthstone.gamepedia.com/Fireblast)
+* Lesser Heal (http://hearthstone.gamepedia.com/Lesser_Heal)
+* Steady Shot (http://hearthstone.gamepedia.com/Steady_Shot)
+
+## Implementing the server in Java
+
+1. Include the `server.jar` file as a dependency.
+2. Include the `gson-2.3.1.jar` file as a dependency.
+3. Create an implementation of `kth.firestone.server.GameFactory`.
+4. Create a main method that creates an instance of your `GameFactory` implementation and create a `ServerFactory` instance with it and then call `createServer` followed by `start`.
+
 
 
 

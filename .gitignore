@@ -3,5 +3,4 @@
 .classpath
 .DS_Store
 .settings/
-lib/
-bin/
+/bin/
