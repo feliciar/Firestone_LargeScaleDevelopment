@@ -6,6 +6,7 @@ import kth.firestone.Action;
 import kth.firestone.DamageHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
+import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.HeroState;
 import kth.firestone.minion.FirestoneMinion;
@@ -240,6 +241,71 @@ public class BuffMethods {
 		for (Player p : action.getPlayers()) {
 			for (Minion m : p.getActiveMinions()) {
 				((FirestoneMinion) m).setHealth(1);
+			}
+		}
+	}
+	
+	/**
+	 * Method for performing buff: "Your Hero Power becomes 'Deal 2 damage'. If 
+	 * already in Shadowform: 3 damage."
+	 * @param action the action that just took place
+	 */
+	public void changeHeroPowerToDealTwoOrThreeDamage(Action action, Minion minion) {
+		if (minion != null) return;
+		// TODO
+	}
+	
+	/**
+	 * Method for performing buff: "Battlecry: Set a hero's remaining Health to 15."
+	 * @param action the action that just took place
+	 */
+	public void setHeroHealthTo15(Action action, Minion minion) {
+		if (minion == null) return;
+		for(Player p : action.getPlayers()) {
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				FirestoneHero hero = (FirestoneHero) p.getHero();
+				if (hero.getMaxHealth() < 15) {
+					hero.setMaxHealth(15);
+				}
+				hero.setHealth(15);
+				return;
+			}
+		}
+	}
+	
+	/**
+	 * Method for performing buff: "Whenever this minion takes damage, draw a card."
+	 * @param action the action that just took place
+	 */
+	public void drawCardWhenThisMinionTakesDamage(Action action, Minion minion) {
+		if (minion == null) return;
+		Player currentPlayer = getCurrentPlayer(action);
+		if (action.getActionType().equals(Action.Type.DAMAGE)) {
+			Card drawnCard = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
+			currentPlayer.getHand().add(drawnCard);
+		}
+	}
+	
+	/**
+	 * Method for performing buff: "Whenever a player casts a spell, put a copy into 
+	 * the other player's hand."
+	 * @param action the action that just took place
+	 */
+	public void copyOponentsPlayedSpellCardIntoHand(Action action, Minion minion) {
+		if (minion == null) return;
+		Player currentPlayer = getCurrentPlayer(action);
+		Card playedCard = null;
+		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
+			if (c.getId().equals(action.getPlayedCardId())) {
+				playedCard = c;
+				break;
+			}
+		}
+		if (playedCard.getType().equals(Card.Type.SPELL)) {
+			if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
+				action.getPlayers().get(1).getHand().add(playedCard);
+			} else {
+				action.getPlayers().get(0).getHand().add(playedCard);
 			}
 		}
 	}
