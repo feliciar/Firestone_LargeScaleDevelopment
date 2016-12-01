@@ -6,6 +6,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
@@ -14,6 +15,8 @@ import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.Deck;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.FirestoneHeroPower;
+import kth.firestone.hero.HeroPower;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
@@ -160,8 +163,10 @@ public class FirestoneBuilder implements GameBuilder {
 	
 	private List<Player> createPlayers() {
 		List<Player> players = new ArrayList<>();
-		Player player1 = new GamePlayer(PLAYER_1_ID, new FirestoneHero(PLAYER_1_ID, HERO_HEALTH));
-		Player player2 = new GamePlayer(PLAYER_2_ID, new FirestoneHero(PLAYER_2_ID, HERO_HEALTH));
+		HeroPower heroPowerPlayer1 = new FirestoneHeroPower("Life Tap", "2");
+		HeroPower heroPowerPlayer2 = new FirestoneHeroPower("Lesser Heal", "2");
+		Player player1 = new GamePlayer(PLAYER_1_ID, new FirestoneHero(PLAYER_1_ID, HERO_HEALTH, heroPowerPlayer1));
+		Player player2 = new GamePlayer(PLAYER_2_ID, new FirestoneHero(PLAYER_2_ID, HERO_HEALTH, heroPowerPlayer2));
 		players.add(player1);
 		players.add(player2);
 		
