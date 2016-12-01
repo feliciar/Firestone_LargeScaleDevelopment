@@ -222,8 +222,9 @@ public class GameData {
 		card.put("mana", "2");
 		card.put("race", "NONE");
 		card.put("state", "");
-		card.put("buff", "Hero Power Draw a crd and take 2 damage.");
-		card.put("type", "Hero Power");
+		card.put("buff", "Hero Power Draw a card and take 2 damage.");
+		card.put("type", "HERO_POWER");
+		card.put("class", "WARLOCK");
 		cards.put(card.get("name"), card);
 		
 		card = new HashMap<>();
@@ -235,7 +236,8 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Hero Power Deal 1 damage.");
-		card.put("type", "Hero Power");
+		card.put("type", "HERO_POWER");
+		card.put("class", "MAGE");
 		cards.put(card.get("name"), card);
 		
 		card = new HashMap<>();
@@ -247,7 +249,8 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Hero Power Restore 2 Health.");
-		card.put("type", "Hero Power");
+		card.put("type", "HERO_POWER");
+		card.put("class", "PRIEST");
 		cards.put(card.get("name"), card);
 		
 		card = new HashMap<>();
@@ -259,7 +262,8 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Hero Power Deal 2 damage to the enemy hero.");
-		card.put("type", "Hero Power");
+		card.put("type", "HERO_POWER");
+		card.put("class", "HUNTER");
 		cards.put(card.get("name"), card);
 		
 		card = new HashMap<>();
@@ -271,7 +275,8 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Hero Power Deal 2 damage.");
-		card.put("type", "Hero Power");
+		card.put("type", "HERO_POWER");
+		card.put("class", "PRIEST");
 		cards.put(card.get("name"), card);
 		
 		card = new HashMap<>();
@@ -283,7 +288,8 @@ public class GameData {
 		card.put("race", "NONE");
 		card.put("state", "");
 		card.put("buff", "Hero Power Deal 3 damage.");
-		card.put("type", "Hero Power");
+		card.put("type", "HERO_POWER");
+		card.put("class", "PRIEST");
 		cards.put(card.get("name"), card);
 	}
 	
