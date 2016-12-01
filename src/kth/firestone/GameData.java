@@ -224,6 +224,55 @@ public class GameData {
 		card.put("buff", "Whenever a player casts a spell, put a copy into the other player's hand.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
+		
+		// Hero powers
+		card = new HashMap<>();
+		
+		card.put("name", "Life Tap");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Draw a crd and take 2 damage.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Fireblast");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Deal 1 damage.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Lesser Heal");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Restore 2 Health.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Steady Shot");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Deal 2 damage to the enemy hero.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
 	}
 	
 	public HashMap<String, HashMap<String, String>> getCards() {
