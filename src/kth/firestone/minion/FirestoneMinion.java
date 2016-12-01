@@ -1,5 +1,6 @@
 package kth.firestone.minion;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -132,7 +133,7 @@ public class FirestoneMinion implements Minion, Observer {
 
 	@Override
 	public List<BuffDescription> getBuffDescriptions() {
-		return null;
+		return new ArrayList<>();
 	}
 	
 }
