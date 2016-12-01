@@ -113,23 +113,6 @@ public class BuffMethods {
 	}
 	
 	/**
-	 * Method for performing buff: "Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt."
-	 * @param action the action that just took place
-	 * @param minion the minion that this buff belongs to
-	 */
-	public void whenHoldingDragonGainOneAttackAndTaunt(Action action, Minion minion) {
-		if (minion == null) return;
-		Player currentPlayer = getCurrentPlayer(action);
-		for (Card c : currentPlayer.getHand()) {
-			if (c.getRace().get().equals(MinionRace.DRAGON)) {
-				((FirestoneMinion) minion).setAttack(minion.getAttack() + 1);
-				minion.getStates().add(MinionState.TAUNT);
-				return;
-			}
-		}
-	}
-	
-	/**
 	 * Method for performing buff: "After you cast a spell, deal 1 damage to ALL minions."
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
