@@ -107,18 +107,6 @@ public class GameData {
 		
 		card = new HashMap<>();
 		
-		card.put("name", "Twilight Guardian");
-		card.put("health", "6");
-		card.put("attack", "2");
-		card.put("mana", "4");
-		card.put("race", "DRAGON");
-		card.put("state", "");
-		card.put("buff", "Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt.");
-		card.put("type", "MINION");
-		cards.put(card.get("name"), card);
-		
-		card = new HashMap<>();
-		
 		card.put("name", "Wild Pyromancer");
 		card.put("health", "2");
 		card.put("attack", "3");
