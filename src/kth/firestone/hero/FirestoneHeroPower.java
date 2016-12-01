@@ -1,23 +1,33 @@
 package kth.firestone.hero;
 
 public class FirestoneHeroPower implements HeroPower {
-
+	private String name;
+	private int manaCost;
+	private int originalManaCost;
+	
+	public FirestoneHeroPower(String name, String manaCost){
+		this.name = name;
+		this.manaCost = Integer.parseInt(manaCost);
+		this.originalManaCost = this.manaCost;
+	}
+	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public int getManaCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return manaCost;
 	}
 
 	@Override
 	public int getOriginalManaCost() {
-		// TODO Auto-generated method stub
-		return 0;
+		return originalManaCost;
+	}
+	
+	public void setManaCost(int newManaCost){
+		manaCost = newManaCost;
 	}
 
 }
