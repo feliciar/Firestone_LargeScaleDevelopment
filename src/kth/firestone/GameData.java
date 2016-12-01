@@ -177,6 +177,53 @@ public class GameData {
 		card.put("type", "SPELL");
 		cards.put(card.get("name"), card);
 		
+		card = new HashMap<>();
+		
+		card.put("name", "Shadowform");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "3");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Your Hero Power becomes 'Deal 2 damage'. If already in Shadowform: 3 damage.");
+		card.put("type", "SPELL");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Alexstrasza");
+		card.put("health", "8");
+		card.put("attack", "8");
+		card.put("mana", "9");
+		card.put("race", "DRAGON");
+		card.put("state", "");
+		card.put("buff", "Battlecry: Set a hero's remaining Health to 15.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
+
+		card = new HashMap<>();
+		
+		card.put("name", "Acolyte of Pain");
+		card.put("health", "3");
+		card.put("attack", "1");
+		card.put("mana", "3");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Whenever this minion takes damage, draw a card.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Lorewalker Cho");
+		card.put("health", "4");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Whenever a player casts a spell, put a copy into the other player's hand.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
 	}
 	
 	public HashMap<String, HashMap<String, String>> getCards() {
