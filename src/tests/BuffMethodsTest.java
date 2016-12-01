@@ -73,7 +73,7 @@ public class BuffMethodsTest {
 		Action action2 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", Action.Type.DAMAGE);
 		
 		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
-		Hero hero = new FirestoneHero("targetHero", 4);
+		Hero hero = new FirestoneHero("targetHero", 4, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		when(p1.getId()).thenReturn("currentPlayerId");
@@ -95,7 +95,7 @@ public class BuffMethodsTest {
 	public void testGainOneHealthForCardsInHand() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetHero", Action.Type.DAMAGE);
 		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
-		Hero hero = new FirestoneHero("heroId", 4);
+		Hero hero = new FirestoneHero("heroId", 4, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
@@ -113,7 +113,7 @@ public class BuffMethodsTest {
 	public void testGainTwoForCardsPlayedThisTurn() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetHero", Action.Type.DAMAGE);
 		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
-		Hero hero = new FirestoneHero("heroId", 4);
+		Hero hero = new FirestoneHero("heroId", 4, null);
 		List<Card> cardsPlayed = new ArrayList<>();
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
@@ -167,7 +167,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testDealThreeDamageToAndFreezeCharacter() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", null , -1, "uniqueId-2", Action.Type.PLAYED_CARD);
-		FirestoneHero hero = new FirestoneHero("heroId", 30);
+		FirestoneHero hero = new FirestoneHero("heroId", 30, null);
 		when(p1.getHero()).thenReturn(hero);
 		when(p1.getActiveMinions()).thenReturn(minions);
 		
@@ -251,7 +251,7 @@ public class BuffMethodsTest {
 	public void testSetHeroHealthTo15() {		
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.PLAYED_CARD);
 		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
-		Hero hero = new FirestoneHero("targetId", 14);
+		Hero hero = new FirestoneHero("targetId", 14, null);
 		
 		when(p1.getHero()).thenReturn(hero);
 		

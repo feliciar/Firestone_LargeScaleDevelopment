@@ -21,7 +21,7 @@ public class DamageHandlerTest {
 		DamageHandler dh = new DamageHandler();
 		
 		//Mocked target - Hero
-		FirestoneHero hero = new FirestoneHero("2", 30);
+		FirestoneHero hero = new FirestoneHero("2", 30, null);
 		//Mock attacker - Minion
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minionPlayer1.setSleepy(false);

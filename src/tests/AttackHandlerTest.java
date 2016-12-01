@@ -133,8 +133,8 @@ public class AttackHandlerTest {
 	public void testisMinionAttackValid() {
 		//Mock players
 		List<Player> players = new ArrayList<>();
-		Player player1 = new GamePlayer("1", new FirestoneHero("1", 30));
-		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30));
+		Player player1 = new GamePlayer("1", new FirestoneHero("1", 30, null));
+		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30, null));
 		//Mock player1's minion
 		List<MinionState> state0 = new ArrayList<>();
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
@@ -184,8 +184,8 @@ public class AttackHandlerTest {
 	public void testattack() {
 		List<Player> players = new ArrayList<>();
 		//Mock players
-		Player player1 = new GamePlayer("1", new FirestoneHero("1", 30));
-		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30));
+		Player player1 = new GamePlayer("1", new FirestoneHero("1", 30, null));
+		Player player2 = new GamePlayer("2", new FirestoneHero("2", 30, null));
 		//Player1 minion
 		List<MinionState> state0 = new ArrayList<>();
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 8,8,6,6, MinionRace.NONE, state0, null, null);
