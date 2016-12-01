@@ -15,13 +15,13 @@ public class FirestoneHero implements Hero {
 	private List<HeroState> states;
 	private Weapon weapon;
 	
-	public FirestoneHero(String id, int health) {
+	public FirestoneHero(String id, int health, HeroPower heroPower) {
 		this.id = id;
 		this.health = health;
 		this.maxHealth = health;
 		weapon = new FirestoneWeapon();
 		states = new ArrayList<>();
-		heroPower = new FirestoneHeroPower();
+		this.heroPower = heroPower;
 	}
 	
 	@Override
@@ -97,6 +97,10 @@ public class FirestoneHero implements Hero {
 	
 	public void setAttack(int attack) {
 		this.attack = attack;
+	}
+	
+	public void setHeroPower(HeroPower newHeroPower){
+		heroPower = newHeroPower;
 	}
 	
 	public String toString(){
