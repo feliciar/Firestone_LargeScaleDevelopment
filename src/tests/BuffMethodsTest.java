@@ -62,7 +62,7 @@ public class BuffMethodsTest {
 		Minion minion = new FirestoneMinion("uniqueId", "Ironforge Rifleman", 2,2,2,2,MinionRace.NONE, new ArrayList<>(),"Battlecry: Deal 1 damage.", buffHandler);
 		when(p1.getActiveMinions()).thenReturn(minions);
 		
-		buffMethods.dealOneDamage(action, minion);
+		buffMethods.dealOneDamage(action, minion, true);
 		
 		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 1);
 		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(0));
@@ -82,12 +82,12 @@ public class BuffMethodsTest {
 
 		// When target is hero
 		when(p1.getHero()).thenReturn(hero);
-		buffMethods.whenHoldingDragonDealThreeDamage(action1, minion);
+		buffMethods.whenHoldingDragonDealThreeDamage(action1, minion, true);
 		verify(damageHandler).dealDamageToHero(hero, 3);
 		
 		// When target is minion
 		when(p1.getActiveMinions()).thenReturn(minions);
-		buffMethods.whenHoldingDragonDealThreeDamage(action2, minion);
+		buffMethods.whenHoldingDragonDealThreeDamage(action2, minion, true);
 		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 3);
 		verify(damageHandler).removeDeadMinions(minions);
 	}
@@ -105,7 +105,7 @@ public class BuffMethodsTest {
 		when(p1.getHero()).thenReturn(hero);
 		when(p1.getHand()).thenReturn(hand);
 		
-		buffMethods.gainOneHealthForCardsInHand(action, minion);
+		buffMethods.gainOneHealthForCardsInHand(action, minion, true);
 		
 		assertEquals(6, hero.getHealth());
 	}
@@ -123,7 +123,7 @@ public class BuffMethodsTest {
 		when(p1.getDiscardPileThisTurn()).thenReturn(cardsPlayed);
 		when(p1.getHero()).thenReturn(hero);
 		
-		buffMethods.gainTwoForCardsPlayedThisTurn(action, minion);
+		buffMethods.gainTwoForCardsPlayedThisTurn(action, minion, true);
 		
 		assertEquals(8, hero.getHealth());
 		assertEquals(4, hero.getAttack());
@@ -140,7 +140,7 @@ public class BuffMethodsTest {
 		when(p1.getId()).thenReturn("currentPlayerId");
 		when(p1.getHand()).thenReturn(hand);
 		
-		buffMethods.gainOneAttackForEachOtherCardInHand(action, minion);
+		buffMethods.gainOneAttackForEachOtherCardInHand(action, minion, true);
 		
 		assertEquals(7, minion.getAttack());
 	}
@@ -158,7 +158,7 @@ public class BuffMethodsTest {
 		when(p1.getActiveMinions()).thenReturn(minionsp1);
 		when(p2.getActiveMinions()).thenReturn(minions);
 		
-		buffMethods.afterSpellDealOneDamageToAllMinions(action, minionsp1.get(0));
+		buffMethods.afterSpellDealOneDamageToAllMinions(action, minionsp1.get(0), true);
 		
 		verify(damageHandler).removeDeadMinions(minionsp1);
 		verify(damageHandler).removeDeadMinions(minions);
@@ -172,7 +172,7 @@ public class BuffMethodsTest {
 		when(p1.getHero()).thenReturn(hero);
 		when(p1.getActiveMinions()).thenReturn(minions);
 		
-		buffMethods.dealThreeDamageToAndFreezeCharacter(action, null);
+		buffMethods.dealThreeDamageToAndFreezeCharacter(action, null, true);
 		
 		verify(damageHandler).dealDamageToOneMinion(minions.get(1), 3);
 		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(1));
@@ -198,7 +198,7 @@ public class BuffMethodsTest {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", null, 0, "uniqueId-2", Action.Type.PLAYED_CARD);
 		Minion minion = null;
 		
-		buffMethods.returnOwnMinionToHand(action, minion);
+		buffMethods.returnOwnMinionToHand(action, minion, true);
 		
 		assertTrue(p1.getHand().contains(c));
 		assertEquals(manaCost-2, c.getManaCost());
@@ -212,7 +212,7 @@ public class BuffMethodsTest {
 		c = new FirestoneCard("playedCardId", "Imp", "2", "2", ""+manaCost, Card.Type.MINION.toString(), "", MinionRace.NONE.toString());
 		discardPileThisTurn.add(c);
 		
-		buffMethods.returnOwnMinionToHand(action, minion);
+		buffMethods.returnOwnMinionToHand(action, minion, true);
 		assertEquals(0, c.getManaCost());		
 	}
 	
@@ -222,14 +222,14 @@ public class BuffMethodsTest {
 		Minion minion = null;
 		when(p1.getActiveMinions()).thenReturn(minions);
 		//Verify that the undamaged minion can be killed
-		buffMethods.dealTwoDamageToUndamagedMinion(action, minion);
+		buffMethods.dealTwoDamageToUndamagedMinion(action, minion, true);
 		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(0));
 		
 		//Verify that the damaged minion cannot be targeted
 		action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-2", Action.Type.PLAYED_CARD);
 		int minionHealth = 3;
 		((FirestoneMinion)minions.get(1)).setHealth(minionHealth);
-		buffMethods.dealTwoDamageToUndamagedMinion(action, minion);
+		buffMethods.dealTwoDamageToUndamagedMinion(action, minion, true);
 		assertEquals(minionHealth, minions.get(1).getHealth());
 	}
 	
@@ -240,7 +240,7 @@ public class BuffMethodsTest {
 		
 		when(p1.getActiveMinions()).thenReturn(minions);
 		
-		buffMethods.changeHealthOfAllMinionsToOne(action,minion);
+		buffMethods.changeHealthOfAllMinionsToOne(action,minion, true);
 		for(Player p : action.getPlayers()){
 			for(Minion m : p.getActiveMinions()){
 				assertEquals(1, m.getHealth());
@@ -257,7 +257,7 @@ public class BuffMethodsTest {
 		when(p1.getId()).thenReturn("currentPlayerId");
 		when(p1.getHero()).thenReturn(hero);
 		
-		buffMethods.changeHeroPowerToDealTwoOrThreeDamage(action,minion);
+		buffMethods.changeHeroPowerToDealTwoOrThreeDamage(action,minion, true);
 		
 		assertTrue(hero.getHeroPower().getName().equals("Mind Spike"));
 	}	
@@ -270,7 +270,7 @@ public class BuffMethodsTest {
 		
 		when(p1.getHero()).thenReturn(hero);
 		
-		buffMethods.setHeroHealthTo15(action,minion);
+		buffMethods.setHeroHealthTo15(action,minion, true);
 		
 		assertEquals(15, hero.getHealth());
 		assertEquals(15, hero.getMaxHealth());
@@ -287,7 +287,7 @@ public class BuffMethodsTest {
 		when(p1.getDeck()).thenReturn(new FirestoneDeck(d));
 		when(p1.getHand()).thenReturn(new ArrayList<>());
 		
-		buffMethods.drawCardWhenThisMinionTakesDamage(action,minion);
+		buffMethods.drawCardWhenThisMinionTakesDamage(action,minion, true);
 		
 		assertEquals(1, p1.getHand().size());
 	}
@@ -303,7 +303,7 @@ public class BuffMethodsTest {
 		when(p1.getDiscardPileThisTurn()).thenReturn(d);
 		when(p2.getHand()).thenReturn(new ArrayList<>());
 		
-		buffMethods.copyOponentsPlayedSpellCardIntoHand(action,minion);
+		buffMethods.copyOponentsPlayedSpellCardIntoHand(action,minion, true);
 		
 		assertEquals(1, p2.getHand().size());
 	}

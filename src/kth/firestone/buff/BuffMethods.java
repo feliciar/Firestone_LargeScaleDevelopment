@@ -32,7 +32,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean dealOneDamage(Action action, Minion minion) {
+	public boolean dealOneDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		for (Player p : action.getPlayers()) {
 			for (Minion m : p.getActiveMinions()) {
@@ -51,7 +51,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean whenHoldingDragonDealThreeDamage(Action action, Minion minion) {
+	public boolean whenHoldingDragonDealThreeDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
@@ -81,7 +81,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean gainOneHealthForCardsInHand(Action action, Minion minion) {
+	public boolean gainOneHealthForCardsInHand(Action action, Minion minion, boolean performBuff) {
 		Player currentPlayer = getCurrentPlayer(action);
 		int heroHealth = ((FirestoneHero) currentPlayer.getHero()).getHealth();
 		heroHealth += currentPlayer.getHand().size();
@@ -95,7 +95,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean gainTwoForCardsPlayedThisTurn(Action action, Minion minion) {
+	public boolean gainTwoForCardsPlayedThisTurn(Action action, Minion minion, boolean performBuff) {
 		Player currentPlayer = getCurrentPlayer(action);
 		List<Card> cardsPlayed = ((GamePlayer) currentPlayer).getDiscardPileThisTurn();
 		if (cardsPlayed.size() > 0) {
@@ -114,7 +114,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean gainOneAttackForEachOtherCardInHand(Action action, Minion minion) {
+	public boolean gainOneAttackForEachOtherCardInHand(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		((FirestoneMinion) minion).setAttack(minion.getAttack() + currentPlayer.getHand().size());
@@ -126,7 +126,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 * @param minion the minion that this buff belongs to
 	 */
-	public boolean afterSpellDealOneDamageToAllMinions(Action action, Minion minion) {
+	public boolean afterSpellDealOneDamageToAllMinions(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		Card playedCard = null;
@@ -156,7 +156,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Deal 3 damage to a character and Freeze it."
 	 * @param action the action that just took place
 	 */
-	public boolean dealThreeDamageToAndFreezeCharacter(Action action, Minion minion) {
+	public boolean dealThreeDamageToAndFreezeCharacter(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return true;
 		for (Player p : action.getPlayers()) {
 			// if target is a hero
@@ -182,7 +182,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Return a friendly minion to your hand. It costs (2) less."
 	 * @param action the action that just took place
 	 */
-	public boolean returnOwnMinionToHand(Action action, Minion minion) {
+	public boolean returnOwnMinionToHand(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Minion m : currentPlayer.getActiveMinions()) {
@@ -211,7 +211,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Deal 2 damage to an undamaged minion."
 	 * @param action the action that just took place
 	 */
-	public boolean dealTwoDamageToUndamagedMinion(Action action, Minion minion) {
+	public boolean dealTwoDamageToUndamagedMinion(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return true;
 		for (Player p : action.getPlayers()) {
 			for (Minion m : p.getActiveMinions()) {
@@ -232,7 +232,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Change the Health of ALL minions to 1."
 	 * @param action the action that just took place
 	 */
-	public boolean changeHealthOfAllMinionsToOne(Action action, Minion minion) {
+	public boolean changeHealthOfAllMinionsToOne(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return true;
 		for (Player p : action.getPlayers()) {
 			for (Minion m : p.getActiveMinions()) {
@@ -247,7 +247,7 @@ public class BuffMethods {
 	 * already in Shadowform: 3 damage."
 	 * @param action the action that just took place
 	 */
-	public boolean changeHeroPowerToDealTwoOrThreeDamage(Action action, Minion minion) {
+	public boolean changeHeroPowerToDealTwoOrThreeDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		Hero hero = currentPlayer.getHero(); 
@@ -265,7 +265,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Battlecry: Set a hero's remaining Health to 15."
 	 * @param action the action that just took place
 	 */
-	public boolean setHeroHealthTo15(Action action, Minion minion) {
+	public boolean setHeroHealthTo15(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		for(Player p : action.getPlayers()) {
 			if (p.getHero().getId().equals(action.getTargetId())) {
@@ -284,7 +284,7 @@ public class BuffMethods {
 	 * Method for performing buff: "Whenever this minion takes damage, draw a card."
 	 * @param action the action that just took place
 	 */
-	public boolean drawCardWhenThisMinionTakesDamage(Action action, Minion minion) {
+	public boolean drawCardWhenThisMinionTakesDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		if (action.getActionType().equals(Action.Type.DAMAGE)) {
@@ -299,7 +299,7 @@ public class BuffMethods {
 	 * the other player's hand."
 	 * @param action the action that just took place
 	 */
-	public boolean copyOponentsPlayedSpellCardIntoHand(Action action, Minion minion) {
+	public boolean copyOponentsPlayedSpellCardIntoHand(Action action, Minion minion, boolean performBuff) {
 		if (minion == null) return true;
 		Player currentPlayer = getCurrentPlayer(action);
 		Card playedCard = null;
