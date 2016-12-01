@@ -63,7 +63,7 @@ public class MainTest {
 		assertEquals(game.getPlayerInTurn().getId(), "1");
 		assertEquals(game.getPlayerInTurn().getActiveMinions().get(0).getName(),m1);
 		assertEquals(game.getPlayerInTurn().getHand().size(), 4); 
-		assertEquals(game.getPlayerInTurn().getHero().getMana(), 2);
+		assertEquals(game.getPlayerInTurn().getHero().getMana(), 3);
 
 		//Attack "Imp" with "Imp"
 		Minion minion1 = game.getPlayerInTurn().getActiveMinions().get(0);
@@ -78,7 +78,7 @@ public class MainTest {
 		game.endTurn(game.getPlayerInTurn());
 		game.endTurn(game.getPlayerInTurn());
 		assertEquals(game.getPlayerInTurn().getId(), "1");
-		assertEquals(game.getPlayerInTurn().getHero().getMana(), 3);
+		assertEquals(game.getPlayerInTurn().getHero().getMana(), 4);
 		
 		//Play a card "Imp"
 		game.playMinionCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(0), 0);

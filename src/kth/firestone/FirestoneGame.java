@@ -72,6 +72,7 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position) {
+		System.out.println("playminion card: "+card.getName() +" at position: "+position);
 		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
 		playCardHandler.playMinionCard(player, card, position);
 		
@@ -92,6 +93,7 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position, String targetId) {
+		System.out.println("playminion card with target: "+card.getName() +" at position: "+position);
 		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
 		playCardHandler.playMinionCard(player, card, position);
 		
@@ -132,11 +134,21 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public boolean isPlayCardValid(Player player, Card card) {
+		if(! player.getId().equals(getPlayerInTurn().getId())){
+			return false;
+		}
+		if(card.getName().equals("Imp"));
+			//System.out.println("Is play card valid: "+ playCardHandler.isPlayCardValid(player, card)+ " for player: "+player.getId());
 		return playCardHandler.isPlayCardValid(player, card);
 	}
 
 	@Override
 	public boolean isPlayCardValid(Player player, Card card, String targetId) {
+		if(! player.getId().equals(getPlayerInTurn().getId())){
+			return false;
+		}
+		if(card.getName().equals("Imp"));
+			//System.out.println("Is play card valid: "+ playCardHandler.isPlayCardValid(player, card, targetId)+ " at target: "+targetId+ " for player: "+player.getId());
 		return playCardHandler.isPlayCardValid(player, card, targetId);
 	}
 
@@ -171,6 +183,7 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public List<Event> endTurn(Player player) {
+		System.out.println("Ended turn");
 		if (getPlayerInTurn().equals(player)) {
 			if (player.getId().equals(PLAYER_1_ID)) {
 				playerIndexInTurn = 2;
@@ -216,18 +229,26 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public void start() {
+		System.out.println("Started the game");
 		start(players.get(new Random().nextInt(2)));
 	}
 
 	@Override
 	public void start(Player player) {
+		//player = players.get(1);
+		System.out.println("Started the game with player: "+player.getId());
 		((GamePlayer) player).setHand(createHand(((FirestoneDeck) player.getDeck()).getCards(), 4));
 		int otherPlayerIndex = 0;
+		int mana = player.getHero().getMana()+1;
+		((FirestoneHero)player.getHero()).setMana(mana);
+		((FirestoneHero)player.getHero()).setMaxMana(mana);
+		
 		if (player.getId().equals(PLAYER_1_ID)) {
 			otherPlayerIndex = 1;
 		}
 		Player otherPlayer = players.get(otherPlayerIndex);
 		((GamePlayer) otherPlayer).setHand(createHand(((FirestoneDeck) otherPlayer.getDeck()).getCards(), 3));
+		playerIndexInTurn = Integer.parseInt(player.getId());
 	}
 
 	@Override
