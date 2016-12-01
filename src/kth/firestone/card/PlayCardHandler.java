@@ -119,6 +119,9 @@ public class PlayCardHandler {
     		//TODO throw an error
     		return false;
     	}
+    	if(! player.getHand().contains(card)){
+    		return false;
+    	}
     	
     	return true;
     }
@@ -132,8 +135,9 @@ public class PlayCardHandler {
      * @return true if the play is valid
      */
     public boolean isPlayCardValid(Player player, Card card, String targetId){
-    	//TODO Implement if we have taunts
-    	return true;
+    	//TODO implement more if we have taunts
+    	//return isPlayCardValid(player, card);
+    	return isPlayCardValid(player, card);
     }
     
     public List<MinionState> getMinionStates(Card card) {

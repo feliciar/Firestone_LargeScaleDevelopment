@@ -137,6 +137,10 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, Type.PLAYED_CARD);
+		if(! buffHandler.isPerformBuffValid(action)){
+    		return false;
+    	}
 		if(card.getName().equals("Imp"));
 			//System.out.println("Is play card valid: "+ playCardHandler.isPlayCardValid(player, card)+ " for player: "+player.getId());
 		return playCardHandler.isPlayCardValid(player, card);
@@ -147,6 +151,10 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, Type.PLAYED_CARD);
+		if(! buffHandler.isPerformBuffValid(action)){
+    		return false;
+    	}
 		if(card.getName().equals("Imp"));
 			//System.out.println("Is play card valid: "+ playCardHandler.isPlayCardValid(player, card, targetId)+ " at target: "+targetId+ " for player: "+player.getId());
 		return playCardHandler.isPlayCardValid(player, card, targetId);
