@@ -20,6 +20,7 @@ import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.FirestoneHeroPower;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -248,6 +249,20 @@ public class BuffMethodsTest {
 	}
 	
 	@Test
+	public void testChangeHeroPowerToDealTwoOrThreeDamage() {		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.PLAYED_CARD);
+		Minion minion = null;
+		Hero hero = new FirestoneHero("heroId", 14, new FirestoneHeroPower("name", "2"));
+		
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getHero()).thenReturn(hero);
+		
+		buffMethods.changeHeroPowerToDealTwoOrThreeDamage(action,minion);
+		
+		assertTrue(hero.getHeroPower().getName().equals("Mind Spike"));
+	}	
+	
+	@Test
 	public void testSetHeroHealthTo15() {		
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.PLAYED_CARD);
 		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
@@ -256,6 +271,7 @@ public class BuffMethodsTest {
 		when(p1.getHero()).thenReturn(hero);
 		
 		buffMethods.setHeroHealthTo15(action,minion);
+		
 		assertEquals(15, hero.getHealth());
 		assertEquals(15, hero.getMaxHealth());
 	}
