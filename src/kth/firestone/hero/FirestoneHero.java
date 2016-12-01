@@ -1,5 +1,6 @@
 package kth.firestone.hero;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FirestoneHero implements Hero {
@@ -18,6 +19,9 @@ public class FirestoneHero implements Hero {
 		this.id = id;
 		this.health = health;
 		this.maxHealth = health;
+		weapon = new FirestoneWeapon();
+		states = new ArrayList<>();
+		heroPower = new FirestoneHeroPower();
 	}
 	
 	@Override
