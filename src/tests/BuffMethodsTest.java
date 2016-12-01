@@ -145,22 +145,6 @@ public class BuffMethodsTest {
 	}
 	
 	@Test
-	public void testWhenHoldingDragonGainOneAttackAndTaunt() {
-		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, Action.Type.PLAYED_CARD);
-		Minion minion = new FirestoneMinion("minionCreatedId", "Twilight Guardian", 6,6,2,2, MinionRace.DRAGON, new ArrayList<>(),"Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt.", buffHandler);
-		List<Card> hand = new ArrayList<Card>();
-		hand.add(new FirestoneCard("cardID1", "Midnight Drake", "4", "1", "4", "MINION", null, "DRAGON"));
-		
-		when(p1.getId()).thenReturn("currentPlayerId");
-		when(p1.getHand()).thenReturn(hand);
-		
-		buffMethods.whenHoldingDragonGainOneAttackAndTaunt(action, minion);
-		
-		assertEquals(minion.getAttack(), 3);
-		assertTrue(minion.getStates().contains(MinionState.TAUNT));
-	}
-	
-	@Test
 	public void testAfterSpellDealOneDamageToAllMinions() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", null , -1, null, Action.Type.PLAYED_CARD);
 		List<Minion> minionsp1 = new ArrayList<>();
