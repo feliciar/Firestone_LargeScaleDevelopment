@@ -23,16 +23,12 @@ public class AttackHandler {
 	 */
 	public boolean canAttack(List<Minion> playersActiveMinions, Minion minion) {
 		if (!playersActiveMinions.contains(minion)) {
-			System.err.println("Minion does not belong to player. Cannot attack");
 			return false;
 		} else if (minion.getStates().contains(MinionState.FROZEN)) {
-			System.err.println("Minion was FROZEN, cannot attack");
 			return false;
 		} else if (minion.isSleepy()) {
-			System.err.println("Minion was sleepy, cannot attack");
 			return false;
 		} else if(((FirestoneMinion) minion).wasUsedThisTurn()){
-			System.err.println("Minion was used this turn, cannot attack");
 			return false;
 		}
 		return true;
@@ -60,7 +56,6 @@ public class AttackHandler {
 
 		Minion minion = findMinion(activeMinions, attackerId);
 		if(minion == null){
-			System.err.println("This minion did not exist and therefore cannot attack another minion");
 			return false;
 		}
 		
@@ -77,12 +72,10 @@ public class AttackHandler {
 						return true;
 					}
 				}	
-				System.err.println("Could not find a TAUNT target, cannot attack");
 				return false;
 			}
 			return true;
 		}
-		System.err.println("Could not find target, cannot attack");
 		return false;
 	}
 	
