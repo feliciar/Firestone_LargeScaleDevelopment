@@ -23,7 +23,7 @@ public class FirestoneGameFactory implements GameFactory {
 			gb.setMaxHealth(i, 30)
 			  .setDeck(i, "Imp", "War Golem", "Boulderfist Ogre", 
 				"Ironforge Rifleman", "Blackwing Corruptor", "Twilight Drake")
-			  .setStartingMana(i, startingMana++);
+			  .setStartingMana(i, startingMana);
 		}
 		Game game = gb.build();
 		return game;
