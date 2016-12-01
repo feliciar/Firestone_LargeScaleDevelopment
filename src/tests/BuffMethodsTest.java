@@ -12,7 +12,6 @@ import org.mockito.MockitoAnnotations;
 
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
-import kth.firestone.Action.Type;
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
