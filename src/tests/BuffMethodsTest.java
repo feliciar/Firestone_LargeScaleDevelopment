@@ -3,7 +3,9 @@ package tests;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,6 +18,7 @@ import kth.firestone.buff.BuffHandler;
 import kth.firestone.buff.BuffMethods;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
+import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
@@ -259,5 +262,52 @@ public class BuffMethodsTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testSetHeroHealthTo15() {		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.PLAYED_CARD);
+		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
+		Hero hero = new FirestoneHero("targetId", 14);
+		
+		when(p1.getHero()).thenReturn(hero);
+		
+		buffMethods.setHeroHealthTo15(action,minion);
+		assertEquals(15, hero.getHealth());
+		assertEquals(15, hero.getMaxHealth());
+	}
+	
+	@Test
+	public void testDrawCardWhenThisMinionTakesDamage() {		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.DAMAGE);
+		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
+		Deque<Card> d = new ArrayDeque<>();
+		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
+		
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getDeck()).thenReturn(new FirestoneDeck(d));
+		when(p1.getHand()).thenReturn(new ArrayList<>());
+		
+		buffMethods.drawCardWhenThisMinionTakesDamage(action,minion);
+		
+		assertEquals(1, p1.getHand().size());
+	}
+	
+	@Test
+	public void testCopyOponentsPlayedSpellCardIntoHand() {		
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", Action.Type.DAMAGE);
+		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
+		List<Card> d = new ArrayList<>();
+		d.add(new FirestoneCard("playedCardId","","1","1","1","SPELL","","DRAGON"));
+		
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getDiscardPileThisTurn()).thenReturn(d);
+		when(p2.getHand()).thenReturn(new ArrayList<>());
+		
+		buffMethods.copyOponentsPlayedSpellCardIntoHand(action,minion);
+		
+		assertEquals(1, p2.getHand().size());
+	}
+	
+	
 	
 }
