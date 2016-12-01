@@ -32,7 +32,7 @@ public class BuffHandler {
 		String buff = playedCard.getDescription();
 		
 		if(playedCard.getType()==Card.Type.SPELL || buff.startsWith("Battlecry") || buff.startsWith("Combo"))
-			invokeBuff(action, null, buff, false);
+			invokeBuff(action, null, buff, true);
 	}
 	
 	public boolean isPerformBuffValid(Action action){
@@ -40,7 +40,7 @@ public class BuffHandler {
 		Card playedCard = getPlayedCard(action);
 		String buff = playedCard.getDescription();
 		
-		return invokeBuff(action, null, buff, true);
+		return invokeBuff(action, null, buff, false);
 		
 	}
 	
@@ -51,7 +51,7 @@ public class BuffHandler {
 	public void performBuff(Action action, Minion minion){
 		String buff = ((FirestoneMinion) minion).getBuff();
 		if( ! buff.startsWith("Battlecry: ") && ! buff.startsWith("Combo: ")){
-			invokeBuff(action, minion, buff, false);
+			invokeBuff(action, minion, buff, true);
 		}
 	}
 	
@@ -85,8 +85,6 @@ public class BuffHandler {
 					BuffMethods.class.getDeclaredMethod("gainTwoForCardsPlayedThisTurn", Action.class, Minion.class, boolean.class));
 			methodMap.put("Battlecry: Gain +1 Attack for each other card in your hand.",
 					BuffMethods.class.getDeclaredMethod("gainOneAttackForEachOtherCardInHand", Action.class, Minion.class, boolean.class));
-			methodMap.put("Battlecry: If you're holding a Dragon, gain +1 Attack and Taunt.",
-					BuffMethods.class.getDeclaredMethod("whenHoldingDragonGainOneAttackAndTaunt", Action.class, Minion.class, boolean.class));
 			methodMap.put("After you cast a spell, deal 1 damage to ALL minions.", 
 					BuffMethods.class.getDeclaredMethod("afterSpellDealOneDamageToAllMinions", Action.class, Minion.class, boolean.class));
 			methodMap.put("Deal 3 damage to a character and Freeze it.",

@@ -84,7 +84,7 @@ public class BuffHandlerTest {
 				-1, null, Action.Type.PLAYED_CARD);
 		Minion m = minions1.get(0);
 		buffHandler.performBuffOnPlayedCard(action);
-		verify(buffMethods).dealOneDamage(action,m);
+		verify(buffMethods).dealOneDamage(action,null, true);
 	}
 	
 	@Test
@@ -98,7 +98,7 @@ public class BuffHandlerTest {
 				-1, null, Action.Type.PLAYED_CARD);
 		
 		buffHandler.performBuffOnPlayedCard(action);
-		verify(buffMethods).dealOneDamage(action,null);
+		verify(buffMethods).dealOneDamage(action,null, true);
 	}
 
 	
@@ -112,10 +112,10 @@ public class BuffHandlerTest {
 		
 		buffHandler.performBuff(action, minions1.get(0));
 		
-		verify(buffMethods).afterSpellDealOneDamageToAllMinions(action, minions1.get(0));
+		verify(buffMethods).afterSpellDealOneDamageToAllMinions(action, minions1.get(0),true);
 		
 		buffHandler.performBuff(action, minions2.get(0));
-		verify(buffMethods, times(0)).dealOneDamage(action, minions2.get(0));
+		verify(buffMethods, times(0)).dealOneDamage(action, minions2.get(0),true);
 		
 	}
 	
