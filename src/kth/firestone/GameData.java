@@ -273,6 +273,30 @@ public class GameData {
 		card.put("buff", "Hero Power Deal 2 damage to the enemy hero.");
 		card.put("type", "Hero Power");
 		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Mind Spike");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Deal 2 damage.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
+		
+		card = new HashMap<>();
+		
+		card.put("name", "Mind Shatter");
+		card.put("health", "0");
+		card.put("attack", "0");
+		card.put("mana", "2");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Hero Power Deal 3 damage.");
+		card.put("type", "Hero Power");
+		cards.put(card.get("name"), card);
 	}
 	
 	public HashMap<String, HashMap<String, String>> getCards() {
