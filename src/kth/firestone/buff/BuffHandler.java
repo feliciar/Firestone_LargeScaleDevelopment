@@ -105,6 +105,14 @@ public class BuffHandler {
 					BuffMethods.class.getDeclaredMethod("dealTwoDamageToUndamagedMinion", Action.class, Minion.class));
 			methodMap.put("Change the Health of ALL minions to 1.",
 					BuffMethods.class.getDeclaredMethod("changeHealthOfAllMinionsToOne", Action.class, Minion.class));
+			methodMap.put("Your Hero Power becomes 'Deal 2 damage'. If already in Shadowform: 3 damage.",
+					BuffMethods.class.getDeclaredMethod("changeHeroPowerToDealTwoOrThreeDamage", Action.class, Minion.class));
+			methodMap.put("Battlecry: Set a hero's remaining Health to 15.",
+					BuffMethods.class.getDeclaredMethod("setHeroHealthTo15", Action.class, Minion.class));
+			methodMap.put("Whenever this minion takes damage, draw a card.",
+					BuffMethods.class.getDeclaredMethod("drawCardWhenThisMinionTakesDamage", Action.class, Minion.class));
+			methodMap.put("Whenever a player casts a spell, put a copy into the other player's hand.",
+					BuffMethods.class.getDeclaredMethod("copyOponentsPlayedSpellCardIntoHand", Action.class, Minion.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
