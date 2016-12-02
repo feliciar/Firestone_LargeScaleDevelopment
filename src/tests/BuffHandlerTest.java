@@ -55,7 +55,7 @@ public class BuffHandlerTest {
 		String buff2 = "Battlecry: Deal 1 damage.";
 		minions1.add(new FirestoneMinion("uniqueId", "Wild Pyromancer",2,2,0,0,MinionRace.NONE,new ArrayList<>(), buff, buffHandler));
 		minions2.add(new FirestoneMinion("uniqueId2","Minion",2,2,1,1,MinionRace.NONE,new ArrayList<>(),buff2, buffHandler));
-		minionCard = new FirestoneCard("uniqueId3","","0","0","0","MINION",buff2, "NONE");
+		minionCard = new FirestoneCard("uniqueId3","Minion","0","0","0","MINION",buff2, "NONE");
 		spellCard = new FirestoneCard("","","0","0","0","SPELL","","NONE");
 		
 		when(p1.getId()).thenReturn("1");
@@ -68,10 +68,7 @@ public class BuffHandlerTest {
 		discardPile.add(minionCard);
 	}
 	
-	@Test
-	public void testPerformBuffOnPlayedCard() {
-		
-	}
+	
 	@Test
 	public void testPerformBuffOnPlayedMinionCard(){
 		
@@ -82,9 +79,22 @@ public class BuffHandlerTest {
 		
 		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), minions1.get(0).getId(), 
 				-1, null, Action.Type.PLAYED_CARD);
-		Minion m = minions1.get(0);
 		buffHandler.performBuffOnPlayedCard(action);
 		verify(buffMethods).dealOneDamage(action,null, true);
+	}
+	
+	@Test
+	public void isPerformBuffValid(){
+		when(p1.getDiscardPileThisTurn()).thenReturn(discardPile);
+		when(p1.getActiveMinions()).thenReturn(minions1);
+		when(p2.getActiveMinions()).thenReturn(minions2);
+		List<Card> cards = new ArrayList<>();
+		cards.add(minionCard);
+		when(p2.getHand()).thenReturn(cards);
+		Action action = new Action(players, players.get(1).getId(), minionCard.getId(), null, 
+				-1, "1", Action.Type.PLAYED_CARD);
+		buffHandler.isPerformBuffValid(action);
+		verify(buffMethods).dealOneDamage(action, null, false);
 	}
 	
 	@Test

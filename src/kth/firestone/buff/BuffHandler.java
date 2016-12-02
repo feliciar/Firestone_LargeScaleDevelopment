@@ -36,10 +36,23 @@ public class BuffHandler {
 	}
 	
 	public boolean isPerformBuffValid(Action action){
-		//Minion minion = findCreatedMinion(action);
-		Card playedCard = getPlayedCard(action);
-		String buff = playedCard.getDescription();
+		Card playedCard = null;
 		
+		for(Player p : action.getPlayers()){
+			if(p.getId().equals(action.getCurrentPlayerId())){
+				for(Card c : p.getHand()){
+					if(c.getId().equals(action.getPlayedCardId())){
+						playedCard = c;
+					}
+				}
+			}
+		}
+		
+		
+		String buff = playedCard.getDescription();
+		if(buff.equals("")){
+			return true;
+		}
 		return invokeBuff(action, null, buff, false);
 		
 	}
@@ -121,25 +134,4 @@ public class BuffHandler {
 		}
 		return null;
 	}
-	
-	/*
-	for(Player p : action.getPlayers()){
-		if(p.getId().equals(action.getCurrentPlayerId())){
-			for(Card c : ((GamePlayer) p).getDiscardPileThisTurn()){
-				if(c.getId().equals(action.getPlayedCardId())){
-					buff = c.getDescription();
-					playedCard = c;
-				}
-			}
-			if(action.getMinionCreatedId()!=null){
-				for(Minion  m : p.getActiveMinions()){
-					if(m.getId().equals(action.getMinionCreatedId())){
-						minion = m;
-					}
-				}
-			}
-		}
-	}
-	*/
-
 }

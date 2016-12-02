@@ -92,8 +92,10 @@ public class MainTest {
 		assertEquals(game.getPlayerInTurn().getHero().getMana(), 4);
 		
 		//Play a card with Battlecry: Deal 1 damage and kill "Imp"
-		assertEquals(game.getPlayerInTurn().getHand().get(2).getName(), "Ironforge Rifleman");
-		game.playMinionCard(game.getPlayerInTurn(), game.getPlayerInTurn().getHand().get(2), 0,minionImp.getId());
+		Card c = game.getPlayerInTurn().getHand().get(2);
+		assertEquals(c.getName(), "Ironforge Rifleman");
+		assertTrue(game.isPlayCardValid(game.getPlayerInTurn(),c, minionImp.getId()));
+		game.playMinionCard(game.getPlayerInTurn(),c, 0,minionImp.getId());
 		assertEquals(game.getPlayerInTurn().getActiveMinions().get(0).getName(), "Ironforge Rifleman");
 		assertEquals(game.getPlayers().get(0).getActiveMinions().size(), 0);
 		
