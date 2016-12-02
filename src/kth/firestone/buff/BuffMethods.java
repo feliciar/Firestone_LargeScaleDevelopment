@@ -372,23 +372,85 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean lifeTap(Action action, Minion minion, boolean performBuff){
-		if(!(action.getActionType() == Action.Type.HERO_POWER)){
-			return false;
-		}
-		if(minion != null){
-			return false;
-		}
-		if(action.getTargetId() != null){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null 
+				|| action.getTargetId() != null){
 			return false;
 		}
 		if(performBuff){
 			Player currentPlayer = getCurrentPlayer(action);
-			Card c = ((FirestoneDeck)currentPlayer.getDeck()).getCards().pop();
+			Card c = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
 			currentPlayer.getHand().add(c);
-			((FirestoneHero)currentPlayer.getHero()).reduceHealth(2);
+			((FirestoneHero) currentPlayer.getHero()).reduceHealth(2);
+		}
+		return true;
+	}
+	
+	/**
+	 * Method for performing hero power: "Fireblast: Deal 1 damage."
+	 * @param action the action that just took place
+	 */
+	public boolean fireblast(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
+			return false;
+		}
+		return dealOneDamage(action, minion, performBuff);
+	}
+	
+	/**
+	 * Method for performing hero power: "Lesser Heal: Restore 2 Health."
+	 * @param action the action that just took place
+	 */
+	public boolean lesserHeal(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
+			return false;
+		}
+		// if target is a hero
+		for (Player p : action.getPlayers()) {
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				if (performBuff) {
+					FirestoneHero hero = (FirestoneHero) p.getHero();
+					if (hero.getMaxHealth() < hero.getHealth() + 2) {
+						hero.setHealth(hero.getHealth() + 2);
+					}
+				}
+				return true;
+			}
+		}
+		// if target is a minion
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
+				if (m.getId().equals(action.getTargetId())) {
+					if (performBuff) {
+						if (m.getMaxHealth() < m.getHealth() + 2) {
+							((FirestoneMinion) m).setHealth(m.getHealth() + 2);
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for performing hero power: "Steady Shot: Deal 2 damage to the enemy hero."
+	 * @param action the action that just took place
+	 */
+	public boolean steadyShot(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null 
+				|| action.getTargetId() != null){
+			return false;
+		}
+		for (Player p : action.getPlayers()) {
+			if (!p.getId().equals(action.getCurrentPlayerId())) {
+				if (performBuff) {
+					damageHandler.dealDamageToHero(p.getHero(), 2);
+				}
+				return true;
+			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	private Player getCurrentPlayer(Action action) {
