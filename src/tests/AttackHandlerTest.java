@@ -62,9 +62,7 @@ public class AttackHandlerTest {
 		minionPlayer2 = new FirestoneMinion("200", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, new ArrayList<>(), null, null);
 		minionPlayer2.setSleepy(false);
 		minionsP2.add(minionPlayer2);
-		List<MinionState> state1 = new ArrayList<>();
-		state1.add(MinionState.TAUNT);
-		minionPlayer21 = new FirestoneMinion("210", "Imp", 1,1,1,1,MinionRace.DEMON, state1, null, null);
+		minionPlayer21 = new FirestoneMinion("210", "Imp", 1,1,1,1,MinionRace.DEMON, new ArrayList<>(), null, null);
 		minionPlayer21.setSleepy(false);
 		minionsP2.add(minionPlayer21);
 		
@@ -104,14 +102,6 @@ public class AttackHandlerTest {
 		assertEquals(adversary.getId(), "2");
 	}
 	
-	@Test 
-	public void testgetAdversaryMinionswithTaunt() {
-		List<Minion> minionsTaunt = ah.getAdversaryMinionsWithTaunt(minionsP2);
-		assertEquals(minionsTaunt.size(), 1);
-		
-		List<Minion> minionsNonTaunt = ah.getAdversaryMinionsWithTaunt(minionsP1);
-		assertEquals(minionsNonTaunt.size(), 0);
-	}
 	
 	@Test 
 	public void testfindMinion() {
@@ -126,15 +116,7 @@ public class AttackHandlerTest {
 		when(p1.getId()).thenReturn("1");
 		when(heroP1.getId()).thenReturn("1");
 		when(heroP2.getId()).thenReturn("2");
-		
-		//Test if minion, which is not Taunt but there is a Taunt on the board, is attackable
-		assertFalse(ah.isMinionAttackValid(p1, "100", "200"));
-		//Test if the hero, but a Taunt is on the board, is attackable
-		assertFalse(ah.isMinionAttackValid(p1, "100", "2"));
-		//Test if minion with Taunt as a state is attackable
-		assertTrue(ah.isMinionAttackValid(p1, "100", "210"));
-		
-		minionPlayer21.getStates().clear(); //Taunt is no more on the board
+	
 		//Test if minion is attackable
 		assertTrue(ah.isMinionAttackValid(p1, "100", "200"));
 		//Test if the hero of the adversary is attackable
@@ -151,36 +133,17 @@ public class AttackHandlerTest {
 	@Test
 	public void testattack_AttackerNonValid() {
 		when(p1.getActiveMinions()).thenReturn(minionsP1);
-		when(p2.getActiveMinions()).thenReturn(minionsP2);
 		when(p1.getId()).thenReturn("1");
 		when(p1.getHero()).thenReturn(heroP1);
-		when(p2.getHero()).thenReturn(heroP2);
 		when(heroP1.getId()).thenReturn("1");
-		when(heroP2.getId()).thenReturn("2");
 		
-		// Test to attack the Taunt minion with non valid attacker
+		// Test to attack a minion with non valid attacker
 		ah.attack(p1, "110", "210");
 		verify(damageHandler, never()).dealDamageToTwoMinions(minionPlayer11, minionPlayer21);
 		verify(damageHandler, never()).removeDeadMinions(minionsP1);
 		verify(damageHandler, never()).removeDeadMinions(minionsP2);		
 	}
 	
-	@Test
-	public void testattack_attackerValidTargetNonValid() {
-		when(p1.getActiveMinions()).thenReturn(minionsP1);
-		when(p2.getActiveMinions()).thenReturn(minionsP2);
-		when(p1.getId()).thenReturn("1");
-		when(p1.getHero()).thenReturn(heroP1);
-		when(p2.getHero()).thenReturn(heroP2);
-		when(heroP1.getId()).thenReturn("1");
-		when(heroP2.getId()).thenReturn("2");
-		
-		// Test to attack the minion which is not TAUNT, with a valid attacker
-		ah.attack(p1, "100", "200");
-		verify(damageHandler, never()).dealDamageToTwoMinions(minionPlayer1, minionPlayer2);
-		verify(damageHandler, never()).removeDeadMinions(minionsP1);
-		verify(damageHandler, never()).removeDeadMinions(minionsP2);
-	}
 	
 	@Test
 	public void testattack_AttackerValidTargetValidTaunt() {
@@ -188,11 +151,9 @@ public class AttackHandlerTest {
 		when(p2.getActiveMinions()).thenReturn(minionsP2);
 		when(p1.getId()).thenReturn("1");
 		when(p1.getHero()).thenReturn(heroP1);
-		when(p2.getHero()).thenReturn(heroP2);
 		when(heroP1.getId()).thenReturn("1");
-		when(heroP2.getId()).thenReturn("2");
 		
-		// Test to kill the Taunt minion
+		// Test to kill a minion
 		ah.attack(p1, "100", "210");
 		verify(damageHandler).dealDamageToTwoMinions(minionPlayer1, minionPlayer21);
 		verify(damageHandler).removeDeadMinions(minionsP2);
@@ -205,12 +166,9 @@ public class AttackHandlerTest {
 		when(p2.getActiveMinions()).thenReturn(minionsP2);
 		when(p1.getId()).thenReturn("1");
 		when(p1.getHero()).thenReturn(heroP1);
-		when(p2.getHero()).thenReturn(heroP2);
 		when(heroP1.getId()).thenReturn("1");
-		when(heroP2.getId()).thenReturn("2");
 		
 		//Test to attack other Ogre 
-		minionPlayer21.getStates().clear(); //Taunt is no more on the board
 		ah.attack(p1, "100", "200");
 		verify(damageHandler).dealDamageToTwoMinions(minionPlayer1, minionPlayer2);
 		verify(damageHandler).removeDeadMinions(minionsP1);
@@ -227,10 +185,9 @@ public class AttackHandlerTest {
 		when(heroP1.getId()).thenReturn("1");
 		when(heroP2.getId()).thenReturn("2");
 		
-		minionPlayer21.getStates().clear(); //Taunt is no more on the board
 		//Test to attack the hero see that health is reduced
 		ah.attack(p1, "100", "2");
 		verify(damageHandler).dealDamageToMinionAndHero(minionPlayer1, heroP2);
-
+		verify(damageHandler).removeDeadMinions(minionsP1);
 	}
 }
