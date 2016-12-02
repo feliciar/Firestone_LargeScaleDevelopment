@@ -78,7 +78,7 @@ public class BuffHandlerTest {
 		
 		
 		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), minions1.get(0).getId(), 
-				-1, null, Action.Type.PLAYED_CARD);
+				-1, null, null, Action.Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		verify(buffMethods).dealOneDamage(action,null, true);
 	}
@@ -92,7 +92,7 @@ public class BuffHandlerTest {
 		cards.add(minionCard);
 		when(p2.getHand()).thenReturn(cards);
 		Action action = new Action(players, players.get(1).getId(), minionCard.getId(), null, 
-				-1, "1", Action.Type.PLAYED_CARD);
+				-1, "1", null, Action.Type.PLAYED_CARD);
 		buffHandler.isPerformBuffValid(action);
 		verify(buffMethods).dealOneDamage(action, null, false);
 	}
@@ -105,7 +105,7 @@ public class BuffHandlerTest {
 		
 		
 		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), null, 
-				-1, null, Action.Type.PLAYED_CARD);
+				-1, null, null, Action.Type.PLAYED_CARD);
 		
 		buffHandler.performBuffOnPlayedCard(action);
 		verify(buffMethods).dealOneDamage(action,null, true);
@@ -118,7 +118,7 @@ public class BuffHandlerTest {
 		when(p2.getActiveMinions()).thenReturn(minions2);
 		
 		Action action = new Action(players, players.get(0).getId(), minionCard.getId(), null, 
-				-1, null, Action.Type.PLAYED_CARD);
+				-1, null, null, Action.Type.PLAYED_CARD);
 		
 		buffHandler.performBuff(action, minions1.get(0));
 		
@@ -134,7 +134,7 @@ public class BuffHandlerTest {
 		Map<String, Method> methods = buffHandler.createMethodMap();
 		for(String methodString : methods.keySet()){
 		assertTrue(buffHandler.invokeBuff(new Action(players, players.get(0).getId(), minionCard.getId(), null, 
-				-1, null, Action.Type.PLAYED_CARD), minions1.get(0), methodString,false));
+				-1, null, null, Action.Type.PLAYED_CARD), minions1.get(0), methodString,false));
 	
 		}
 	}
