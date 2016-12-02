@@ -133,7 +133,7 @@ public class BuffHandlerTest {
 	public void testMap(){
 		Map<String, Method> methods = buffHandler.createMethodMap();
 		for(String methodString : methods.keySet()){
-		assertTrue(buffHandler.invokeBuff(new Action(players, players.get(0).getId(), minionCard.getId(), null, 
+		assert(buffHandler.invokeBuff(new Action(players, players.get(0).getId(), minionCard.getId(), null, 
 				-1, null, null, Action.Type.PLAYED_CARD), minions1.get(0), methodString,false));
 	
 		}
