@@ -59,6 +59,10 @@ public class BuffMethodsTest {
 	@Test
 	public void testDealOneDamage() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", Action.Type.DAMAGE);
+		FirestoneHero hero = new FirestoneHero("heroId", 30, null);
+		
+		when(p1.getHero()).thenReturn(hero);
+		when(p2.getHero()).thenReturn(hero);
 		when(p1.getActiveMinions()).thenReturn(minions);
 		
 		buffMethods.dealOneDamage(action, null, true);
@@ -75,11 +79,13 @@ public class BuffMethodsTest {
 		Hero hero = new FirestoneHero("targetHero", 4, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
+		
 		when(p1.getId()).thenReturn("currentPlayerId");
 		when(p1.getHand()).thenReturn(hand);
 
 		// When target is hero
 		when(p1.getHero()).thenReturn(hero);
+		when(p2.getHero()).thenReturn(hero);
 		buffMethods.whenHoldingDragonDealThreeDamage(action1, null, true);
 		verify(damageHandler).dealDamageToHero(hero, 3);
 		
@@ -165,6 +171,7 @@ public class BuffMethodsTest {
 	public void testDealThreeDamageToAndFreezeCharacter() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", null , -1, "uniqueId-2", Action.Type.PLAYED_CARD);
 		FirestoneHero hero = new FirestoneHero("heroId", 30, null);
+		
 		when(p1.getHero()).thenReturn(hero);
 		when(p1.getActiveMinions()).thenReturn(minions);
 		

@@ -33,8 +33,18 @@ public class BuffMethods {
 	 */
 	public boolean dealOneDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return false;
+		// if target is a hero
 		for (Player p : action.getPlayers()) {
-			for (Minion m : p.getActiveMinions()) { // TODO: heroes
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				if (performBuff) {
+					damageHandler.dealDamageToHero(p.getHero(), 1);
+				}
+				return true;
+			}
+		}
+		// if target is a minion
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
 						damageHandler.dealDamageToOneMinion(m, 1);
@@ -56,15 +66,17 @@ public class BuffMethods {
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().get().equals(MinionRace.DRAGON)) {
+				// if target is a hero
 				for (Player p : action.getPlayers()) {
-					// if target is a hero
 					if (p.getHero().getId().equals(action.getTargetId())) {
 						if (performBuff) {
 							damageHandler.dealDamageToHero(p.getHero(), 3);
 						}
 						return true;
 					}
-					// if target is a minion
+				}
+				// if target is a minion
+				for (Player p : action.getPlayers()) {
 					for (Minion m : p.getActiveMinions()) {
 						if (m.getId().equals(action.getTargetId())) {
 							if (performBuff) {
