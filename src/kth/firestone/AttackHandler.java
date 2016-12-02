@@ -129,7 +129,9 @@ public class AttackHandler {
 			// Target was not a minion
 			if (adversary.getHero().getId().equals(targetId)) {
 				targetHero = (FirestoneHero) adversary.getHero();
-			}				
+			}else if (player.getHero().getId().equals(targetId)) {
+				targetHero = (FirestoneHero) player.getHero();
+			}
 		}
 		
 		if (targetMinion != null) {
