@@ -137,7 +137,20 @@ public class BuffHandler {
 			methodMap.put("Whenever this minion takes damage, draw a card.",
 					BuffMethods.class.getDeclaredMethod("drawCardWhenThisMinionTakesDamage", Action.class, Minion.class, boolean.class));
 			methodMap.put("Whenever a player casts a spell, put a copy into the other player's hand.",
-					BuffMethods.class.getDeclaredMethod("copyOponentsPlayedSpellCardIntoHand", Action.class, Minion.class, boolean.class));
+					BuffMethods.class.getDeclaredMethod("copyOpponentsPlayedSpellCardIntoHand", Action.class, Minion.class, boolean.class));
+			methodMap.put("Life Tap", 
+					BuffMethods.class.getDeclaredMethod("lifeTap", Action.class, Minion.class, boolean.class));
+			/*methodMap.put("Fireblast", 
+					BuffMethods.class.getDeclaredMethod("fireblast", Action.class, Minion.class, boolean.class));
+			methodMap.put("Lesser Heal", 
+					BuffMethods.class.getDeclaredMethod("lesserHeal", Action.class, Minion.class, boolean.class));
+			methodMap.put("Steady Shot", 
+					BuffMethods.class.getDeclaredMethod("steadyShot", Action.class, Minion.class, boolean.class));
+			methodMap.put("Mind Spike", 
+					BuffMethods.class.getDeclaredMethod("mindSpike", Action.class, Minion.class, boolean.class));
+			methodMap.put("Mind Shatter", 
+					BuffMethods.class.getDeclaredMethod("mindShatter", Action.class, Minion.class, boolean.class));
+*/
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
