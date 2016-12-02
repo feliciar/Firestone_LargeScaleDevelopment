@@ -75,20 +75,6 @@ public class AttackHandler {
 		}
 		
 		if(canAttack(activeMinions, minion)) {
-			Player adversary = getAdversary(player.getId());
-		
-			// Find if the adversary has a TAUNT on the board and who it is.
-			List<Minion> tauntingMinions = getAdversaryMinionsWithTaunt(adversary.getActiveMinions());
-			
-			if (tauntingMinions.size() != 0) {
-				// There was at least one taunt minion
-				for (Minion m : tauntingMinions){
-					if (m.getId().equals(targetId)){
-						return true;
-					}
-				}	
-				return false;
-			}
 			return true;
 		}
 		return false;
@@ -101,16 +87,7 @@ public class AttackHandler {
 		return players.get(0);
 	}
 	
-	public List<Minion> getAdversaryMinionsWithTaunt(List<Minion> adversaryActiveMinions) {
-		List<Minion> tauntingMinions = new ArrayList<Minion>();
-		for(Minion m : adversaryActiveMinions){
-			if (m.getStates().contains(MinionState.TAUNT)){
-				tauntingMinions.add(m);
-			}	
-		}
-		
-		return tauntingMinions;
-	}
+	
 	
 	public Minion findMinion(List<Minion> activeMinions, String minionId) {
 		Minion minion = null;
