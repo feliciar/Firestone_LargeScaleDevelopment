@@ -30,62 +30,68 @@ public class BuffMethods {
 	/**
 	 * Method for performing buff: "Battlecry: Deal 1 damage."
 	 * @param action the action that just took place
-	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean dealOneDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion != null) return false;
 		for (Player p : action.getPlayers()) {
-			for (Minion m : p.getActiveMinions()) {
+			for (Minion m : p.getActiveMinions()) { // TODO: heroes
 				if (m.getId().equals(action.getTargetId())) {
-					damageHandler.dealDamageToOneMinion(m, 1);
-					damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+					if (performBuff) {
+						damageHandler.dealDamageToOneMinion(m, 1);
+						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+					}
 					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
 	 * Method for performing buff: "Battlecry: If you're holding a Dragon, deal 3 damage."
 	 * @param action the action that just took place
-	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean whenHoldingDragonDealThreeDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().get().equals(MinionRace.DRAGON)) {
 				for (Player p : action.getPlayers()) {
 					// if target is a hero
 					if (p.getHero().getId().equals(action.getTargetId())) {
-						damageHandler.dealDamageToHero(p.getHero(), 3);
+						if (performBuff) {
+							damageHandler.dealDamageToHero(p.getHero(), 3);
+						}
 						return true;
 					}
 					// if target is a minion
 					for (Minion m : p.getActiveMinions()) {
 						if (m.getId().equals(action.getTargetId())) {
-							damageHandler.dealDamageToOneMinion(m, 3);
-							damageHandler.removeDeadMinions(p.getActiveMinions());
+							if (performBuff) {
+								damageHandler.dealDamageToOneMinion(m, 3);
+								damageHandler.removeDeadMinions(p.getActiveMinions());
+							}
 							return true;
 						}
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
 	 * Method for performing buff: "Battlecry: Gain +1 Health for each card in your hand."
 	 * @param action the action that just took place
-	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean gainOneHealthForCardsInHand(Action action, Minion minion, boolean performBuff) {
-		Player currentPlayer = getCurrentPlayer(action);
-		int heroHealth = ((FirestoneHero) currentPlayer.getHero()).getHealth();
-		heroHealth += currentPlayer.getHand().size();
-		((FirestoneHero) currentPlayer.getHero()).setHealth(heroHealth);
+		if (minion != null) return false;
+		if (performBuff) {
+			Player currentPlayer = getCurrentPlayer(action);
+			int heroHealth = ((FirestoneHero) currentPlayer.getHero()).getHealth();
+			heroHealth += currentPlayer.getHand().size();
+			((FirestoneHero) currentPlayer.getHero()).setHealth(heroHealth);
+		}
 		return true;
 	}
 	
@@ -93,20 +99,23 @@ public class BuffMethods {
 	/**
 	 * Method for performing buff: "Combo: Gain +2/+2 for each card played earlier this turn."
 	 * @param action the action that just took place
-	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean gainTwoForCardsPlayedThisTurn(Action action, Minion minion, boolean performBuff) {
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		List<Card> cardsPlayed = ((GamePlayer) currentPlayer).getDiscardPileThisTurn();
 		if (cardsPlayed.size() > 0) {
-			int increase = cardsPlayed.size()*2;
-			FirestoneHero hero = ((FirestoneHero) currentPlayer.getHero());
-			hero.setHealth(hero.getHealth() + increase);
-			hero.setAttack(hero.getAttack() + increase);
+			if (performBuff) {
+				int increase = cardsPlayed.size()*2;
+				FirestoneHero hero = ((FirestoneHero) currentPlayer.getHero());
+				hero.setHealth(hero.getHealth() + increase);
+				hero.setAttack(hero.getAttack() + increase);
+			}
+			return true;
 		} else {
 			System.err.println("Error: No cards were played earlier.");
+			return false;
 		}
-		return true;
 	}
 	
 	/**
@@ -115,9 +124,11 @@ public class BuffMethods {
 	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean gainOneAttackForEachOtherCardInHand(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
-		Player currentPlayer = getCurrentPlayer(action);
-		((FirestoneMinion) minion).setAttack(minion.getAttack() + currentPlayer.getHand().size());
+		if (minion == null) return false;
+		if (performBuff) {
+			Player currentPlayer = getCurrentPlayer(action);
+			((FirestoneMinion) minion).setAttack(minion.getAttack() + currentPlayer.getHand().size());
+		}
 		return true;
 	}
 	
@@ -127,7 +138,7 @@ public class BuffMethods {
 	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean afterSpellDealOneDamageToAllMinions(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion == null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		Card playedCard = null;
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
@@ -137,19 +148,22 @@ public class BuffMethods {
 			}
 		}
 		if (playedCard.getType().equals(Card.Type.SPELL)) {
-			List<Minion> minionsToDealDamageTo = new ArrayList<>();
-			for (Player p : action.getPlayers()) {
-				for (Minion m : p.getActiveMinions()) {
-					if (m.equals(minion)) continue;
-					minionsToDealDamageTo.add(m);
+			if (performBuff) {
+				List<Minion> minionsToDealDamageTo = new ArrayList<>();
+				for (Player p : action.getPlayers()) {
+					for (Minion m : p.getActiveMinions()) {
+						if (m.equals(minion)) continue;
+						minionsToDealDamageTo.add(m);
+					}
+				}
+				damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
+				for (Player p : action.getPlayers()) {
+					damageHandler.removeDeadMinions(p.getActiveMinions());
 				}
 			}
-			damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
-			for (Player p : action.getPlayers()) {
-				damageHandler.removeDeadMinions(p.getActiveMinions());
-			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -157,25 +171,29 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean dealThreeDamageToAndFreezeCharacter(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return true;
+		if (minion != null) return false;
 		for (Player p : action.getPlayers()) {
 			// if target is a hero
 			if (p.getHero().getId().equals(action.getTargetId())) {
-				damageHandler.dealDamageToHero(p.getHero(), 3);
-				p.getHero().getStates().add(HeroState.FROZEN);
+				if (performBuff) {
+					damageHandler.dealDamageToHero(p.getHero(), 3);
+					p.getHero().getStates().add(HeroState.FROZEN);
+				}
 				return true;
 			}
 			// if target is a minion
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
-					damageHandler.dealDamageToOneMinion(m, 3);
-					damageHandler.removeDeadMinion(p.getActiveMinions(), m);
-					m.getStates().add(MinionState.FROZEN);
+					if (performBuff) {
+						damageHandler.dealDamageToOneMinion(m, 3);
+						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+						m.getStates().add(MinionState.FROZEN);
+					}
 					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -183,7 +201,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean returnOwnMinionToHand(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return true;
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Minion m : currentPlayer.getActiveMinions()) {
 			if (m.getId().equals(action.getTargetId())) {
@@ -192,19 +210,21 @@ public class BuffMethods {
 				for (List<Card> turnPile: pile) {
 					for (Card c : turnPile) {
 						if (c.getName().equals(m.getName())) {
-							// this is the card we want to return
-							int mana = Math.max(0, c.getOriginalManaCost() - 2);
-							((FirestoneCard) c).setManaCost(mana);
-							currentPlayer.getHand().add(c);
-							// remove minion from the board
-							currentPlayer.getActiveMinions().remove(m);
+							if (performBuff) {
+								// this is the card we want to return
+								int mana = Math.max(0, c.getOriginalManaCost() - 2);
+								((FirestoneCard) c).setManaCost(mana);
+								currentPlayer.getHand().add(c);
+								// remove minion from the board
+								currentPlayer.getActiveMinions().remove(m);
+							}
 							return true;
 						}
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -212,20 +232,22 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean dealTwoDamageToUndamagedMinion(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return true;
+		if (minion != null) return false;
 		for (Player p : action.getPlayers()) {
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					// this is the minion we want to deal damage to
 					if (m.getOriginalHealth() == m.getHealth()) {
-						damageHandler.dealDamageToOneMinion(m, 2);
-						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+						if (performBuff) {
+							damageHandler.dealDamageToOneMinion(m, 2);
+							damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+						}
 						return true;
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -233,10 +255,12 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean changeHealthOfAllMinionsToOne(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return true;
-		for (Player p : action.getPlayers()) {
-			for (Minion m : p.getActiveMinions()) {
-				((FirestoneMinion) m).setHealth(1);
+		if (minion != null) return false;
+		if (performBuff) {
+			for (Player p : action.getPlayers()) {
+				for (Minion m : p.getActiveMinions()) {
+					((FirestoneMinion) m).setHealth(1);
+				}
 			}
 		}
 		return true;
@@ -248,15 +272,17 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean changeHeroPowerToDealTwoOrThreeDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return true;
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		Hero hero = currentPlayer.getHero(); 
-		if (hero.getHeroPower().getName().equals("Mind Spike")) {
-			// 3 damage
-			((FirestoneHero) hero).setHeroPower(new FirestoneHeroPower("Mind Shatter", "2"));
-		} else {
-			// 2 damage
-			((FirestoneHero) hero).setHeroPower(new FirestoneHeroPower("Mind Spike", "2"));
+		if (performBuff) {
+			if (hero.getHeroPower().getName().equals("Mind Spike")) {
+				// 3 damage
+				((FirestoneHero) hero).setHeroPower(new FirestoneHeroPower("Mind Shatter", "2"));
+			} else {
+				// 2 damage
+				((FirestoneHero) hero).setHeroPower(new FirestoneHeroPower("Mind Spike", "2"));
+			}
 		}
 		return true;
 	}
@@ -266,18 +292,20 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean setHeroHealthTo15(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion != null) return false;
 		for(Player p : action.getPlayers()) {
 			if (p.getHero().getId().equals(action.getTargetId())) {
-				FirestoneHero hero = (FirestoneHero) p.getHero();
-				if (hero.getMaxHealth() < 15) {
-					hero.setMaxHealth(15);
+				if (performBuff) {
+					FirestoneHero hero = (FirestoneHero) p.getHero();
+					if (hero.getMaxHealth() < 15) {
+						hero.setMaxHealth(15);
+					}
+					hero.setHealth(15);
 				}
-				hero.setHealth(15);
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -285,13 +313,16 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean drawCardWhenThisMinionTakesDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		if (action.getActionType().equals(Action.Type.DAMAGE)) {
-			Card drawnCard = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
-			currentPlayer.getHand().add(drawnCard);
+			if (performBuff) {
+				Card drawnCard = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
+				currentPlayer.getHand().add(drawnCard);
+			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -300,7 +331,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean copyOponentsPlayedSpellCardIntoHand(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return true;
+		if (minion != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		Card playedCard = null;
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
@@ -310,13 +341,16 @@ public class BuffMethods {
 			}
 		}
 		if (playedCard.getType().equals(Card.Type.SPELL)) {
-			if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
-				action.getPlayers().get(1).getHand().add(playedCard);
-			} else {
-				action.getPlayers().get(0).getHand().add(playedCard);
+			if (performBuff) {
+				if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
+					action.getPlayers().get(1).getHand().add(playedCard);
+				} else {
+					action.getPlayers().get(0).getHand().add(playedCard);
+				}
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private Player getCurrentPlayer(Action action) {
