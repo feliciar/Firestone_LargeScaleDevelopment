@@ -125,11 +125,17 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public boolean canAttack(Player player, Minion minion) {
+		if(! player.equals(getPlayerInTurn())){
+			return false;
+		}
 		return attackHandler.canAttack(player.getActiveMinions(), minion);
 	}
 
 	@Override
 	public boolean isAttackValid(Player player, String attackerId, String targetId) {
+		if(! player.equals(getPlayerInTurn())){
+			return false;
+		}
 		return attackHandler.isAttackValid(player, attackerId, targetId);
 	}
 
