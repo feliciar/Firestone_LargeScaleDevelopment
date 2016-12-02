@@ -8,7 +8,8 @@ public class Action {
 	
 	public enum Type {
 		PLAYED_CARD,
-		DAMAGE
+		DAMAGE,
+		HERO_POWER
 	}
 	
 	private List<Player> players;

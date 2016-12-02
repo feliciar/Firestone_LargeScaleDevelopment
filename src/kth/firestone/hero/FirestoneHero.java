@@ -12,6 +12,7 @@ public class FirestoneHero implements Hero {
 	private int mana;
 	private int attack;
 	private HeroPower heroPower;
+	private boolean hasUsedHeroPower = false;
 	private List<HeroState> states;
 	private Weapon weapon;
 	
@@ -101,6 +102,14 @@ public class FirestoneHero implements Hero {
 	
 	public void setHeroPower(HeroPower newHeroPower){
 		heroPower = newHeroPower;
+	}
+	
+	public void setHasUsedHeroPower(boolean hasUsedHeroPower){
+		this.hasUsedHeroPower = hasUsedHeroPower;
+	}
+	
+	public boolean hasUsedHeroPower(){
+		return hasUsedHeroPower;
 	}
 	
 	public String toString(){
