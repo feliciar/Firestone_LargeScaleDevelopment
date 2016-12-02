@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kth.firestone.hero.FirestoneHero;
+import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionState;
@@ -35,6 +36,15 @@ public class AttackHandler {
 	}
 	
 	/**
+	 * Checks if a hero can be used to attack.
+	 */
+	public boolean heroCanAttack(Hero hero){
+		//TODO Check if the hero has a weapon (if not, false) and if the hero has been used this turn (if true, false). 
+		
+		return true;
+	}
+	
+	/**
 	 * Check if an attack is valid to perform.
 	 */
 	public boolean isAttackValid(Player player, String attackerId, String targetId) {
@@ -47,7 +57,12 @@ public class AttackHandler {
 	}
 	
 	public boolean isHeroAttackValid(Player player, String attackerId, String targetId) {
-		// TODO implement hero attacks
+		Hero hero = player.getHero(); 
+		if(hero.getId().equals("attackerId")) {
+			if (heroCanAttack(hero)) {
+				return true;
+			}
+		}	
 		return false;
 	}
 	
@@ -113,9 +128,23 @@ public class AttackHandler {
 		if (!isAttackValid(player, attackerId, targetId)) {
 			return events;
 		}
-		// TODO check if hero is attacking.
+		
+		if (player.getHero().getId().equals(attackerId)) {
+			//The hero is the attacker
+			events = attackPerformedByHero(player, attackerId, targetId);
+		} else {
+			//Minion is the attacker
+			events = attackPerformedByMinion(player, attackerId, targetId);
+		}
+		
+		return events;
+	}
+	
+	public List<Event> attackPerformedByMinion(Player player, String attackerId, String targetId){
+		List<Event> events = new ArrayList<Event>();
 		
 		FirestoneMinion attacker = (FirestoneMinion) findMinion(player.getActiveMinions(), attackerId);
+		
 		Player adversary = getAdversary(player.getId());
 		FirestoneMinion targetMinion = (FirestoneMinion) findMinion(adversary.getActiveMinions(), targetId);
 		FirestoneHero targetHero = null;
@@ -137,8 +166,16 @@ public class AttackHandler {
 		} else {
 			damageHandler.dealDamageToMinionAndHero(attacker, targetHero);
 			attacker.setUsedThisTurn(true);
-			//TODO check for defeat (hero)
+			damageHandler.removeDeadMinions(player.getActiveMinions());
 		}
+		
+		return events;
+	}
+	
+	public List<Event> attackPerformedByHero(Player player, String attackerId, String targetId){
+		List<Event> events = new ArrayList<Event>();
+		// TODO make Hero attack a minion/hero
+		
 		return events;
 	}
 }
