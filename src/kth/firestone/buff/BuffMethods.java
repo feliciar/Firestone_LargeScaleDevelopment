@@ -365,6 +365,27 @@ public class BuffMethods {
 		return false;
 	}
 	
+	/**
+	 * Method for performing hero power: "Life Tap: Draw a card and take 2 damage."
+	 * @param action the action that just took place
+	 */
+	public boolean lifeTap(Action action, Minion minion, boolean performBuff){
+		if(! (action.getActionType()==Action.Type.HERO_POWER)){
+			return false;
+		}
+		if( minion !=null ){
+			return false;
+		}
+		if(performBuff){
+			Player player = this.getCurrentPlayer(action);
+			Card c = ((FirestoneDeck)player.getDeck()).getCards().pop();
+			player.getHand().add(c);
+			((FirestoneHero)player.getHero()).reduceHealth(2);
+		}
+		
+		return true;
+	}
+	
 	private Player getCurrentPlayer(Action action) {
 		for (Player p : action.getPlayers()) {
 			if (p.getId().equals(action.getCurrentPlayerId())) {
