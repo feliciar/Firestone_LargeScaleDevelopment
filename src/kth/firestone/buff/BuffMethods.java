@@ -372,17 +372,20 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean lifeTap(Action action, Minion minion, boolean performBuff){
-		if(! (action.getActionType()==Action.Type.HERO_POWER)){
+		if(!(action.getActionType() == Action.Type.HERO_POWER)){
 			return false;
 		}
-		if( minion !=null ){
+		if(minion != null){
+			return false;
+		}
+		if(action.getTargetId() != null){
 			return false;
 		}
 		if(performBuff){
-			Player player = this.getCurrentPlayer(action);
-			Card c = ((FirestoneDeck)player.getDeck()).getCards().pop();
-			player.getHand().add(c);
-			((FirestoneHero)player.getHero()).reduceHealth(2);
+			Player currentPlayer = getCurrentPlayer(action);
+			Card c = ((FirestoneDeck)currentPlayer.getDeck()).getCards().pop();
+			currentPlayer.getHand().add(c);
+			((FirestoneHero)currentPlayer.getHero()).reduceHealth(2);
 		}
 		
 		return true;
