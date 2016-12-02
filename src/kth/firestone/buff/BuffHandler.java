@@ -68,14 +68,36 @@ public class BuffHandler {
 		}
 	}
 	
-	public boolean invokeBuff(Action action, Minion minion, String buff, boolean checkIfBuffValid){
+	public boolean isPerformHeroPowerValid(Action action){
+		Player player;
+		if(action.getCurrentPlayerId().equals("1")){
+			player = action.getPlayers().get(0);
+		}else{
+			player = action.getPlayers().get(1);
+		}
+		String buff = player.getHero().getHeroPower().getName();
+		return invokeBuff(action, null, buff, false);
+	}
+	
+	public void performHeroPower(Action action){
+		Player player;
+		if(action.getCurrentPlayerId().equals("1")){
+			player = action.getPlayers().get(0);
+		}else{
+			player = action.getPlayers().get(1);
+		}
+		String buff = player.getHero().getHeroPower().getName();
+		invokeBuff(action, null, buff, true);
+	}
+	
+	public boolean invokeBuff(Action action, Minion minion, String buff, boolean performBuff){
 		try {
 			if( ! methodMap.containsKey(buff)){
 				System.err.println("The buff did not exist in BuffHandler's method map. Buff: "+buff);
 				return false;
 			}
 			if(! buff.equals("")){
-				methodMap.get(buff).invoke(buffMethods, action, minion, checkIfBuffValid);
+				methodMap.get(buff).invoke(buffMethods, action, minion, performBuff);
 				return true;
 			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
