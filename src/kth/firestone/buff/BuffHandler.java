@@ -48,7 +48,6 @@ public class BuffHandler {
 			}
 		}
 		
-		
 		String buff = playedCard.getDescription();
 		if(buff.equals("")){
 			return true;
@@ -97,8 +96,7 @@ public class BuffHandler {
 				return false;
 			}
 			if(! buff.equals("")){
-				methodMap.get(buff).invoke(buffMethods, action, minion, performBuff);
-				return true;
+				return (boolean) methodMap.get(buff).invoke(buffMethods, action, minion, performBuff);
 			}
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
