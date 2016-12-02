@@ -50,7 +50,11 @@ public class BuffHandler {
 		
 		String buff = playedCard.getDescription();
 		if(buff.equals("")){
-			return true;
+			if(action.getTargetId() == null){
+				return true;
+			}else{
+				return false;				
+			}
 		}
 		return invokeBuff(action, null, buff, false);
 		
