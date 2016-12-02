@@ -376,13 +376,17 @@ public class BuffMethods {
 				|| action.getTargetId() != null){
 			return false;
 		}
-		if(performBuff){
-			Player currentPlayer = getCurrentPlayer(action);
-			Card c = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
-			currentPlayer.getHand().add(c);
-			((FirestoneHero) currentPlayer.getHero()).reduceHealth(2);
+		Player currentPlayer = getCurrentPlayer(action);
+		FirestoneDeck deck = (FirestoneDeck) currentPlayer.getDeck();
+		if (deck.size() > 0) {
+			if(performBuff) {
+				Card c = deck.getCards().pop();
+				currentPlayer.getHand().add(c);
+				((FirestoneHero) currentPlayer.getHero()).reduceHealth(2);
+			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
