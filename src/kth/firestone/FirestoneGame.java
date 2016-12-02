@@ -55,7 +55,7 @@ public class FirestoneGame extends Observable implements Game {
 	@Override
 	public List<Event> playSpellCard(Player player, Card card) {
 		playCardHandler.playSpellCard(player, card);
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
 		return null;
@@ -65,7 +65,7 @@ public class FirestoneGame extends Observable implements Game {
 	@Override
 	public List<Event> playSpellCard(Player player, Card card, String targetId) {
 		playCardHandler.playSpellCard(player, card);
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
 		return null;
@@ -83,7 +83,7 @@ public class FirestoneGame extends Observable implements Game {
 				playedMinion = m;
 			}
 		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, null, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, null, null, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
 		if(playedMinion != null){
@@ -104,7 +104,7 @@ public class FirestoneGame extends Observable implements Game {
 				playedMinion = m;
 			}
 		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, targetId, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, targetId, null, Type.PLAYED_CARD);
 		buffHandler.performBuffOnPlayedCard(action);
 		this.notifyObservers(action);
 		if(playedMinion != null){
@@ -138,7 +138,7 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
 		if(! buffHandler.isPerformBuffValid(action)){
     		return false;
     	}
@@ -152,7 +152,7 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, Type.PLAYED_CARD);
+		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
 		if(! buffHandler.isPerformBuffValid(action)){
     		return false;
     	}
@@ -178,7 +178,7 @@ public class FirestoneGame extends Observable implements Game {
 		if(((FirestoneHero)player.getHero()).hasUsedHeroPower()){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), null, null, -1, null, Type.HERO_POWER);
+		Action action = new Action(players, player.getId(), null, null, -1, null, null, Type.HERO_POWER);
 		return buffHandler.isPerformHeroPowerValid(action);
 	}
 
@@ -194,7 +194,7 @@ public class FirestoneGame extends Observable implements Game {
 		if(((FirestoneHero)player.getHero()).hasUsedHeroPower()){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), null, null, -1, targetId, Type.HERO_POWER);
+		Action action = new Action(players, player.getId(), null, null, -1, targetId, null, Type.HERO_POWER);
 		return buffHandler.isPerformHeroPowerValid(action);
 	}
 
@@ -203,7 +203,7 @@ public class FirestoneGame extends Observable implements Game {
 		((FirestoneHero)player.getHero()).setHasUsedHeroPower(true);
 		int mana = player.getHero().getMana() - player.getHero().getHeroPower().getManaCost(); 
 		((FirestoneHero)player.getHero()).setMana(mana);
-		Action action = new Action(players, player.getId(), null, null, -1, null, Type.HERO_POWER);
+		Action action = new Action(players, player.getId(), null, null, -1, null, null, Type.HERO_POWER);
 		buffHandler.performHeroPower(action);
 		return null;
 	}
@@ -213,7 +213,7 @@ public class FirestoneGame extends Observable implements Game {
 		((FirestoneHero)player.getHero()).setHasUsedHeroPower(true);
 		int mana = player.getHero().getMana() - player.getHero().getHeroPower().getManaCost(); 
 		((FirestoneHero)player.getHero()).setMana(mana);
-		Action action = new Action(players, player.getId(), null, null, -1, targetId, Type.HERO_POWER);
+		Action action = new Action(players, player.getId(), null, null, -1, targetId, null, Type.HERO_POWER);
 		buffHandler.performHeroPower(action);
 		return null;
 	}

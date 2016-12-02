@@ -18,10 +18,11 @@ public class Action {
 	private String minionCreatedId;
 	private int position;
 	private String targetId;
+	private String damagedCharacterId;
 	private Type actionType;
 	
 	public Action(List<Player> players, String currentPlayerId, String playedCardId, 
-			String minionCreatedId, int position, String targetId, Type actionType) {
+			String minionCreatedId, int position, String targetId, String damagedCharacterId, Type actionType) {
 		
 		this.players = players;
 		this.currentPlayerId = currentPlayerId;
@@ -29,6 +30,7 @@ public class Action {
 		this.minionCreatedId = minionCreatedId;
 		this.position = position;
 		this.targetId = targetId;
+		this.damagedCharacterId = damagedCharacterId;
 		this.actionType = actionType;
 	}
 
@@ -54,6 +56,10 @@ public class Action {
 
 	public String getTargetId() {
 		return targetId;
+	}
+	
+	public String getDamagedCharacterId() {
+		return damagedCharacterId;
 	}
 
 	public Type getActionType() {
