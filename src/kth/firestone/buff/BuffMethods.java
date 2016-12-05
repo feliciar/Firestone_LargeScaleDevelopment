@@ -347,22 +347,19 @@ public class BuffMethods {
 	public boolean copyOpponentsPlayedSpellCardIntoHand(Action action, Minion minion, boolean performBuff) {
 		if (minion != null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
-		Card playedCard = null;
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
 			if (c.getId().equals(action.getPlayedCardId())) {
-				playedCard = c;
-				break;
-			}
-		}
-		if (playedCard.getType().equals(Card.Type.SPELL)) {
-			if (performBuff) {
-				if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
-					action.getPlayers().get(1).getHand().add(playedCard);
-				} else {
-					action.getPlayers().get(0).getHand().add(playedCard);
+				if (c.getType().equals(Card.Type.SPELL)) {
+					if (performBuff) {
+						if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
+							action.getPlayers().get(1).getHand().add(c);
+						} else {
+							action.getPlayers().get(0).getHand().add(c);
+						}
+					}
+					return true;
 				}
 			}
-			return true;
 		}
 		return false;
 	}
@@ -372,23 +369,95 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean lifeTap(Action action, Minion minion, boolean performBuff){
-		if(!(action.getActionType() == Action.Type.HERO_POWER)){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null 
+				|| action.getTargetId() != null){
 			return false;
 		}
-		if(minion != null){
+		Player currentPlayer = getCurrentPlayer(action);
+		FirestoneDeck deck = (FirestoneDeck) currentPlayer.getDeck();
+		if (deck.size() > 0) {
+			if(performBuff) {
+				Card c = deck.getCards().pop();
+				currentPlayer.getHand().add(c);
+				((FirestoneHero) currentPlayer.getHero()).reduceHealth(2);
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for performing hero power: "Fireblast: Deal 1 damage."
+	 * @param action the action that just took place
+	 */
+	public boolean fireblast(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
 			return false;
 		}
-		if(action.getTargetId() != null){
+		Player currentPlayer = getCurrentPlayer(action);
+		for (Minion m : currentPlayer.getActiveMinions()) {
+			if (m.getId().equals(action.getMinionCreatedId())) {
+				return dealOneDamage(action, m, performBuff);
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for performing hero power: "Lesser Heal: Restore 2 Health."
+	 * @param action the action that just took place
+	 */
+	public boolean lesserHeal(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
 			return false;
 		}
-		if(performBuff){
-			Player currentPlayer = getCurrentPlayer(action);
-			Card c = ((FirestoneDeck)currentPlayer.getDeck()).getCards().pop();
-			currentPlayer.getHand().add(c);
-			((FirestoneHero)currentPlayer.getHero()).reduceHealth(2);
+		// if target is a hero
+		for (Player p : action.getPlayers()) {
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				if (performBuff) {
+					FirestoneHero hero = (FirestoneHero) p.getHero();
+					if (hero.getMaxHealth() >= hero.getHealth() + 2) {
+						hero.setHealth(hero.getHealth() + 2);
+					}
+				}
+				return true;
+			}
+		}
+		// if target is a minion
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
+				if (m.getId().equals(action.getTargetId())) {
+					if (performBuff) {
+						if (m.getMaxHealth() >= m.getHealth() + 2) {
+							((FirestoneMinion) m).setHealth(m.getHealth() + 2);
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Method for performing hero power: "Steady Shot: Deal 2 damage to the enemy hero."
+	 * @param action the action that just took place
+	 */
+	public boolean steadyShot(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null 
+				|| action.getTargetId() != null){
+			return false;
+		}
+		for (Player p : action.getPlayers()) {
+			if (!p.getId().equals(action.getCurrentPlayerId())) {
+				if (performBuff) {
+					damageHandler.dealDamageToHero(p.getHero(), 2);
+				}
+				return true;
+			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	private Player getCurrentPlayer(Action action) {

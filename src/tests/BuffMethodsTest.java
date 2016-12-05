@@ -309,6 +309,50 @@ public class BuffMethodsTest {
 		assertEquals(1, p2.getHand().size());
 	}
 	
+	@Test
+	public void testLifeTap() {
+		Action action = new Action(players, "currentPlayerId", null, null, 0, null, Action.Type.HERO_POWER);
+		Hero hero = new FirestoneHero("targetId", 14, null);
+		Deque<Card> d = new ArrayDeque<>();
+		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
+		
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getDeck()).thenReturn(new FirestoneDeck(d));
+		when(p1.getHand()).thenReturn(new ArrayList<>());
+		when(p1.getHero()).thenReturn(hero);
+		
+		buffMethods.lifeTap(action, null, true);
+		
+		assertEquals(1, p1.getHand().size());
+	}
 	
+	@Test
+	public void testLesserHeal() {
+		Action action1 = new Action(players, "currentPlayerId", null, null, 0, "targetId", Action.Type.HERO_POWER);
+		Action action2 = new Action(players, "currentPlayerId", null, null, 0, "uniqueId-1", Action.Type.HERO_POWER);
+		Hero hero = new FirestoneHero("targetId", 16, null);
+		((FirestoneHero) hero).setHealth(14);
+		
+		// When target is hero
+		when(p1.getHero()).thenReturn(hero);
+		when(p2.getHero()).thenReturn(hero);
+		buffMethods.lesserHeal(action1, null, true);
+		assertEquals(16, hero.getHealth());
+		
+		// When target is minion
+		when(p1.getActiveMinions()).thenReturn(minions);
+		buffMethods.lesserHeal(action2, null, true);
+		assertEquals(1, minions.get(0).getHealth());
+	}
 	
+	@Test
+	public void testSteadyShot() {
+		Action action = new Action(players, "currentPlayerId", null, null, 0, null, Action.Type.HERO_POWER);
+		
+		when(p1.getId()).thenReturn("opponentId");
+
+		buffMethods.steadyShot(action, null, true);
+		
+		verify(damageHandler).dealDamageToHero(p1.getHero(), 2);
+	}
 }
