@@ -36,7 +36,7 @@ public class PlayCardHandlerTest {
 
 	@Test
 	public void testPlaySpellCardPlayerCard() {
-		PlayCardHandler pch = new PlayCardHandler(null, null);
+		PlayCardHandler pch = new PlayCardHandler(null, null, null);
 		//Mock hero
 		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), null, 30, null);
 		int startMana = 10;
@@ -67,7 +67,7 @@ public class PlayCardHandlerTest {
 	public void testPlayMinionCardPlayerCardInt() {
 		//Create PlayCardHandler
 		
-		PlayCardHandler pch = new PlayCardHandler(gameData, null);
+		PlayCardHandler pch = new PlayCardHandler(gameData, null, null);
 		
 		int manaCost = 5;
 		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "", "NONE");

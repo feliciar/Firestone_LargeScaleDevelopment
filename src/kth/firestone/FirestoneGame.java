@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import kth.firestone.Action.Type;
@@ -20,27 +19,28 @@ import kth.firestone.minion.MinionState;
 import kth.firestone.player.Player;
 import kth.firestone.player.GamePlayer;
 
-public class FirestoneGame extends Observable implements Game {
+public class FirestoneGame implements Game {
 	private List<Player> players;
 	private List<Event> events;
 	private PlayCardHandler playCardHandler;
 	private AttackHandler attackHandler;
 	private BuffHandler buffHandler;
+	private Observable observable;
 	private int playerIndexInTurn = 1;	// first player starts by default
 	private final String PLAYER_1_ID = "1";
 	//private final String PLAYER_2_ID = "2";
-	private List<Minion> observers;
+	
 	
 	public FirestoneGame(List<Player> players, 
 			PlayCardHandler playCardHandler,
 			AttackHandler attackHandler,
-			BuffHandler buffHandler) {
+			BuffHandler buffHandler, Observable observable) {
 		this.players = players;
 		this.playCardHandler = playCardHandler;
 		this.attackHandler = attackHandler;
 		this.buffHandler = buffHandler;
+		this.observable = observable;
 		this.events = new ArrayList<>();
-		observers = new ArrayList<>();
 	}
 	
 	@Override
@@ -55,61 +55,23 @@ public class FirestoneGame extends Observable implements Game {
 
 	@Override
 	public List<Event> playSpellCard(Player player, Card card) {
-		playCardHandler.playSpellCard(player, card);
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
-		buffHandler.performBuffOnPlayedCard(action);
-		this.notifyObservers(action);
-		return null;
+		return playCardHandler.playSpellCard(player, card);
 	}
 
 	
 	@Override
 	public List<Event> playSpellCard(Player player, Card card, String targetId) {
-		playCardHandler.playSpellCard(player, card);
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
-		buffHandler.performBuffOnPlayedCard(action);
-		this.notifyObservers(action);
-		return null;
+		return playCardHandler.playSpellCard(player, card, targetId);
 	}
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position) {
-		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
-		playCardHandler.playMinionCard(player, card, position);
-		
-		Minion playedMinion = null;
-		for(Minion m : player.getActiveMinions()){
-			if(!minionsBefore.contains(m)){
-				playedMinion = m;
-			}
-		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, null, null, Type.PLAYED_CARD);
-		buffHandler.performBuffOnPlayedCard(action);
-		this.notifyObservers(action);
-		if(playedMinion != null){
-			this.addObserver((FirestoneMinion)playedMinion);
-		}
-		return null;
+		return playCardHandler.playMinionCard(player, card, position);
 	}
 
 	@Override
 	public List<Event> playMinionCard(Player player, Card card, int position, String targetId) {
-		List<Minion> minionsBefore = new ArrayList<>(player.getActiveMinions());
-		playCardHandler.playMinionCard(player, card, position);
-		
-		Minion playedMinion = null;
-		for(Minion m : player.getActiveMinions()){
-			if(!minionsBefore.contains(m)){
-				playedMinion = m;
-			}
-		}
-		Action action = new Action(players, player.getId(), card.getId(), playedMinion.getId(), position, targetId, null, Type.PLAYED_CARD);
-		buffHandler.performBuffOnPlayedCard(action);
-		this.notifyObservers(action);
-		if(playedMinion != null){
-			this.addObserver((FirestoneMinion)playedMinion);
-		}
-		return null;
+		return playCardHandler.playMinionCard(player, card, position, targetId);
 	}
 
 	@Override
@@ -143,10 +105,6 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
-		if(! buffHandler.isPerformBuffValid(action)){
-    		return false;
-    	}
 		return playCardHandler.isPlayCardValid(player, card);
 	}
 
@@ -155,10 +113,6 @@ public class FirestoneGame extends Observable implements Game {
 		if(! player.getId().equals(getPlayerInTurn().getId())){
 			return false;
 		}
-		Action action = new Action(players, player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
-		if(! buffHandler.isPerformBuffValid(action)){
-			return false;
-    	}
 		return playCardHandler.isPlayCardValid(player, card, targetId);
 	}
 
@@ -267,6 +221,9 @@ public class FirestoneGame extends Observable implements Game {
 			// save discard pile for this turn and clear
 			((GamePlayer) player).getDiscardPile().add(((GamePlayer) player).getDiscardPileThisTurn());
 			((GamePlayer) player).getDiscardPileThisTurn().clear();
+			
+			
+			((FirestoneObservable)observable).setCurrentPlayerId(this.getPlayerInTurn().getId());
 		} else {
 			System.err.println("The player trying to end turn was not the player in turn");
 		}
@@ -292,6 +249,7 @@ public class FirestoneGame extends Observable implements Game {
 		Player otherPlayer = players.get(otherPlayerIndex);
 		((GamePlayer) otherPlayer).setHand(createHand(((FirestoneDeck) otherPlayer.getDeck()).getCards(), 3));
 		playerIndexInTurn = Integer.parseInt(player.getId());
+		((FirestoneObservable)observable).setCurrentPlayerId(this.getPlayerInTurn().getId());
 	}
 
 	@Override
@@ -311,29 +269,6 @@ public class FirestoneGame extends Observable implements Game {
 		return hand;
 	}
 	
-	@Override
-	public void notifyObservers(Object o){
-		updateObserverList();
-		setChanged();
-		super.notifyObservers(o);
-		updateObserverList();
-	}
 	
-	@Override
-	public void addObserver(Observer o){
-		super.addObserver(o);
-		observers.add((Minion)o);
-	}
-	
-	public void updateObserverList(){
-		List<Minion> observersToRemove = new ArrayList<>();
-		for(Minion m : observers){
-			if(!players.get(0).getActiveMinions().contains(m) && !players.get(1).getActiveMinions().contains(m)){
-				this.deleteObserver((FirestoneMinion)m);
-				observersToRemove.add(m);
-			}
-		}
-		observers.removeAll(observersToRemove);
-	}
 
 }
