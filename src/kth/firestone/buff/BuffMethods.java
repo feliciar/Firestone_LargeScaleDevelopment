@@ -95,14 +95,25 @@ public class BuffMethods {
 		if (minion != null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		List<Card> cardsPlayed = ((GamePlayer) currentPlayer).getDiscardPileThisTurn();
-		if (cardsPlayed.size() > 0 && performBuff) {
-			// must have played other cards before this one
-			int increase = cardsPlayed.size()*2;
-			FirestoneHero hero = ((FirestoneHero) currentPlayer.getHero());
-			hero.setHealth(hero.getHealth() + increase);
-			hero.setAttack(hero.getAttack() + increase);
+		
+		for (Minion m : currentPlayer.getActiveMinions()) {
+			if (m.getId().equals(action.getMinionCreatedId())) {
+				if (performBuff) {
+					if (cardsPlayed.size() > 1) {
+						// must have two cards in the pile, where one of them is this one
+						int increase = (cardsPlayed.size() - 1) * 2;
+						((FirestoneMinion) m).setHealth(m.getHealth() + increase); // Do we need to set max health too?
+						((FirestoneMinion) m).setAttack(m.getAttack() + increase);
+						return true;
+					}
+				} else {
+					if (cardsPlayed.size() > 0) {
+						return true;
+					}
+				}
+			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
