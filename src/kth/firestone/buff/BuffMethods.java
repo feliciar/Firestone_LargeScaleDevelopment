@@ -32,29 +32,8 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean dealOneDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return false;
-		// if target is a hero
-		for (Player p : action.getPlayers()) {
-			if (p.getHero().getId().equals(action.getTargetId())) {
-				if (performBuff) {
-					damageHandler.dealDamageToHero(p.getHero(), 1);
-				}
-				return true;
-			}
-		}
-		// if target is a minion
-		for (Player p : action.getPlayers()) {
-			for (Minion m : p.getActiveMinions()) {
-				if (m.getId().equals(action.getTargetId())) {
-					if (performBuff) {
-						damageHandler.dealDamageToOneMinion(m, 1);
-						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
-					}
-					return true;
-				}
-			}
-		}
-		return false;
+		if (minion != null || action.getTargetId() == null) return false;
+		return dealDamage(action, performBuff, 1);
 	}
 	
 	/**
@@ -116,14 +95,25 @@ public class BuffMethods {
 		if (minion != null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		List<Card> cardsPlayed = ((GamePlayer) currentPlayer).getDiscardPileThisTurn();
-		if (cardsPlayed.size() > 0 && performBuff) {
-			// must have played other cards before this one
-			int increase = cardsPlayed.size()*2;
-			FirestoneHero hero = ((FirestoneHero) currentPlayer.getHero());
-			hero.setHealth(hero.getHealth() + increase);
-			hero.setAttack(hero.getAttack() + increase);
+		
+		for (Minion m : currentPlayer.getActiveMinions()) {
+			if (m.getId().equals(action.getMinionCreatedId())) {
+				if (performBuff) {
+					if (cardsPlayed.size() > 1) {
+						// must have two cards in the pile, where one of them is this one
+						int increase = (cardsPlayed.size() - 1) * 2;
+						((FirestoneMinion) m).setHealth(m.getHealth() + increase); // Do we need to set max health too?
+						((FirestoneMinion) m).setAttack(m.getAttack() + increase);
+						return true;
+					}
+				} else {
+					if (cardsPlayed.size() > 0) {
+						return true;
+					}
+				}
+			}
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -416,9 +406,12 @@ public class BuffMethods {
 			if (p.getHero().getId().equals(action.getTargetId())) {
 				if (performBuff) {
 					FirestoneHero hero = (FirestoneHero) p.getHero();
-					if (hero.getMaxHealth() >= hero.getHealth() + 2) {
-						hero.setHealth(hero.getHealth() + 2);
+					int health = hero.getHealth() + 2;
+					int maxHealth = hero.getMaxHealth();
+					if (health > maxHealth) {
+						health = maxHealth;
 					}
+					hero.setHealth(health);
 				}
 				return true;
 			}
@@ -428,9 +421,12 @@ public class BuffMethods {
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
-						if (m.getMaxHealth() >= m.getHealth() + 2) {
-							((FirestoneMinion) m).setHealth(m.getHealth() + 2);
+						int health = m.getHealth() + 2;
+						int maxHealth = m.getMaxHealth();
+						if (health > maxHealth) {
+							health = maxHealth;
 						}
+						((FirestoneMinion) m).setHealth(health);
 					}
 					return true;
 				}
@@ -460,6 +456,58 @@ public class BuffMethods {
 		return false;
 	}
 	
+	/**
+	 * Method for performing hero power: "Mind Spike: Deal 2 damage."
+	 * @param action the action that just took place
+	 */
+	public boolean mindSpike(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null
+				|| action.getTargetId() == null){
+			return false;
+		}
+		return dealDamage(action, performBuff, 2);
+	}
+	
+	/**
+	 * Method for performing hero power: "Mind Shatter: Deal 3 damage."
+	 * @param action the action that just took place
+	 */
+	public boolean mindShatter(Action action, Minion minion, boolean performBuff){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null
+				|| action.getTargetId() == null){
+			return false;
+		}
+		return dealDamage(action, performBuff, 3);
+	}
+	
+	/**
+	 * Deals specific amount of damage.
+	 */
+	private boolean dealDamage(Action action, boolean performBuff, int damage) {
+		// if target is a hero
+		for (Player p : action.getPlayers()) {
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				if (performBuff) {
+					damageHandler.dealDamageToHero(p.getHero(), damage);
+				}
+				return true;
+			}
+		}
+		// if target is a minion
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
+				if (m.getId().equals(action.getTargetId())) {
+					if (performBuff) {
+						damageHandler.dealDamageToOneMinion(m, damage);
+						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	private Player getCurrentPlayer(Action action) {
 		for (Player p : action.getPlayers()) {
 			if (p.getId().equals(action.getCurrentPlayerId())) {
@@ -468,4 +516,5 @@ public class BuffMethods {
 		}
 		return null;
 	}
+	
 }
