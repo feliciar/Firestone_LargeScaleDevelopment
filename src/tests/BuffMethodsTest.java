@@ -330,7 +330,8 @@ public class BuffMethodsTest {
 	public void testLesserHeal() {
 		Action action1 = new Action(players, "currentPlayerId", null, null, 0, "targetId", Action.Type.HERO_POWER);
 		Action action2 = new Action(players, "currentPlayerId", null, null, 0, "uniqueId-1", Action.Type.HERO_POWER);
-		Hero hero = new FirestoneHero("targetId", 14, null);
+		Hero hero = new FirestoneHero("targetId", 16, null);
+		((FirestoneHero) hero).setHealth(14);
 		
 		// When target is hero
 		when(p1.getHero()).thenReturn(hero);
@@ -341,7 +342,7 @@ public class BuffMethodsTest {
 		// When target is minion
 		when(p1.getActiveMinions()).thenReturn(minions);
 		buffMethods.lesserHeal(action2, null, true);
-		assertEquals(3, minions.get(0).getHealth());
+		assertEquals(1, minions.get(0).getHealth());
 	}
 	
 	@Test
