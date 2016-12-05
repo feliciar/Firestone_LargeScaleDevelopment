@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import kth.firestone.FirestoneObservable;
 import kth.firestone.GameData;
+import kth.firestone.buff.BuffHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.FirestoneCard;
 import kth.firestone.card.PlayCardHandler;
@@ -27,6 +29,12 @@ public class PlayCardHandlerTest {
 	
 	@Mock
 	GamePlayer player;
+	
+	@Mock
+	FirestoneObservable observable;
+	
+	@Mock
+	BuffHandler buffHandler;
 
 	
 	public PlayCardHandlerTest(){
@@ -36,7 +44,7 @@ public class PlayCardHandlerTest {
 
 	@Test
 	public void testPlaySpellCardPlayerCard() {
-		PlayCardHandler pch = new PlayCardHandler(null, null, null);
+		PlayCardHandler pch = new PlayCardHandler(null, buffHandler, observable);
 		//Mock hero
 		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), null, 30, null);
 		int startMana = 10;
@@ -67,7 +75,7 @@ public class PlayCardHandlerTest {
 	public void testPlayMinionCardPlayerCardInt() {
 		//Create PlayCardHandler
 		
-		PlayCardHandler pch = new PlayCardHandler(gameData, null, null);
+		PlayCardHandler pch = new PlayCardHandler(gameData, buffHandler, observable);
 		
 		int manaCost = 5;
 		Card card = new FirestoneCard(UUID.randomUUID().toString(), "Imp", "1", "1", ""+manaCost, "MINION", "", "NONE");

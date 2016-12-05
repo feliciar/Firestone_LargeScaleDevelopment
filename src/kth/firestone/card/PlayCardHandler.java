@@ -147,13 +147,8 @@ public class PlayCardHandler {
     	if(! player.getHand().contains(card)){
     		return false;
     	}
-    	
     	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
-		if(! buffHandler.isPerformBuffValid(action)){
-    		return false;
-    	}
-    	
-    	return true;
+		return buffHandler.isPerformBuffValid(action);
     }
 
     /**
@@ -165,11 +160,20 @@ public class PlayCardHandler {
      * @return true if the play is valid
      */
     public boolean isPlayCardValid(Player player, Card card, String targetId){
-    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
-		if(! buffHandler.isPerformBuffValid(action)){
+    	if(player.getActiveMinions().size() >= MAX_CARDS_ALLOWED_ON_THE_BOARD){
+    		//TODO throw an appropriate error
     		return false;
     	}
-    	return isPlayCardValid(player, card);
+    	if(player.getHero().getMana() < card.getManaCost()){
+    		//TODO throw an error
+    		return false;
+    	}
+    	if(! player.getHand().contains(card)){
+    		return false;
+    	}
+    	
+    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
+		return buffHandler.isPerformBuffValid(action);
     }
     
     public List<MinionState> getMinionStates(Card card) {

@@ -30,7 +30,6 @@ public class BuffHandler {
 		
 		Card playedCard =getPlayedCard(action);
 		String buff = playedCard.getDescription();
-		
 		if(playedCard.getType()==Card.Type.SPELL || buff.startsWith("Battlecry") || buff.startsWith("Combo"))
 			invokeBuff(action, null, buff, true);
 	}
