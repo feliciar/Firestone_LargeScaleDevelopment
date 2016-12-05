@@ -66,7 +66,7 @@ public class BuffHandler {
 	 */
 	public void performBuff(Action action, Minion minion){
 		String buff = ((FirestoneMinion) minion).getBuff();
-		if( ! buff.startsWith("Battlecry: ") && ! buff.startsWith("Combo: ")){
+		if(! buff.equals("") && ! buff.startsWith("Battlecry: ") && ! buff.startsWith("Combo: ")){
 			invokeBuff(action, minion, buff, true);
 		}
 	}
