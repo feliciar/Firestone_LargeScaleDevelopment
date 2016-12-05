@@ -56,7 +56,9 @@ public class BuffHandler {
 				return false;				
 			}
 		}
-		return invokeBuff(action, null, buff, false);
+		if(buff.startsWith("Battlecry") || playedCard.getType() == Card.Type.SPELL)
+			return invokeBuff(action, null, buff, false);
+		return true;
 		
 	}
 	
