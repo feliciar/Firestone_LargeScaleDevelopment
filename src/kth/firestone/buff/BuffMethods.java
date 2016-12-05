@@ -102,7 +102,12 @@ public class BuffMethods {
 					if (cardsPlayed.size() > 1) {
 						// must have two cards in the pile, where one of them is this one
 						int increase = (cardsPlayed.size() - 1) * 2;
-						((FirestoneMinion) m).setHealth(m.getHealth() + increase); // Do we need to set max health too?
+						int health = m.getHealth() + increase;
+						int maxHealth = m.getMaxHealth();
+						if (health > maxHealth) {
+							((FirestoneMinion) m).setMaxHealth(health);
+						}
+						((FirestoneMinion) m).setHealth(health);
 						((FirestoneMinion) m).setAttack(m.getAttack() + increase);
 						return true;
 					}
@@ -315,10 +320,10 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean drawCardWhenThisMinionTakesDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion == null) return false; // TODO: add || action.getTargetId() != null
+		if (minion == null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		if (action.getActionType().equals(Action.Type.DAMAGE)) {
-			if (minion.getId().equals(action.getTargetId())) { // TODO: change to action.getDamagedCharacterId
+			if (minion.getId().equals(action.getDamagedCharacterId())) {
 				if (performBuff) {
 					Card drawnCard = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
 					currentPlayer.getHand().add(drawnCard);

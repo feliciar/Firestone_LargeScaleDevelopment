@@ -107,12 +107,16 @@ public class FirestoneMinion implements Minion, Observer {
 		this.sleepy = sleepy;
 	}
 	
-	public void setHealth(int newHealth){
-		health = newHealth;
+	public void setHealth(int health){
+		this.health = health;
 	}
 	
-	public void setAttack(int newAttack){
-		attack = newAttack;
+	public void setMaxHealth(int maxHealth){
+		this.maxHealth = maxHealth;
+	}
+	
+	public void setAttack(int attack){
+		this.attack = attack;
 	}
 
 	public String toString(){
