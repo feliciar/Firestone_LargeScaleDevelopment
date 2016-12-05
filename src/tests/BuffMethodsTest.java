@@ -59,7 +59,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testDealOneDamage() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", null, Action.Type.DAMAGE);
-		FirestoneHero hero = new FirestoneHero("heroId", 30, null);
+		FirestoneHero hero = new FirestoneHero("heroId", null, 30, null);
 		
 		when(p1.getHero()).thenReturn(hero);
 		when(p2.getHero()).thenReturn(hero);
@@ -76,7 +76,7 @@ public class BuffMethodsTest {
 		Action action1 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetHero", null, Action.Type.DAMAGE);
 		Action action2 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", null, Action.Type.DAMAGE);
 		
-		Hero hero = new FirestoneHero("targetHero", 4, null);
+		Hero hero = new FirestoneHero("targetHero", null, 4, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		
@@ -99,7 +99,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testGainOneHealthForCardsInHand() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.DAMAGE);
-		Hero hero = new FirestoneHero("heroId", 4, null);
+		Hero hero = new FirestoneHero("heroId", null, 4, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
@@ -116,7 +116,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testGainTwoForCardsPlayedThisTurn() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.DAMAGE);
-		Hero hero = new FirestoneHero("heroId", 4, null);
+		Hero hero = new FirestoneHero("heroId", null, 4, null);
 		List<Card> cardsPlayed = new ArrayList<>();
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
@@ -171,7 +171,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testDealThreeDamageToAndFreezeCharacter() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", null , -1, "uniqueId-2", null, Action.Type.PLAYED_CARD);
-		FirestoneHero hero = new FirestoneHero("heroId", 30, null);
+		FirestoneHero hero = new FirestoneHero("heroId", null, 30, null);
 		
 		when(p1.getHero()).thenReturn(hero);
 		when(p1.getActiveMinions()).thenReturn(minions);
@@ -255,7 +255,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testChangeHeroPowerToDealTwoOrThreeDamage() {		
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.PLAYED_CARD);
-		Hero hero = new FirestoneHero("heroId", 14, new FirestoneHeroPower("name", "2"));
+		Hero hero = new FirestoneHero("heroId", null, 14, new FirestoneHeroPower("name", "2"));
 		
 		when(p1.getId()).thenReturn("currentPlayerId");
 		when(p1.getHero()).thenReturn(hero);
@@ -268,7 +268,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testSetHeroHealthTo15() {		
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "targetId", null, Action.Type.PLAYED_CARD);
-		Hero hero = new FirestoneHero("targetId", 14, null);
+		Hero hero = new FirestoneHero("targetId", null, 14, null);
 		
 		when(p1.getHero()).thenReturn(hero);
 		
@@ -312,7 +312,7 @@ public class BuffMethodsTest {
 	@Test
 	public void testLifeTap() {
 		Action action = new Action(players, "currentPlayerId", null, null, 0, null, null, Action.Type.HERO_POWER);
-		Hero hero = new FirestoneHero("targetId", 14, null);
+		Hero hero = new FirestoneHero("targetId", null, 14, null);
 		Deque<Card> d = new ArrayDeque<>();
 		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
 		
@@ -330,7 +330,7 @@ public class BuffMethodsTest {
 	public void testLesserHeal() {
 		Action action1 = new Action(players, "currentPlayerId", null, null, 0, "targetId", null, Action.Type.HERO_POWER);
 		Action action2 = new Action(players, "currentPlayerId", null, null, 0, "uniqueId-1", null, Action.Type.HERO_POWER);
-		Hero hero = new FirestoneHero("targetId", 16, null);
+		Hero hero = new FirestoneHero("targetId", null, 16, null);
 		((FirestoneHero) hero).setHealth(14);
 		
 		// When target is hero

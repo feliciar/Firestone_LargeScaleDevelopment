@@ -38,7 +38,7 @@ public class PlayCardHandlerTest {
 	public void testPlaySpellCardPlayerCard() {
 		PlayCardHandler pch = new PlayCardHandler(null, null);
 		//Mock hero
-		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), 30, null);
+		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), null, 30, null);
 		int startMana = 10;
 		hero.setMana(startMana);
 		when(player.getHero()).thenReturn(hero);
@@ -77,7 +77,7 @@ public class PlayCardHandlerTest {
 		
 		//Mock hero
 		int startHealth = 30;
-		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), startHealth, null);
+		FirestoneHero hero = new FirestoneHero(UUID.randomUUID().toString(), null, startHealth, null);
 		int startMana = 10;
 		hero.setMana(startMana);
 		when(player.getHero()).thenReturn(hero);
