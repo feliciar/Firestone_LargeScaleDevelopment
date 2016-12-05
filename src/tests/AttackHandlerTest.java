@@ -185,9 +185,26 @@ public class AttackHandlerTest {
 		when(heroP1.getId()).thenReturn("1");
 		when(heroP2.getId()).thenReturn("2");
 		
-		//Test to attack the hero see that health is reduced
+		//Test to attack the hero of adversary
 		ah.attack(p1, "100", "2");
 		verify(damageHandler).dealDamageToMinionAndHero(minionPlayer1, heroP2);
 		verify(damageHandler).removeDeadMinions(minionsP1);
+	}
+	
+	@Test
+	public void testattack_AttackerValidTargetHeroOfThePlayer() {
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
+		when(p1.getId()).thenReturn("1");
+		when(p1.getHero()).thenReturn(heroP1);
+		when(p2.getHero()).thenReturn(heroP2);
+		when(heroP1.getId()).thenReturn("1");
+		when(heroP2.getId()).thenReturn("2");
+		
+		//Attack the own hero
+		ah.attack(p1, "100", "1");
+		verify(damageHandler).dealDamageToMinionAndHero(minionPlayer1, heroP1);
+		verify(damageHandler).removeDeadMinions(minionsP1);
+		
 	}
 }
