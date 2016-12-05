@@ -111,7 +111,7 @@ public class PlayCardHandler {
     public boolean isPlayCardValid(Player player, Card card){
     	//Check if the player has less than 8 cards
     	//Check if the player has enough mana
-    	if(player.getHand().size() >= MAX_CARDS_ALLOWED_ON_THE_BOARD){
+    	if(player.getActiveMinions().size() >= MAX_CARDS_ALLOWED_ON_THE_BOARD){
     		//TODO throw an appropriate error
     		return false;
     	}
