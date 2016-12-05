@@ -406,9 +406,12 @@ public class BuffMethods {
 			if (p.getHero().getId().equals(action.getTargetId())) {
 				if (performBuff) {
 					FirestoneHero hero = (FirestoneHero) p.getHero();
-					if (hero.getMaxHealth() >= hero.getHealth() + 2) {
-						hero.setHealth(hero.getHealth() + 2);
+					int health = hero.getHealth() + 2;
+					int maxHealth = hero.getMaxHealth();
+					if (health > maxHealth) {
+						health = maxHealth;
 					}
+					hero.setHealth(health);
 				}
 				return true;
 			}
@@ -418,9 +421,12 @@ public class BuffMethods {
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
-						if (m.getMaxHealth() >= m.getHealth() + 2) {
-							((FirestoneMinion) m).setHealth(m.getHealth() + 2);
+						int health = m.getHealth() + 2;
+						int maxHealth = m.getMaxHealth();
+						if (health > maxHealth) {
+							health = maxHealth;
 						}
+						((FirestoneMinion) m).setHealth(health);
 					}
 					return true;
 				}
