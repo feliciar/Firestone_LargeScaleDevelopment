@@ -142,7 +142,7 @@ public class BuffHandler {
 					BuffMethods.class.getDeclaredMethod("copyOpponentsPlayedSpellCardIntoHand", Action.class, Minion.class, boolean.class));
 			methodMap.put("Life Tap", 
 					BuffMethods.class.getDeclaredMethod("lifeTap", Action.class, Minion.class, boolean.class));
-			/*methodMap.put("Fireblast", 
+			methodMap.put("Fireblast", 
 					BuffMethods.class.getDeclaredMethod("fireblast", Action.class, Minion.class, boolean.class));
 			methodMap.put("Lesser Heal", 
 					BuffMethods.class.getDeclaredMethod("lesserHeal", Action.class, Minion.class, boolean.class));
@@ -152,7 +152,7 @@ public class BuffHandler {
 					BuffMethods.class.getDeclaredMethod("mindSpike", Action.class, Minion.class, boolean.class));
 			methodMap.put("Mind Shatter", 
 					BuffMethods.class.getDeclaredMethod("mindShatter", Action.class, Minion.class, boolean.class));
-*/
+
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
