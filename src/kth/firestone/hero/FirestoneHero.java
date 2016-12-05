@@ -16,8 +16,9 @@ public class FirestoneHero implements Hero {
 	private List<HeroState> states;
 	private Weapon weapon;
 	
-	public FirestoneHero(String id, int health, HeroPower heroPower) {
+	public FirestoneHero(String id, String name, int health, HeroPower heroPower) {
 		this.id = id;
+		this.name = name;
 		this.health = health;
 		this.maxHealth = health;
 		weapon = new FirestoneWeapon();

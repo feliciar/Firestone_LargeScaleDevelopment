@@ -165,8 +165,8 @@ public class FirestoneBuilder implements GameBuilder {
 		List<Player> players = new ArrayList<>();
 		HeroPower heroPowerPlayer1 = new FirestoneHeroPower("Life Tap", "2");
 		HeroPower heroPowerPlayer2 = new FirestoneHeroPower("Lesser Heal", "2");
-		Player player1 = new GamePlayer(PLAYER_1_ID, new FirestoneHero(PLAYER_1_ID, HERO_HEALTH, heroPowerPlayer1));
-		Player player2 = new GamePlayer(PLAYER_2_ID, new FirestoneHero(PLAYER_2_ID, HERO_HEALTH, heroPowerPlayer2));
+		Player player1 = new GamePlayer(PLAYER_1_ID, new FirestoneHero(PLAYER_1_ID, "Gul'dan", HERO_HEALTH, heroPowerPlayer1));
+		Player player2 = new GamePlayer(PLAYER_2_ID, new FirestoneHero(PLAYER_2_ID, "Anduin Wrynn", HERO_HEALTH, heroPowerPlayer2));
 		players.add(player1);
 		players.add(player2);
 		
