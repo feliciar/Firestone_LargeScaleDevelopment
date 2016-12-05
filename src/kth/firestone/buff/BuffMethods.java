@@ -347,22 +347,19 @@ public class BuffMethods {
 	public boolean copyOpponentsPlayedSpellCardIntoHand(Action action, Minion minion, boolean performBuff) {
 		if (minion != null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
-		Card playedCard = null;
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
 			if (c.getId().equals(action.getPlayedCardId())) {
-				playedCard = c;
-				break;
-			}
-		}
-		if (playedCard.getType().equals(Card.Type.SPELL)) {
-			if (performBuff) {
-				if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
-					action.getPlayers().get(1).getHand().add(playedCard);
-				} else {
-					action.getPlayers().get(0).getHand().add(playedCard);
+				if (c.getType().equals(Card.Type.SPELL)) {
+					if (performBuff) {
+						if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
+							action.getPlayers().get(1).getHand().add(c);
+						} else {
+							action.getPlayers().get(0).getHand().add(c);
+						}
+					}
+					return true;
 				}
 			}
-			return true;
 		}
 		return false;
 	}
