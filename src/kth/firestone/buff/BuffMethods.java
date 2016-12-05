@@ -397,7 +397,13 @@ public class BuffMethods {
 		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
 			return false;
 		}
-		return dealOneDamage(action, minion, performBuff);
+		Player currentPlayer = getCurrentPlayer(action);
+		for (Minion m : currentPlayer.getActiveMinions()) {
+			if (m.getId().equals(action.getMinionCreatedId())) {
+				return dealOneDamage(action, m, performBuff);
+			}
+		}
+		return false;
 	}
 	
 	/**
