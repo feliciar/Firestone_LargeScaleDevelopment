@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
 import kth.firestone.buff.BuffHandler;
@@ -152,13 +153,14 @@ public class FirestoneBuilder implements GameBuilder {
 
 	@Override
 	public Game build() {
-		DamageHandler damageHandler = new DamageHandler();
+		Observable observable = new FirestoneObservable(players);
+		DamageHandler damageHandler = new DamageHandler(observable);
 		BuffMethods buffMethods = new BuffMethods(damageHandler);
 		BuffHandler buffHandler = new BuffHandler(buffMethods);
 		return new FirestoneGame(players, 
-				new PlayCardHandler(gameData, buffHandler), 
+				new PlayCardHandler(gameData, buffHandler, observable), 
 				new AttackHandler(players, damageHandler),
-				buffHandler);
+				buffHandler, observable);
 	}
 	
 	private List<Player> createPlayers() {

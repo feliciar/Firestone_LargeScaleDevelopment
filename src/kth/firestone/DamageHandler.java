@@ -2,12 +2,20 @@ package kth.firestone;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+
+import kth.firestone.Action.Type;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 
 public class DamageHandler {
+	private Observable observable;
+	
+	public DamageHandler(Observable observable){
+		this.observable = observable;
+	}
 
 	/**
 	 * Deals damage when a minion and hero battles.
@@ -15,6 +23,10 @@ public class DamageHandler {
 	public void dealDamageToMinionAndHero(Minion attacker, Hero target) {
 		((FirestoneHero) target).reduceHealth(attacker.getAttack());
 		((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+		Action action1 = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(), Type.DAMAGE);
+		Action action2 = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, target.getId(), Type.DAMAGE);
+		observable.notifyObservers(action1); //men nu kan de ha dött, men ej rensats än
+		observable.notifyObservers(action2);
 	}
 	
 	/**
@@ -23,6 +35,10 @@ public class DamageHandler {
 	public void dealDamageToTwoMinions(Minion attacker, Minion target) {
 		((FirestoneMinion) target).reduceHealth(attacker.getAttack());
 		((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+		Action action1 = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(), Type.DAMAGE);
+		Action action2 = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, target.getId(), Type.DAMAGE);
+		observable.notifyObservers(action1); //men nu kan de ha dött, men ej rensats än
+		observable.notifyObservers(action2);
 	}
 	
 	/**
@@ -30,6 +46,8 @@ public class DamageHandler {
 	 */
 	public void dealDamageToOneMinion(Minion minion, int damage) {
 		((FirestoneMinion) minion).reduceHealth(damage);
+		Action action = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, minion.getId(), Type.DAMAGE);
+		observable.notifyObservers(action); //men nu kan de ha dött, men ej rensats än
 	}
 	
 	/**
@@ -37,6 +55,8 @@ public class DamageHandler {
 	 */
 	public void dealDamageToHero(Hero hero, int damage) {
 		((FirestoneHero) hero).reduceHealth(damage);
+		Action action = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, hero.getId(), Type.DAMAGE);
+		observable.notifyObservers(action); //men nu kan de ha dött, men ej rensats än
 	}
 	
 	/**
@@ -45,6 +65,11 @@ public class DamageHandler {
 	public void dealOneDamageToSeveralMinions(List<Minion> minions) {
 		for (Minion m : minions){
 			((FirestoneMinion) m).reduceHealth(1);
+		}
+		//TODO Städa minions
+		for (Minion m : minions){
+			Action action = new Action(((FirestoneObservable)observable).getPlayers(), ((FirestoneObservable)observable).getCurrentPlayerId(), null, null, -1, null, m.getId(), Type.DAMAGE);
+			observable.notifyObservers(action); //men nu kan de ha dött, men ej rensats än
 		}
 	}
 	
@@ -68,6 +93,7 @@ public class DamageHandler {
 		List<Minion> deadMinions = findDeadMinions(minions);
 		for (Minion dead : deadMinions){
 			minions.remove(dead);
+			((FirestoneObservable)observable).deleteObserver((FirestoneMinion)dead);
 		}
 		
 	}
@@ -87,13 +113,8 @@ public class DamageHandler {
 	public void removeDeadMinion(List<Minion> minions, Minion minion) {
 		if (isDead(minion)) {
 			minions.remove(minion);
+			((FirestoneObservable)observable).deleteObserver((FirestoneMinion)minion);
 		}
-	}
-	
-	public boolean checkDefeat(){
-		//TODO check if a Hero is defeated
-		
-		return false;
 	}
 	
 	
