@@ -278,7 +278,7 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testDrawCardWhenThisMinionTakesDamage() {		
-		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-2", null, Action.Type.DAMAGE);
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, "uniqueId-2", Action.Type.DAMAGE);
 		Minion minion = minions.get(1);
 		Deque<Card> d = new ArrayDeque<>();
 		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
