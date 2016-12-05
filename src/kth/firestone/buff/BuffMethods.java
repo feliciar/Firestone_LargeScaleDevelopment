@@ -32,7 +32,7 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean dealOneDamage(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return false;
+		if (minion != null || action.getTargetId() == null) return false;
 		return dealDamage(action, performBuff, 1);
 	}
 	
@@ -444,7 +444,8 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean mindSpike(Action action, Minion minion, boolean performBuff){
-		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null
+				|| action.getTargetId() == null){
 			return false;
 		}
 		return dealDamage(action, performBuff, 2);
@@ -455,7 +456,8 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean mindShatter(Action action, Minion minion, boolean performBuff){
-		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null){
+		if(!action.getActionType().equals(Action.Type.HERO_POWER) || minion != null
+				|| action.getTargetId() == null){
 			return false;
 		}
 		return dealDamage(action, performBuff, 3);
