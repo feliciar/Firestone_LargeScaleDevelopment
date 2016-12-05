@@ -115,26 +115,24 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testGainTwoForCardsPlayedThisTurn() {
-		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.DAMAGE);
-		Hero hero = new FirestoneHero("heroId", null, 4, null);
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "uniqueId-1", 0, null, null, Action.Type.DAMAGE);
 		List<Card> cardsPlayed = new ArrayList<>();
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		cardsPlayed.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
 
 		when(p1.getId()).thenReturn("currentPlayerId");
 		when(p1.getDiscardPileThisTurn()).thenReturn(cardsPlayed);
-		when(p1.getHero()).thenReturn(hero);
+		when(p1.getActiveMinions()).thenReturn(minions);
 		
 		buffMethods.gainTwoForCardsPlayedThisTurn(action, null, true);
 		
-		assertEquals(8, hero.getHealth());
-		assertEquals(4, hero.getAttack());
+		assertEquals(3, minions.get(0).getHealth());
+		assertEquals(3, minions.get(0).getAttack());
 	}
 	
 	@Test
 	public void testGainOneAttackForEachOtherCardInHand() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "uniqueId-2", 0, null, null, Action.Type.DAMAGE);
-		Minion minion = new FirestoneMinion("", "", 4,4,5,5,MinionRace.NONE, new ArrayList<>(),"", buffHandler);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
