@@ -311,7 +311,7 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testLifeTap() {
-		Action action = new Action(players, "currentPlayerId", null, null, 0, null, Action.Type.HERO_POWER);
+		Action action = new Action(players, "currentPlayerId", null, null, 0, null, null, Action.Type.HERO_POWER);
 		Hero hero = new FirestoneHero("targetId", 14, null);
 		Deque<Card> d = new ArrayDeque<>();
 		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
@@ -328,8 +328,8 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testLesserHeal() {
-		Action action1 = new Action(players, "currentPlayerId", null, null, 0, "targetId", Action.Type.HERO_POWER);
-		Action action2 = new Action(players, "currentPlayerId", null, null, 0, "uniqueId-1", Action.Type.HERO_POWER);
+		Action action1 = new Action(players, "currentPlayerId", null, null, 0, "targetId", null, Action.Type.HERO_POWER);
+		Action action2 = new Action(players, "currentPlayerId", null, null, 0, "uniqueId-1", null, Action.Type.HERO_POWER);
 		Hero hero = new FirestoneHero("targetId", 16, null);
 		((FirestoneHero) hero).setHealth(14);
 		
@@ -347,7 +347,7 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testSteadyShot() {
-		Action action = new Action(players, "currentPlayerId", null, null, 0, null, Action.Type.HERO_POWER);
+		Action action = new Action(players, "currentPlayerId", null, null, 0, null, null, Action.Type.HERO_POWER);
 		
 		when(p1.getId()).thenReturn("opponentId");
 
