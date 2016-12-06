@@ -139,13 +139,10 @@ public class AttackHandler {
 			damageHandler.dealDamageToTwoMinions(attacker, targetMinion);
 			attacker.setUsedThisTurn(true);
 			
-			//Remove the minions that were killed 
-			damageHandler.removeDeadMinions(player.getActiveMinions());
-			damageHandler.removeDeadMinions(adversary.getActiveMinions());
+			
 		} else {
 			damageHandler.dealDamageToMinionAndHero(attacker, targetHero);
 			attacker.setUsedThisTurn(true);
-			damageHandler.removeDeadMinions(player.getActiveMinions());
 		}
 		
 		return events;
