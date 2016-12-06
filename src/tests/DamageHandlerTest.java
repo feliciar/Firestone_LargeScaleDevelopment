@@ -157,4 +157,23 @@ public class DamageHandlerTest {
 		assertFalse(activeMinionsP2.contains(minionPlayer21));
 	}
 	
+	@Test
+	public void testRemoveDeadMinion(){
+		DamageHandler dh = new DamageHandler(observable);
+		
+		when(observable.getPlayers()).thenReturn(players);
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
+		
+		FirestoneMinion minion1 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null, null);
+		minion1.setSleepy(false);
+		FirestoneMinion minion2 = new FirestoneMinion("210", "Imp", 0, 1, 1, 1, MinionRace.DEMON, null, null, null);
+		minion2.setSleepy(false);
+		minionsP2.add(0, minion1);
+		minionsP2.add(1, minion2);
+		
+		dh.removeDeadMinion(minion2);
+		assertEquals(minionsP2.size(), 1);
+	}
+	
 }
