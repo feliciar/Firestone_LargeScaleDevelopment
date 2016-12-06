@@ -2,6 +2,9 @@ package kth.firestone.buff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
 import kth.firestone.card.Card;
@@ -358,16 +361,17 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean copyOpponentsPlayedSpellCardIntoHand(Action action, Minion minion, boolean performBuff) {
-		if (minion != null || action.getTargetId() != null) return false;
+		if (minion == null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
 			if (c.getId().equals(action.getPlayedCardId())) {
 				if (c.getType().equals(Card.Type.SPELL)) {
 					if (performBuff) {
+						Card newCard = new FirestoneCard(UUID.randomUUID().toString(), c.getName(),""+c.getHealth().get(), ""+c.getAttack().get(), ""+c.getManaCost(), c.getType().toString(), c.getDescription(), ""+c.getRace().get());
 						if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
-							action.getPlayers().get(1).getHand().add(c);
+							action.getPlayers().get(1).getHand().add(newCard);
 						} else {
-							action.getPlayers().get(0).getHand().add(c);
+							action.getPlayers().get(0).getHand().add(newCard);
 						}
 					}
 					return true;
