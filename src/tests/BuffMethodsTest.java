@@ -99,18 +99,19 @@ public class BuffMethodsTest {
 	@Test
 	public void testGainOneHealthForCardsInHand() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.DAMAGE);
-		Hero hero = new FirestoneHero("heroId", null, 4, null);
+		Minion minion = new FirestoneMinion("minionCreatedId", "M", 4, 4, 2, 2, null, null, null, null);
 		List<Card> hand = new ArrayList<>();
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","DRAGON"));
 		hand.add(new FirestoneCard("","","1","1","1","MINION","","NONE"));
-
+		List<Minion> activeMinions = new ArrayList<>(); 
+		activeMinions.add(minion);
 		when(p1.getId()).thenReturn("currentPlayerId");
-		when(p1.getHero()).thenReturn(hero);
 		when(p1.getHand()).thenReturn(hand);
+		when(p1.getActiveMinions()).thenReturn(activeMinions);
 		
 		buffMethods.gainOneHealthForCardsInHand(action, null, true);
 		
-		assertEquals(6, hero.getHealth());
+		assertEquals(6, minion.getHealth());
 	}
 	
 	@Test

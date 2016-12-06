@@ -79,9 +79,15 @@ public class BuffMethods {
 		if (minion != null || action.getTargetId() != null) return false;
 		if (performBuff) {
 			Player currentPlayer = getCurrentPlayer(action);
-			int heroHealth = ((FirestoneHero) currentPlayer.getHero()).getHealth();
-			heroHealth += currentPlayer.getHand().size();
-			((FirestoneHero) currentPlayer.getHero()).setHealth(heroHealth);
+			for(Minion m : currentPlayer.getActiveMinions()){
+				if(m.getId().equals(action.getMinionCreatedId())){
+					int health = m.getHealth();
+					health += currentPlayer.getHand().size();
+					((FirestoneMinion)m).setHealth(health);
+					((FirestoneMinion)m).setMaxHealth(health);
+				}
+			}
+			
 		}
 		return true;
 	}
