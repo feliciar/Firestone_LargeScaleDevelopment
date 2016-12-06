@@ -289,7 +289,7 @@ public class BuffMethodsTest {
 	
 	@Test
 	public void testCopyOponentsPlayedSpellCardIntoHand() {		
-		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.DAMAGE);
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, null, null, Action.Type.PLAYED_CARD);
 		List<Card> d = new ArrayList<>();
 		d.add(new FirestoneCard("playedCardId","","1","1","1","SPELL","","DRAGON"));
 		
@@ -297,7 +297,7 @@ public class BuffMethodsTest {
 		when(p1.getDiscardPileThisTurn()).thenReturn(d);
 		when(p2.getHand()).thenReturn(new ArrayList<>());
 		
-		buffMethods.copyOpponentsPlayedSpellCardIntoHand(action, null, true);
+		buffMethods.copyOpponentsPlayedSpellCardIntoHand(action, new FirestoneMinion("","",0,0,0,0,null,null, null, null), true);
 		
 		assertEquals(1, p2.getHand().size());
 	}
