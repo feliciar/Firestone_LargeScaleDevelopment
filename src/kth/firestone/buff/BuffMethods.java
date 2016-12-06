@@ -163,21 +163,25 @@ public class BuffMethods {
 		if(action.getActionType() != Action.Type.PLAYED_CARD){
 			return false;
 		}*/
-		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
-			if (c.getId().equals(action.getPlayedCardId())) {
-				if (c.getType().equals(Card.Type.SPELL)) {
-					if (performBuff) {
-						List<Minion> minionsToDealDamageTo = new ArrayList<>();
-						for (Player p : action.getPlayers()) {
-							for (Minion m : p.getActiveMinions()) {
-								minionsToDealDamageTo.add(m);
+		
+		if(((GamePlayer)currentPlayer).getActiveMinions().contains(minion)){
+			for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
+				if (c.getId().equals(action.getPlayedCardId())) {
+					if (c.getType().equals(Card.Type.SPELL)) {
+						if (performBuff) {
+							List<Minion> minionsToDealDamageTo = new ArrayList<>();
+							for (Player p : action.getPlayers()) {
+								for (Minion m : p.getActiveMinions()) {
+									minionsToDealDamageTo.add(m);
+								}
 							}
+							damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
 						}
-						damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
+						return true;
 					}
-					return true;
 				}
 			}
+			
 		}
 		return false;
 	}
