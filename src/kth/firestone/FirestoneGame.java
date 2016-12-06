@@ -202,13 +202,13 @@ public class FirestoneGame implements Game {
 			for (Minion m : nextPlayer.getActiveMinions()) {
 				((FirestoneMinion) m).setUsedThisTurn(false);
 			}
-			// Unfreeze all of this player's frozen minions
-			for (Minion m : nextPlayer.getActiveMinions()) {
+			// Unfreeze all of the last player's frozen minions
+			for (Minion m : player.getActiveMinions()) {
 				((FirestoneMinion) m).getStates().remove(MinionState.FROZEN);				
 			}
-			//Unfreese this player's hero
-			nextPlayer.getHero().getStates().remove(MinionState.FROZEN);
-			
+			//Unfreeze this player's hero
+			player.getHero().getStates().remove(MinionState.FROZEN);
+						
 			
 			// Increase mana
 			if (hero.getMaxMana() < 10) {
