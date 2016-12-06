@@ -111,7 +111,7 @@ public class DamageHandler {
 		List<Minion> deadMinions = findDeadMinions(minions);
 		for (Minion dead : deadMinions){
 			minions.remove(dead);
-			((FirestoneObservable)observable).deleteObserver((FirestoneMinion)dead);
+			removeMinionAsObserver(dead);
 		}
 		
 	}
@@ -136,9 +136,14 @@ public class DamageHandler {
 			} else {
 				((FirestoneObservable)observable).getPlayers().get(1).getActiveMinions().remove(minion);
 			}
-			((FirestoneObservable)observable).deleteObserver((FirestoneMinion)minion);
+			removeMinionAsObserver(minion);
 		}
 	}
 	
-	
+	/**
+	 * Removes a minion as an observer.
+	 */
+	public void removeMinionAsObserver(Minion minion){
+		((FirestoneObservable)observable).deleteObserver((FirestoneMinion)minion);
+	}
 }
