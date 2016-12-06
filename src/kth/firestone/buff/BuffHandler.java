@@ -30,7 +30,6 @@ public class BuffHandler {
 		
 		Card playedCard =getPlayedCard(action);
 		String buff = playedCard.getDescription();
-		
 		if(playedCard.getType()==Card.Type.SPELL || buff.startsWith("Battlecry") || buff.startsWith("Combo"))
 			invokeBuff(action, null, buff, true);
 	}
@@ -58,7 +57,9 @@ public class BuffHandler {
 		}
 		if(buff.startsWith("Battlecry") || playedCard.getType() == Card.Type.SPELL)
 			return invokeBuff(action, null, buff, false);
-		return true;
+		else if(action.getTargetId()==null)
+			return true;
+		return false;
 		
 	}
 	

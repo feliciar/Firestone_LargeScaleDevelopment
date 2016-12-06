@@ -1,24 +1,54 @@
 package tests;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import kth.firestone.DamageHandler;
+import kth.firestone.FirestoneObservable;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionRace;
 
+
+import kth.firestone.player.GamePlayer;
+import kth.firestone.player.Player;
+
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 
 public class DamageHandlerTest {
 
+	@Mock
+	FirestoneObservable observable;
+	
+	@Mock
+	GamePlayer p1, p2;
+	
+	private List<Player> players;
+	List<Minion> minionsP1;
+	List<Minion> minionsP2;
+	
+	public DamageHandlerTest(){
+		MockitoAnnotations.initMocks(this);
+		players = new ArrayList<>();
+		players.add(p1);
+		players.add(p2);
+		minionsP1 = new ArrayList<>();
+		minionsP2 = new ArrayList<>();
+	}
+
 	@Test
 	public void testDealDamageToMinionAndHero() {
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
+		when(observable.getPlayers()).thenReturn(players);
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
 		
 		//Mocked target - Hero
 		FirestoneHero hero = new FirestoneHero("2", null, 30, null);
@@ -33,7 +63,11 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void testDealDamageToMinions() {
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
+		when(observable.getPlayers()).thenReturn(players);
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
+		
 		//Minions
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
 		minionPlayer1.setSleepy(false);
@@ -49,8 +83,11 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void testDealDamageToOneMinion() {
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
 		FirestoneMinion minion = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
+		when(observable.getPlayers()).thenReturn(players);
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
 		
 		dh.dealDamageToOneMinion(minion, 2);
 		assertEquals(minion.getHealth(), 5);
@@ -58,7 +95,12 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void testdealOneDamageToSeveralMinions() {
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
+		
+		when(observable.getPlayers()).thenReturn(players);
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minionsP2);
+		
 		Minion minion1 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
 		Minion minion2 = new FirestoneMinion(null, "Boulderfist Ogre", 7,7,6,6, null, null, null, null);
 		Minion minion3 = new FirestoneMinion(null, "Imp", 1, 1, 1, 1, null, null, null, null);
@@ -75,7 +117,7 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void testFindDeadMinions(){
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
 		
 		FirestoneMinion minion1 = new FirestoneMinion("200", "Boulderfist Ogre", 7, 7, 6, 6, MinionRace.NONE, null, null, null);
 		minion1.setSleepy(false);
@@ -92,7 +134,7 @@ public class DamageHandlerTest {
 	
 	@Test
 	public void testRemoveDeadMinions() {
-		DamageHandler dh = new DamageHandler();
+		DamageHandler dh = new DamageHandler(observable);
 		
 		//Mocked minions
 		FirestoneMinion minionPlayer1 = new FirestoneMinion("100", "Boulderfist Ogre", 7,7,6,6, MinionRace.NONE, null, null, null);
@@ -115,8 +157,4 @@ public class DamageHandlerTest {
 		assertFalse(activeMinionsP2.contains(minionPlayer21));
 	}
 	
-	@Test
-	public void checkDefeat() {
-		//TODO Check defeat for heros
-	}
 }

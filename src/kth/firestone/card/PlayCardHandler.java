@@ -2,10 +2,14 @@ package kth.firestone.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
+import kth.firestone.Action;
 import kth.firestone.Event;
+import kth.firestone.FirestoneObservable;
 import kth.firestone.GameData;
+import kth.firestone.Action.Type;
 import kth.firestone.buff.BuffHandler;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.minion.FirestoneMinion;
@@ -20,11 +24,13 @@ public class PlayCardHandler {
 	List<Event> events = new ArrayList<>();
 	GameData gameData;
 	BuffHandler buffHandler;
+	Observable observable;
 	public static int MAX_CARDS_ALLOWED_ON_THE_BOARD = 8;
 	
-	public PlayCardHandler(GameData gameData, BuffHandler buffHandler){
+	public PlayCardHandler(GameData gameData, BuffHandler buffHandler, Observable observable){
 		this.gameData = gameData;
 		this.buffHandler = buffHandler;
+		this.observable = observable;
 	}
 	
 	/**
@@ -34,11 +40,19 @@ public class PlayCardHandler {
      * @param card the card to play
      * @return a list of all events that has happened.
      */
-    public List<Event> playSpellCard(Player player, Card card){
+    public List<Event> playSpellCard(Player player, Card card, String targetId){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
     	((GamePlayer) player).getDiscardPileThisTurn().add(card);
+    	//Perform buffs
+    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		observable.notifyObservers(action);
     	return events;
+    }
+    
+    public List<Event> playSpellCard(Player player, Card card){
+    	return playSpellCard(player, card, null);
     }
     
 
@@ -55,7 +69,7 @@ public class PlayCardHandler {
      * @param position the position on the board where the minion will be positioned
      * @return a list of all events that has happened.
      */
-    public List<Event> playMinionCard(Player player, Card card, int position){
+    public List<Event> playMinionCard(Player player, Card card, int position, String targetId){
     	decreaseMana((FirestoneHero) player.getHero(), card.getManaCost());
     	player.getHand().remove(card);
     	((GamePlayer) player).getDiscardPileThisTurn().add(card);
@@ -72,7 +86,18 @@ public class PlayCardHandler {
     		cardPosition = player.getActiveMinions().size(); // add to end
     	}
     	player.getActiveMinions().add(cardPosition, minion);
+    	
+    	//Perform buffs
+    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), minion.getId(), position, targetId, null, Type.PLAYED_CARD);
+		buffHandler.performBuffOnPlayedCard(action);
+		observable.notifyObservers(action);
+		observable.addObserver((FirestoneMinion)minion);
+		
     	return events;
+    }
+    
+    public List<Event> playMinionCard(Player player, Card card, int position){
+    	return playMinionCard(player, card, position, null);
     }
 
 
@@ -122,8 +147,8 @@ public class PlayCardHandler {
     	if(! player.getHand().contains(card)){
     		return false;
     	}
-    	
-    	return true;
+    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, null, null, Type.PLAYED_CARD);
+		return buffHandler.isPerformBuffValid(action);
     }
 
     /**
@@ -135,9 +160,20 @@ public class PlayCardHandler {
      * @return true if the play is valid
      */
     public boolean isPlayCardValid(Player player, Card card, String targetId){
-    	//TODO implement more if we have taunts
-    	//return isPlayCardValid(player, card);
-    	return isPlayCardValid(player, card);
+    	if(player.getActiveMinions().size() >= MAX_CARDS_ALLOWED_ON_THE_BOARD){
+    		//TODO throw an appropriate error
+    		return false;
+    	}
+    	if(player.getHero().getMana() < card.getManaCost()){
+    		//TODO throw an error
+    		return false;
+    	}
+    	if(! player.getHand().contains(card)){
+    		return false;
+    	}
+    	
+    	Action action = new Action(((FirestoneObservable)observable).getPlayers(), player.getId(), card.getId(), null, -1, targetId, null, Type.PLAYED_CARD);
+		return buffHandler.isPerformBuffValid(action);
     }
     
     public List<MinionState> getMinionStates(Card card) {

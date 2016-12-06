@@ -37,9 +37,17 @@ public class Action {
 	public List<Player> getPlayers() {
 		return players;
 	}
+	
+	public void setPlayers(List<Player> players){
+		this.players = players;
+	}
 
 	public String getCurrentPlayerId() {
 		return currentPlayerId;
+	}
+	
+	public void setCurrentPlayerId(String playerId){
+		this.currentPlayerId = playerId;
 	}
 
 	public String getPlayedCardId() {
