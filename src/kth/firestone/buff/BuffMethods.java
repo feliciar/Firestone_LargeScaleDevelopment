@@ -233,6 +233,7 @@ public class BuffMethods {
 								currentPlayer.getHand().add(c);
 								// remove minion from the board
 								currentPlayer.getActiveMinions().remove(m);
+								damageHandler.removeMinionAsObserver(m);
 							}
 							return true;
 						}
