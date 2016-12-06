@@ -42,6 +42,7 @@ public class BuffMethods {
 	 */
 	public boolean whenHoldingDragonDealThreeDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return false;
+		
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().get().equals(MinionRace.DRAGON)) {
@@ -66,7 +67,10 @@ public class BuffMethods {
 						}
 					}
 				}
+			} else if(!performBuff) { // if not holding a dragon
+				return true;
 			}
+			
 		}
 		return false;
 	}
