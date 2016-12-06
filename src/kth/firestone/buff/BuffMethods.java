@@ -217,13 +217,13 @@ public class BuffMethods {
 	 * @param action the action that just took place
 	 */
 	public boolean returnOwnMinionToHand(Action action, Minion minion, boolean performBuff) {
-		if (minion != null) return false;
+		if (minion != null || action.getTargetId()==null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Minion m : currentPlayer.getActiveMinions()) {
 			if (m.getId().equals(action.getTargetId())) {
 				// target id is the id of the minion that player wants to return to hand
 				List<List<Card>> pile = ((GamePlayer) currentPlayer).getDiscardPile();
-				for (List<Card> turnPile: pile) {
+				for (List<Card> turnPile : pile) {
 					for (Card c : turnPile) {
 						if (c.getName().equals(m.getName())) {
 							if (performBuff) {

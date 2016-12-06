@@ -14,7 +14,6 @@ public class GamePlayer implements Player {
 	private List<Card> hand;
 	private List<Minion> activeMinions;
 	private Deck deck;
-	private List<Card> discardPileThisTurn;
 	private List<List<Card>> discardPile;
 	
 	
@@ -24,7 +23,7 @@ public class GamePlayer implements Player {
 		hand = new ArrayList<Card>();
 		activeMinions = new ArrayList<Minion>();
 		discardPile = new ArrayList<>();
-		discardPileThisTurn = new ArrayList<>();
+		discardPile.add(new ArrayList<>());
 	}
 	
 	@Override
@@ -69,7 +68,7 @@ public class GamePlayer implements Player {
 	}
 	
 	public List<Card> getDiscardPileThisTurn(){
-		return discardPileThisTurn;
+		return discardPile.get(discardPile.size()-1);
 	}
 	
 }

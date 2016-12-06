@@ -220,8 +220,7 @@ public class FirestoneGame implements Game {
 			// Restore hero power use of the hero
 			hero.setHasUsedHeroPower(false);
 			// save discard pile for this turn and clear
-			((GamePlayer) player).getDiscardPile().add(((GamePlayer) player).getDiscardPileThisTurn());
-			((GamePlayer) player).getDiscardPileThisTurn().clear();
+			((GamePlayer) player).getDiscardPile().add(new ArrayList<>());
 			
 			
 			((FirestoneObservable)observable).setCurrentPlayerId(this.getPlayerInTurn().getId());
