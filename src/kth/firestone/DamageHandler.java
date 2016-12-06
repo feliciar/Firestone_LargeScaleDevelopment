@@ -30,11 +30,7 @@ public class DamageHandler {
 		observable.notifyObservers(action2);
 		
 		// Remove the attacker if it has died
-		if(((FirestoneObservable)observable).getPlayers().get(0).getActiveMinions().contains(attacker)){
-			removeDeadMinion(((FirestoneObservable)observable).getPlayers().get(0).getActiveMinions(), attacker);
-		} else {
-			removeDeadMinion(((FirestoneObservable)observable).getPlayers().get(1).getActiveMinions(), attacker);
-		}
+		removeDeadMinion(attacker);
 	}
 	
 	/**
@@ -64,11 +60,7 @@ public class DamageHandler {
 		observable.notifyObservers(action);
 		
 		// Remove the minion if it died
-		if(((FirestoneObservable)observable).getPlayers().get(0).getActiveMinions().contains(minion)){
-			removeDeadMinion(((FirestoneObservable)observable).getPlayers().get(0).getActiveMinions(), minion);
-		} else {
-			removeDeadMinion(((FirestoneObservable)observable).getPlayers().get(1).getActiveMinions(), minion);
-		}
+		removeDeadMinion(minion);
 	}
 	
 	/**
@@ -136,9 +128,14 @@ public class DamageHandler {
 	/**
 	 * Removes a dead minion.
 	 */
-	public void removeDeadMinion(List<Minion> minions, Minion minion) {
+	public void removeDeadMinion(Minion minion) {
 		if (isDead(minion)) {
-			minions.remove(minion);
+			List<Minion> minions = ((FirestoneObservable)observable).getPlayers().get(0).getActiveMinions();
+			if (minions.contains(minion)) {
+				minions.remove(minion);
+			} else {
+				((FirestoneObservable)observable).getPlayers().get(1).getActiveMinions().remove(minion);
+			}
 			((FirestoneObservable)observable).deleteObserver((FirestoneMinion)minion);
 		}
 	}
