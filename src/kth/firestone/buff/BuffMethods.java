@@ -42,6 +42,7 @@ public class BuffMethods {
 	 */
 	public boolean whenHoldingDragonDealThreeDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion != null) return false;
+		
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().get().equals(MinionRace.DRAGON)) {
@@ -66,7 +67,10 @@ public class BuffMethods {
 						}
 					}
 				}
+			} else if(!performBuff) { // if not holding a dragon
+				return true;
 			}
+			
 		}
 		return false;
 	}
@@ -330,14 +334,19 @@ public class BuffMethods {
 	 */
 	public boolean drawCardWhenThisMinionTakesDamage(Action action, Minion minion, boolean performBuff) {
 		if (minion == null || action.getTargetId() != null) return false;
-		Player currentPlayer = getCurrentPlayer(action);
-		if (action.getActionType().equals(Action.Type.DAMAGE)) {
-			if (minion.getId().equals(action.getDamagedCharacterId())) {
-				if (performBuff) {
-					Card drawnCard = ((FirestoneDeck) currentPlayer.getDeck()).getCards().pop();
-					currentPlayer.getHand().add(drawnCard);
+		if (action.getActionType().equals(Action.Type.DAMAGE) && minion.getId().equals(action.getDamagedCharacterId())) {
+			for (Player p : action.getPlayers()) {
+				for (Minion m : p.getActiveMinions()) {
+					if (m.getId().equals(minion.getId())) {
+						if (p.getDeck().size() > 0) {
+							if (performBuff) {
+								Card drawnCard = ((FirestoneDeck) p.getDeck()).getCards().pop();
+								p.getHand().add(drawnCard);
+							}
+							return true;
+						}
+					}
 				}
-				return true;
 			}
 		}
 		return false;
