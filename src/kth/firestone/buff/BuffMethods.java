@@ -159,28 +159,26 @@ public class BuffMethods {
 	public boolean afterSpellDealOneDamageToAllMinions(Action action, Minion minion, boolean performBuff) {
 		if (minion == null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
-		Card playedCard = null;
-		if(action.getActionType()!=Action.Type.PLAYED_CARD){
+		/*
+		if(action.getActionType() != Action.Type.PLAYED_CARD){
 			return false;
-		}
+		}*/
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
 			if (c.getId().equals(action.getPlayedCardId())) {
-				playedCard = c;
-				break;
-			}
-		}
-		if (playedCard.getType().equals(Card.Type.SPELL)) {
-			if (performBuff) {
-				List<Minion> minionsToDealDamageTo = new ArrayList<>();
-				for (Player p : action.getPlayers()) {
-					for (Minion m : p.getActiveMinions()) {
-						if (m.equals(minion)) continue;
-						minionsToDealDamageTo.add(m);
+				if (c.getType().equals(Card.Type.SPELL)) {
+					if (performBuff) {
+						List<Minion> minionsToDealDamageTo = new ArrayList<>();
+						for (Player p : action.getPlayers()) {
+							for (Minion m : p.getActiveMinions()) {
+								if (m.equals(minion)) continue;
+								minionsToDealDamageTo.add(m);
+							}
+						}
+						damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
 					}
+					return true;
 				}
-				damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
 			}
-			return true;
 		}
 		return false;
 	}
