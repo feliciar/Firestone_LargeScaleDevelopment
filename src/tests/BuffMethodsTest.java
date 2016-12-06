@@ -68,7 +68,6 @@ public class BuffMethodsTest {
 		buffMethods.dealOneDamage(action, null, true);
 		
 		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 1);
-		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(0));
 	}
 	
 	@Test
@@ -93,7 +92,6 @@ public class BuffMethodsTest {
 		when(p1.getActiveMinions()).thenReturn(minions);
 		buffMethods.whenHoldingDragonDealThreeDamage(action2, null, true);
 		verify(damageHandler).dealDamageToOneMinion(minions.get(0), 3);
-		verify(damageHandler).removeDeadMinions(minions);
 	}
 	
 	@Test
@@ -162,8 +160,6 @@ public class BuffMethodsTest {
 		
 		buffMethods.afterSpellDealOneDamageToAllMinions(action, minionsp1.get(0), true);
 		
-		verify(damageHandler).removeDeadMinions(minionsp1);
-		verify(damageHandler).removeDeadMinions(minions);
 		verify(damageHandler).dealOneDamageToSeveralMinions(minions);
 	}
 	
@@ -178,7 +174,6 @@ public class BuffMethodsTest {
 		buffMethods.dealThreeDamageToAndFreezeCharacter(action, null, true);
 		
 		verify(damageHandler).dealDamageToOneMinion(minions.get(1), 3);
-		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(1));
 		assertTrue(minions.get(1).getStates().contains(MinionState.FROZEN));
 	}
 	
@@ -226,7 +221,6 @@ public class BuffMethodsTest {
 		when(p1.getActiveMinions()).thenReturn(minions);
 		//Verify that the undamaged minion can be killed
 		buffMethods.dealTwoDamageToUndamagedMinion(action, minion, true);
-		verify(damageHandler).removeDeadMinion(p1.getActiveMinions(), minions.get(0));
 		
 		//Verify that the damaged minion cannot be targeted
 		action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-2", null, Action.Type.PLAYED_CARD);

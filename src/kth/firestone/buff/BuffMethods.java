@@ -61,7 +61,6 @@ public class BuffMethods {
 						if (m.getId().equals(action.getTargetId())) {
 							if (performBuff) {
 								damageHandler.dealDamageToOneMinion(m, 3);
-								damageHandler.removeDeadMinions(p.getActiveMinions());
 							}
 							return true;
 						}
@@ -177,9 +176,6 @@ public class BuffMethods {
 					}
 				}
 				damageHandler.dealOneDamageToSeveralMinions(minionsToDealDamageTo);
-				for (Player p : action.getPlayers()) {
-					damageHandler.removeDeadMinions(p.getActiveMinions());
-				}
 			}
 			return true;
 		}
@@ -206,7 +202,6 @@ public class BuffMethods {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
 						damageHandler.dealDamageToOneMinion(m, 3);
-						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
 						m.getStates().add(MinionState.FROZEN);
 					}
 					return true;
@@ -260,7 +255,6 @@ public class BuffMethods {
 					if (m.getOriginalHealth() == m.getHealth()) {
 						if (performBuff) {
 							damageHandler.dealDamageToOneMinion(m, 2);
-							damageHandler.removeDeadMinion(p.getActiveMinions(), m);
 						}
 						return true;
 					}
@@ -522,7 +516,6 @@ public class BuffMethods {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
 						damageHandler.dealDamageToOneMinion(m, damage);
-						damageHandler.removeDeadMinion(p.getActiveMinions(), m);
 					}
 					return true;
 				}
