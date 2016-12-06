@@ -156,8 +156,6 @@ public class AttackHandlerTest {
 		// Test to kill a minion
 		ah.attack(p1, "100", "210");
 		verify(damageHandler).dealDamageToTwoMinions(minionPlayer1, minionPlayer21);
-		verify(damageHandler).removeDeadMinions(minionsP2);
-		verify(damageHandler).removeDeadMinions(minionsP1);
 	}
 	
 	@Test
@@ -171,8 +169,6 @@ public class AttackHandlerTest {
 		//Test to attack other Ogre 
 		ah.attack(p1, "100", "200");
 		verify(damageHandler).dealDamageToTwoMinions(minionPlayer1, minionPlayer2);
-		verify(damageHandler).removeDeadMinions(minionsP1);
-		verify(damageHandler).removeDeadMinions(minionsP2);
 	}
 	
 	@Test
@@ -188,7 +184,6 @@ public class AttackHandlerTest {
 		//Test to attack the hero of adversary
 		ah.attack(p1, "100", "2");
 		verify(damageHandler).dealDamageToMinionAndHero(minionPlayer1, heroP2);
-		verify(damageHandler).removeDeadMinions(minionsP1);
 	}
 	
 	@Test
@@ -204,7 +199,6 @@ public class AttackHandlerTest {
 		//Attack the own hero
 		ah.attack(p1, "100", "1");
 		verify(damageHandler).dealDamageToMinionAndHero(minionPlayer1, heroP1);
-		verify(damageHandler).removeDeadMinions(minionsP1);
 		
 	}
 }
