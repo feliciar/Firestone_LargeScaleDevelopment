@@ -13,6 +13,7 @@ import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.HeroPower;
+import kth.firestone.hero.HeroState;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
 import kth.firestone.minion.MinionState;
@@ -202,13 +203,13 @@ public class FirestoneGame implements Game {
 			for (Minion m : nextPlayer.getActiveMinions()) {
 				((FirestoneMinion) m).setUsedThisTurn(false);
 			}
-			// Unfreeze all of this player's frozen minions
-			for (Minion m : nextPlayer.getActiveMinions()) {
+			// Unfreeze all of the last player's frozen minions
+			for (Minion m : player.getActiveMinions()) {
 				((FirestoneMinion) m).getStates().remove(MinionState.FROZEN);				
 			}
-			//Unfreese this player's hero
-			nextPlayer.getHero().getStates().remove(MinionState.FROZEN);
-			
+			//Unfreeze this player's hero
+			player.getHero().getStates().remove(HeroState.FROZEN);
+						
 			
 			// Increase mana
 			if (hero.getMaxMana() < 10) {
