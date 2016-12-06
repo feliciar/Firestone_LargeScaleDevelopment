@@ -284,7 +284,7 @@ public class BuffMethodsTest {
 		Deque<Card> d = new ArrayDeque<>();
 		d.add(new FirestoneCard("cardId","","1","1","1","MINION","","DRAGON"));
 		
-		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getActiveMinions()).thenReturn(minions);
 		when(p1.getDeck()).thenReturn(new FirestoneDeck(d));
 		when(p1.getHand()).thenReturn(new ArrayList<>());
 		
