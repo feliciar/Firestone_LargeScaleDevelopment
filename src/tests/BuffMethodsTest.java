@@ -159,7 +159,7 @@ public class BuffMethodsTest {
 		when(p2.getActiveMinions()).thenReturn(minions);
 		
 		buffMethods.afterSpellDealOneDamageToAllMinions(action, minionsp1.get(0), true);
-		
+		minions.add(0,minionsp1.get(0));
 		verify(damageHandler).dealOneDamageToSeveralMinions(minions);
 	}
 	

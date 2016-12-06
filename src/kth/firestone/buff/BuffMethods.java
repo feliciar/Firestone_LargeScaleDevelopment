@@ -157,7 +157,7 @@ public class BuffMethods {
 	 * @param minion the minion that this buff belongs to
 	 */
 	public boolean afterSpellDealOneDamageToAllMinions(Action action, Minion minion, boolean performBuff) {
-		if (minion == null || action.getTargetId() != null) return false;
+		if (minion == null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		/*
 		if(action.getActionType() != Action.Type.PLAYED_CARD){
@@ -170,7 +170,6 @@ public class BuffMethods {
 						List<Minion> minionsToDealDamageTo = new ArrayList<>();
 						for (Player p : action.getPlayers()) {
 							for (Minion m : p.getActiveMinions()) {
-								if (m.equals(minion)) continue;
 								minionsToDealDamageTo.add(m);
 							}
 						}
