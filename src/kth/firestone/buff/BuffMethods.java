@@ -154,6 +154,9 @@ public class BuffMethods {
 		if (minion == null || action.getTargetId() != null) return false;
 		Player currentPlayer = getCurrentPlayer(action);
 		Card playedCard = null;
+		if(action.getActionType()!=Action.Type.PLAYED_CARD){
+			return false;
+		}
 		for (Card c : ((GamePlayer) currentPlayer).getDiscardPileThisTurn()) {
 			if (c.getId().equals(action.getPlayedCardId())) {
 				playedCard = c;
