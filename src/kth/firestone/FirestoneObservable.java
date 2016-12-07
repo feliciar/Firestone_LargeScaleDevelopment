@@ -9,7 +9,6 @@ import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
 
 public class FirestoneObservable extends Observable {
-
     private List<Minion> observers;
     private List<Player> players;
     private String playerInTurnId;
@@ -21,8 +20,11 @@ public class FirestoneObservable extends Observable {
 
     @Override
     public void notifyObservers(Object o) {
+        Action action = (Action) o;
+        // action.setPlayers(players);
+        // action.setCurrentPlayerId(playerInTurnId);
         setChanged();
-        super.notifyObservers(o);
+        super.notifyObservers(action);
     }
 
     @Override
@@ -48,5 +50,14 @@ public class FirestoneObservable extends Observable {
     public List<Player> getPlayers() {
         return players;
     }
+
+    /*
+     * public void updateObserverList(){ List<Minion> observersToRemove = new
+     * ArrayList<>(); for(Minion m : observers){
+     * if(!players.get(0).getActiveMinions().contains(m) &&
+     * !players.get(1).getActiveMinions().contains(m)){
+     * this.deleteObserver((FirestoneMinion)m); observersToRemove.add(m); } }
+     * observers.removeAll(observersToRemove); }
+     */
 
 }

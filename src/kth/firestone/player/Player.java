@@ -1,22 +1,22 @@
 package kth.firestone.player;
 
+import java.util.List;
+
 import kth.firestone.card.Card;
 import kth.firestone.deck.Deck;
 import kth.firestone.hero.Hero;
 import kth.firestone.minion.Minion;
 
-import java.util.List;
-//
 /**
  * A representation of a player in firestone.
  */
 public interface Player {
-	
-	/**
-	 * The unique identifier in the context of all entities in a game.
-	 * 
-	 * @return the id
-	 */
+
+    /**
+     * The unique identifier in the context of all entities in a game.
+     * 
+     * @return the id
+     */
     public String getId();
 
     /**

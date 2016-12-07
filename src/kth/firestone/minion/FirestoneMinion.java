@@ -37,9 +37,6 @@ public class FirestoneMinion implements Minion, Observer {
         this.states = states;
         this.buff = buff;
         this.buffHandler = buffHandler;
-
-        // TODO When we have the Charge ability, check if minion should not be
-        // sleepy
     }
 
     @Override
