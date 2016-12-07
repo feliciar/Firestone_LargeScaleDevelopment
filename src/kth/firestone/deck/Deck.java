@@ -5,9 +5,9 @@ package kth.firestone.deck;
  */
 public interface Deck {
 
-	/**
-	 * @return the current number of cards left in the deck.
-	 */
-	public int size();
-	
+    /**
+     * @return the current number of cards left in the deck.
+     */
+    public int size();
+
 }

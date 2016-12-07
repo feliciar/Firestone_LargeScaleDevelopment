@@ -1,19 +1,19 @@
 package kth.firestone;
 
+import java.util.List;
+
 import kth.firestone.card.Card;
 import kth.firestone.minion.Minion;
 import kth.firestone.player.Player;
-
-import java.util.List;
 
 /**
  * The main API of the game.
  */
 public interface Game {
-	
-	/**
-	 * @return a list of the players of the game.
-	 */
+
+    /**
+     * @return a list of the players of the game.
+     */
     public List<Player> getPlayers();
 
     /**
@@ -24,15 +24,16 @@ public interface Game {
     /**
      * Playing a spell card without a target.
      * 
-     * @param player the player playing the card 
+     * @param player the player playing the card
      * @param card the card to play
      * @return a list of all events that has happened.
      */
     public List<Event> playSpellCard(Player player, Card card);
+
     /**
      * Playing a spell card with a target.
      * 
-     * @param player the player playing the card 
+     * @param player the player playing the card
      * @param card the card to play
      * @param targetId the id of the target of the card
      * @return a list of all events that has happened.
@@ -42,9 +43,10 @@ public interface Game {
     /**
      * Playing a minion without a target.
      * 
-     * @param player the player playing the card 
+     * @param player the player playing the card
      * @param card the card to play
-     * @param position the position on the board where the minion will be positioned
+     * @param position the position on the board where the minion will be
+     *            positioned
      * @return a list of all events that has happened.
      */
     public List<Event> playMinionCard(Player player, Card card, int position);
@@ -54,7 +56,8 @@ public interface Game {
      * 
      * @param player the player playing the card
      * @param card the card to play
-     * @param position the position on the board where the minion will be positioned
+     * @param position the position on the board where the minion will be
+     *            positioned
      * @param targetId the id of the target of the card
      * @return a list of all events that has happened.
      */
@@ -79,9 +82,9 @@ public interface Game {
      */
     public List<Event> playWeaponCard(Player player, Card card, String targetId);
 
-    
     /**
-     * Tells if the given player can perform an attack with the given minion or not.
+     * Tells if the given player can perform an attack with the given minion or
+     * not.
      * 
      * @param player the player wanting to attack
      * @param minion the minion trying to attack
@@ -133,34 +136,34 @@ public interface Game {
      * @param player the player playing the card
      * @return true if the play is valid
      */
-	public boolean isUseOfHeroPowerValid(Player player);
+    public boolean isUseOfHeroPowerValid(Player player);
 
     /**
      * Determines if the hero power can be used with a target.
      * 
-     * @param player the player 
+     * @param player the player
      * @param targetId the id of the target of the hero power
      * @return true if the play is valid
      */
-	public boolean isUseOfHeroPowerValid(Player player, String targetId);
+    public boolean isUseOfHeroPowerValid(Player player, String targetId);
 
     /**
      * Use the hero power without a target.
      * 
-     * @param player the player 
+     * @param player the player
      * @return a list of events that happened
      */
-	public List<Event> useHeroPower(Player player);
+    public List<Event> useHeroPower(Player player);
 
-	/**
+    /**
      * Use the hero power with a target.
      * 
-     * @param player the player 
+     * @param player the player
      * @param targetId the id of the target of the hero power
      * @return a list of events that happened
-	 */
-	public List<Event> useHeroPower(Player player, String targetId);
-	
+     */
+    public List<Event> useHeroPower(Player player, String targetId);
+
     /**
      * Ends the turn of a player.
      * 
@@ -177,7 +180,7 @@ public interface Game {
     /**
      * Starts the game.
      * 
-     * @param player the starting player 
+     * @param player the starting player
      */
     public void start(Player player);
 
