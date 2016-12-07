@@ -10,134 +10,135 @@ import kth.firestone.buff.BuffDescription;
 import kth.firestone.buff.BuffHandler;
 
 public class FirestoneMinion implements Minion, Observer {
-	private String id;
-	private String name;
-	private int health;
-	private int maxHealth;
-	private int originalHealth;
-	private int originalAttack;
-	private int attack;
-	private MinionRace race;
-	private List<MinionState> states;
-	private String buff;
-	private boolean sleepy = true;
-	private boolean usedThisTurn = false;
-	private BuffHandler buffHandler;
-	
-	public FirestoneMinion(String id, String name, int health, int originalHealth, int originalAttack, 
-			int attack, MinionRace race, List<MinionState> states, String buff, BuffHandler buffHandler) {
-		this.id = id;
-		this.name = name;
-		this.health = health;
-		this.maxHealth = health;
-		this.originalHealth = originalHealth;
-		this.originalAttack = originalAttack;
-		this.attack = attack;
-		this.race = race;
-		this.states = states;
-		this.buff = buff;
-		this.buffHandler = buffHandler;
+    private String id;
+    private String name;
+    private int health;
+    private int maxHealth;
+    private int originalHealth;
+    private int originalAttack;
+    private int attack;
+    private MinionRace race;
+    private List<MinionState> states;
+    private String buff;
+    private boolean sleepy = true;
+    private boolean usedThisTurn = false;
+    private BuffHandler buffHandler;
 
-		//TODO When we have the Charge ability, check if minion should not be sleepy		
-	}
-	
-	@Override
-	public String getId() {
-		return id;
-	}
+    public FirestoneMinion(String id, String name, int health, int originalHealth, int originalAttack, int attack,
+            MinionRace race, List<MinionState> states, String buff, BuffHandler buffHandler) {
+        this.id = id;
+        this.name = name;
+        this.health = health;
+        this.maxHealth = health;
+        this.originalHealth = originalHealth;
+        this.originalAttack = originalAttack;
+        this.attack = attack;
+        this.race = race;
+        this.states = states;
+        this.buff = buff;
+        this.buffHandler = buffHandler;
 
-	@Override
-	public String getName() {
-		return name;
-	}
+        // TODO When we have the Charge ability, check if minion should not be
+        // sleepy
+    }
 
-	@Override
-	public int getHealth() {
-		return health;
-	}
+    @Override
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public int getMaxHealth() {
-		return maxHealth;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public int getOriginalHealth() {
-		return originalHealth;
-	}
+    @Override
+    public int getHealth() {
+        return health;
+    }
 
-	@Override
-	public int getOriginalAttack() {
-		return originalAttack;
-	}
+    @Override
+    public int getMaxHealth() {
+        return maxHealth;
+    }
 
-	@Override
-	public int getAttack() {
-		return attack;
-	}
+    @Override
+    public int getOriginalHealth() {
+        return originalHealth;
+    }
 
-	@Override
-	public MinionRace getRace() {
-		return race;
-	}
+    @Override
+    public int getOriginalAttack() {
+        return originalAttack;
+    }
 
-	@Override
-	public List<MinionState> getStates() {
-		return states;
-	}
+    @Override
+    public int getAttack() {
+        return attack;
+    }
 
-	@Override
-	public boolean isSleepy() {
-		return sleepy;
-	}
-	
-	public boolean wasUsedThisTurn(){
-		return usedThisTurn;
-	}
+    @Override
+    public MinionRace getRace() {
+        return race;
+    }
 
-	public String getBuff() {
-		return buff;
-	}
-	
-	public void setUsedThisTurn(boolean usedThisTurn){
-		this.usedThisTurn = usedThisTurn;
-	}
-	
-	public void setSleepy(boolean sleepy){
-		this.sleepy = sleepy;
-	}
-	
-	public void setHealth(int health){
-		this.health = health;
-	}
-	
-	public void setMaxHealth(int maxHealth){
-		this.maxHealth = maxHealth;
-	}
-	
-	public void setAttack(int attack){
-		this.attack = attack;
-	}
+    @Override
+    public List<MinionState> getStates() {
+        return states;
+    }
 
-	public String toString(){
-		String raceString = (race == MinionRace.NONE) ? "" : race.toString();
-		String sleepString = isSleepy() ? "Zzz" : "";
-		return name+" ("+health+"/"+maxHealth+", "+attack+"/"+originalAttack+") " + raceString +" " + sleepString;
-	}
-	
-	public void reduceHealth(int val) {
-		health -= val;
-	}
+    @Override
+    public boolean isSleepy() {
+        return sleepy;
+    }
 
-	@Override
-	public void update(Observable observable, Object arg) {
-		Action action = (Action)arg;
-		buffHandler.performBuff(action, this);
-	}
+    public boolean wasUsedThisTurn() {
+        return usedThisTurn;
+    }
 
-	@Override
-	public List<BuffDescription> getBuffDescriptions() {
-		return new ArrayList<>();
-	}
-	
+    public String getBuff() {
+        return buff;
+    }
+
+    public void setUsedThisTurn(boolean usedThisTurn) {
+        this.usedThisTurn = usedThisTurn;
+    }
+
+    public void setSleepy(boolean sleepy) {
+        this.sleepy = sleepy;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public String toString() {
+        String raceString = (race == MinionRace.NONE) ? "" : race.toString();
+        String sleepString = isSleepy() ? "Zzz" : "";
+        return name + " (" + health + "/" + maxHealth + ", " + attack + "/" + originalAttack + ") " + raceString + " "
+                + sleepString;
+    }
+
+    public void reduceHealth(int val) {
+        health -= val;
+    }
+
+    @Override
+    public void update(Observable observable, Object arg) {
+        buffHandler.performBuff((Action) arg, this);
+    }
+
+    @Override
+    public List<BuffDescription> getBuffDescriptions() {
+        return new ArrayList<>();
+    }
+
 }
