@@ -130,8 +130,7 @@ public class FirestoneMinion implements Minion, Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        Action action = (Action) arg;
-        buffHandler.performBuff(action, this);
+        buffHandler.performBuff((Action) arg, this);
     }
 
     @Override

@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
-
-import kth.firestone.Action.Type;
-import kth.firestone.buff.BuffHandler;
 import kth.firestone.card.Card;
 import kth.firestone.card.PlayCardHandler;
 import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
-import kth.firestone.hero.HeroPower;
+import kth.firestone.hero.HeroPowerHandler;
 import kth.firestone.hero.HeroState;
 import kth.firestone.minion.FirestoneMinion;
 import kth.firestone.minion.Minion;
@@ -25,7 +22,7 @@ public class FirestoneGame implements Game {
 	private List<Event> events;
 	private PlayCardHandler playCardHandler;
 	private AttackHandler attackHandler;
-	private BuffHandler buffHandler;
+	private HeroPowerHandler heroPowerHandler;
 	private Observable observable;
 	private int playerIndexInTurn = 1;	// first player starts by default
 	private final String PLAYER_1_ID = "1";
@@ -35,11 +32,11 @@ public class FirestoneGame implements Game {
 	public FirestoneGame(List<Player> players, 
 			PlayCardHandler playCardHandler,
 			AttackHandler attackHandler,
-			BuffHandler buffHandler, Observable observable) {
+			HeroPowerHandler heroPowerHandler, Observable observable) {
 		this.players = players;
 		this.playCardHandler = playCardHandler;
 		this.attackHandler = attackHandler;
-		this.buffHandler = buffHandler;
+		this.heroPowerHandler = heroPowerHandler;
 		this.observable = observable;
 		this.events = new ArrayList<>();
 	}
@@ -124,54 +121,28 @@ public class FirestoneGame implements Game {
 
 	@Override
 	public boolean isUseOfHeroPowerValid(Player player) {
-		HeroPower power = player.getHero().getHeroPower();
 		if(! player.equals(getPlayerInTurn())){
 			return false;
 		}
-		if(power.getManaCost() > player.getHero().getMana()){
-			return false;
-		}
-		if(((FirestoneHero)player.getHero()).hasUsedHeroPower()){
-			return false;
-		}
-		Action action = new Action(players, player.getId(), null, null, -1, null, null, Type.HERO_POWER);
-		return buffHandler.isPerformHeroPowerValid(action);
+		return heroPowerHandler.isUseOfHeroPowerValid(players, player);
 	}
 
 	@Override
 	public boolean isUseOfHeroPowerValid(Player player, String targetId) {
-		HeroPower power = player.getHero().getHeroPower();
 		if(! player.equals(getPlayerInTurn())){
 			return false;
 		}
-		if(power.getManaCost() > player.getHero().getMana()){
-			return false;
-		}
-		if(((FirestoneHero)player.getHero()).hasUsedHeroPower()){
-			return false;
-		}
-		Action action = new Action(players, player.getId(), null, null, -1, targetId, null, Type.HERO_POWER);
-		return buffHandler.isPerformHeroPowerValid(action);
+		return heroPowerHandler.isUseOfHeroPowerValid(players, player, targetId);
 	}
 
 	@Override
 	public List<Event> useHeroPower(Player player) {
-		((FirestoneHero)player.getHero()).setHasUsedHeroPower(true);
-		int mana = player.getHero().getMana() - player.getHero().getHeroPower().getManaCost(); 
-		((FirestoneHero)player.getHero()).setMana(mana);
-		Action action = new Action(players, player.getId(), null, null, -1, null, null, Type.HERO_POWER);
-		buffHandler.performHeroPower(action);
-		return null;
+		return heroPowerHandler.useHeroPower(players, player);
 	}
 
 	@Override
 	public List<Event> useHeroPower(Player player, String targetId) {
-		((FirestoneHero)player.getHero()).setHasUsedHeroPower(true);
-		int mana = player.getHero().getMana() - player.getHero().getHeroPower().getManaCost(); 
-		((FirestoneHero)player.getHero()).setMana(mana);
-		Action action = new Action(players, player.getId(), null, null, -1, targetId, null, Type.HERO_POWER);
-		buffHandler.performHeroPower(action);
-		return null;
+		return heroPowerHandler.useHeroPower(players, player, targetId);
 	}
 
 	@Override

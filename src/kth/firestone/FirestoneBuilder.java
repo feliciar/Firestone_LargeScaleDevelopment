@@ -18,6 +18,7 @@ import kth.firestone.deck.FirestoneDeck;
 import kth.firestone.hero.FirestoneHero;
 import kth.firestone.hero.FirestoneHeroPower;
 import kth.firestone.hero.HeroPower;
+import kth.firestone.hero.HeroPowerHandler;
 import kth.firestone.player.GamePlayer;
 import kth.firestone.player.Player;
 
@@ -154,8 +155,9 @@ public class FirestoneBuilder implements GameBuilder {
         DamageHandler damageHandler = new DamageHandler(observable);
         BuffMethods buffMethods = new BuffMethods(damageHandler);
         BuffHandler buffHandler = new BuffHandler(buffMethods);
+        HeroPowerHandler heroPowerHandler = new HeroPowerHandler(buffHandler);
         return new FirestoneGame(players, new PlayCardHandler(gameData, buffHandler, observable),
-                new AttackHandler(players, damageHandler), buffHandler, observable);
+                new AttackHandler(players, damageHandler), heroPowerHandler, observable);
     }
 
     private List<Player> createPlayers() {
