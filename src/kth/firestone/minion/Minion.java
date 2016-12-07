@@ -1,8 +1,8 @@
 package kth.firestone.minion;
 
-import kth.firestone.buff.BuffDescription;
-
 import java.util.List;
+
+import kth.firestone.buff.BuffDescription;
 
 /**
  * Describes a minion.
@@ -30,6 +30,7 @@ public interface Minion {
 
     /**
      * Note that the original health and max health of a minion is the same.
+     * 
      * @return the original health of the minion.
      */
     public int getOriginalHealth();
@@ -60,8 +61,9 @@ public interface Minion {
     public List<BuffDescription> getBuffDescriptions();
 
     /**
-     * Tells if the minion is sleepy, i.e., it cannot attack.
-     * This usually happens when a minion is played to the board for the first time.
+     * Tells if the minion is sleepy, i.e., it cannot attack. This usually
+     * happens when a minion is played to the board for the first time.
+     * 
      * @return if the minion is sleepy or not (if it can attack).
      */
     public boolean isSleepy();
