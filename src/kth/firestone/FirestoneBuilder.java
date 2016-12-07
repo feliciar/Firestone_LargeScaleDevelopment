@@ -149,6 +149,17 @@ public class FirestoneBuilder implements GameBuilder {
         return this;
     }
 
+    public GameBuilder setHero(int playerIndex, String heroName, String heroPower, int manaCost) {
+        if (playerIndex < 1) {
+            System.exit(1);
+        }
+
+        GamePlayer p = (GamePlayer) getPlayers().get(playerIndex - 1);
+        ((GamePlayer) p).setHero(
+                new FirestoneHero(p.getId(), heroName, HERO_HEALTH, new FirestoneHeroPower(heroPower, "" + manaCost)));
+        return this;
+    }
+
     @Override
     public Game build() {
         Observable observable = new FirestoneObservable(players);
