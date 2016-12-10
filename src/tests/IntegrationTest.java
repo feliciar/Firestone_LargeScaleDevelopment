@@ -11,7 +11,7 @@ import kth.firestone.GameData;
 import kth.firestone.card.Card;
 import kth.firestone.minion.Minion;
 
-public class MainTest {
+public class IntegrationTest {
 	private final int STARTING_MANA = 1;
 	
 	@Test

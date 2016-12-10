@@ -21,17 +21,21 @@ public class DamageHandler {
      * Deals damage when a minion and hero battles.
      */
     public void dealDamageToMinionAndHero(Minion attacker, Hero target) {
-        ((FirestoneHero) target).reduceHealth(attacker.getAttack());
-        ((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+        if (attacker.getAttack() > 0) {
+            ((FirestoneHero) target).reduceHealth(attacker.getAttack());
+            Action action2 = new Action(((FirestoneObservable) observable).getPlayers(),
+                    ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, target.getId(),
+                    Type.DAMAGE);
+            observable.notifyObservers(action2);
+        }
 
-        Action action1 = new Action(((FirestoneObservable) observable).getPlayers(),
-                ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(),
-                Type.DAMAGE);
-        Action action2 = new Action(((FirestoneObservable) observable).getPlayers(),
-                ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, target.getId(),
-                Type.DAMAGE);
-        observable.notifyObservers(action1);
-        observable.notifyObservers(action2);
+        if (target.getAttack() > 0) {
+            ((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+            Action action1 = new Action(((FirestoneObservable) observable).getPlayers(),
+                    ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(),
+                    Type.DAMAGE);
+            observable.notifyObservers(action1);
+        }
 
         // Remove the attacker if it has died
         removeDeadMinion(attacker);
@@ -41,17 +45,21 @@ public class DamageHandler {
      * Deals damage to minions when two minions battle.
      */
     public void dealDamageToTwoMinions(Minion attacker, Minion target) {
-        ((FirestoneMinion) target).reduceHealth(attacker.getAttack());
-        ((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+        if (attacker.getAttack() > 0) {
+            ((FirestoneMinion) target).reduceHealth(attacker.getAttack());
+            Action action2 = new Action(((FirestoneObservable) observable).getPlayers(),
+                    ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, target.getId(),
+                    Type.DAMAGE);
+            observable.notifyObservers(action2);
+        }
 
-        Action action1 = new Action(((FirestoneObservable) observable).getPlayers(),
-                ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(),
-                Type.DAMAGE);
-        Action action2 = new Action(((FirestoneObservable) observable).getPlayers(),
-                ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, target.getId(),
-                Type.DAMAGE);
-        observable.notifyObservers(action1);
-        observable.notifyObservers(action2);
+        if (target.getAttack() > 0) {
+            ((FirestoneMinion) attacker).reduceHealth(target.getAttack());
+            Action action1 = new Action(((FirestoneObservable) observable).getPlayers(),
+                    ((FirestoneObservable) observable).getCurrentPlayerId(), null, null, -1, null, attacker.getId(),
+                    Type.DAMAGE);
+            observable.notifyObservers(action1);
+        }
 
         // Remove the two minions if they died
         removeDeadMinions(((FirestoneObservable) observable).getPlayers().get(0).getActiveMinions());
@@ -62,6 +70,9 @@ public class DamageHandler {
      * Deals specified amount of damage to a minion.
      */
     public void dealDamageToOneMinion(Minion minion, int damage) {
+        if (damage <= 0) {
+            return;
+        }
         ((FirestoneMinion) minion).reduceHealth(damage);
 
         Action action = new Action(((FirestoneObservable) observable).getPlayers(),
@@ -77,6 +88,9 @@ public class DamageHandler {
      * Deals specified amount of damage to a hero.
      */
     public void dealDamageToHero(Hero hero, int damage) {
+        if (damage <= 0) {
+            return;
+        }
         ((FirestoneHero) hero).reduceHealth(damage);
 
         Action action = new Action(((FirestoneObservable) observable).getPlayers(),

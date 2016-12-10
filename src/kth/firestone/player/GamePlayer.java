@@ -70,4 +70,8 @@ public class GamePlayer implements Player {
         return discardPile.get(discardPile.size() - 1);
     }
 
+    public void setHero(Hero hero) {
+        this.hero = hero;
+    }
+
 }
