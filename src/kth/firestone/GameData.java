@@ -168,6 +168,18 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 
+		card = new HashMap<>();
+
+		card.put("name", "Voodoo Doctor");
+		card.put("health", "1");
+		card.put("attack", "2");
+		card.put("mana", "1");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Battlecry: Restore 2 Health.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
+
 		// ----------- SPELLS -----------
 
 		card = new HashMap<>();

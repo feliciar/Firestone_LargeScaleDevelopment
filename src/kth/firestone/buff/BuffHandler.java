@@ -30,6 +30,7 @@ public class BuffHandler {
 
 		Card playedCard = getPlayedCard(action);
 		String buff = playedCard.getDescription();
+
 		if (playedCard.getType() == Card.Type.SPELL || buff.startsWith("Battlecry") || buff.startsWith("Combo")
 				|| buff.startsWith("Charge"))
 			invokeBuff(action, null, buff, true);
@@ -129,6 +130,8 @@ public class BuffHandler {
 	public Map<String, Method> createMethodMap() {
 		Map<String, Method> methodMap = new HashMap<>();
 		try {
+			methodMap.put("Battlecry: Restore 2 Health.",
+					BuffMethods.class.getDeclaredMethod("restore2Health", Action.class, Minion.class, boolean.class));
 			methodMap.put("Battlecry: Deal 1 damage.",
 					BuffMethods.class.getDeclaredMethod("dealOneDamage", Action.class, Minion.class, boolean.class));
 			methodMap.put("Battlecry: If you're holding a Dragon, deal 3 damage.", BuffMethods.class

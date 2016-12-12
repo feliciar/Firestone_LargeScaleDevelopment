@@ -31,6 +31,58 @@ public class BuffMethods {
 	/* ----------------------- MINIONS ----------------------- */
 
 	/**
+	 * Method for performing buff: "Battlecry: Restore 2 Health."
+	 * 
+	 * @param action
+	 *            the action that just took place
+	 * @param minion
+	 *            null
+	 * @param performBuff
+	 *            true if we want to perform a buff and false if we only want to check if it is possible to perform this
+	 *            buff
+	 * @return true if the buff was invoked or can be invoked, false otherwise
+	 */
+	public boolean restore2Health(Action action, Minion minion, boolean performBuff) {
+		if (minion != null || action.getTargetId() == null)
+			return false;
+
+		// if target is a hero
+		for (Player p : action.getPlayers()) {
+			if (p.getHero().getId().equals(action.getTargetId())) {
+				if (performBuff) {
+
+					FirestoneHero hero = (FirestoneHero) p.getHero();
+					int health = hero.getHealth() + 2;
+					int maxHealth = hero.getMaxHealth();
+					if (health > maxHealth) {
+						health = maxHealth;
+					}
+					hero.setHealth(health);
+				}
+				return true;
+			}
+		}
+		// if target is a minion
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
+				if (m.getId().equals(action.getTargetId())) {
+					if (performBuff) {
+						FirestoneMinion min = (FirestoneMinion) m;
+						int health = min.getHealth() + 2;
+						int maxHealth = min.getMaxHealth();
+						if (health > maxHealth) {
+							health = maxHealth;
+						}
+						min.setHealth(health);
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Method for performing buff: "Battlecry: Deal 1 damage."
 	 * 
 	 * @param action

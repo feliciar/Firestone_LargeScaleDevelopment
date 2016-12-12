@@ -63,10 +63,43 @@ public class BuffMethodsTest {
 	}
 
 	@Test
+	public void testRestoreTwoHealth() {
+		Action action1 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "heroId1", null,
+				Action.Type.DAMAGE);
+		Action action2 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "heroId2", null,
+				Action.Type.DAMAGE);
+		Action action3 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-2",
+				null, Action.Type.DAMAGE);
+		FirestoneHero hero1 = new FirestoneHero("heroId1", null, 30, null);
+		FirestoneHero hero2 = new FirestoneHero("heroId2", null, 30, null);
+		when(p1.getHero()).thenReturn(hero1);
+		when(p2.getHero()).thenReturn(hero2);
+		when(p1.getActiveMinions()).thenReturn(minions);
+
+		// Heal own hero
+		hero1.setHealth(28);
+		boolean ret = buffMethods.restore2Health(action1, null, true);
+		assertTrue(ret);
+		assertEquals(30, hero1.getHealth());
+
+		// Heal opponent hero
+		hero2.setHealth(28);
+		ret = buffMethods.restore2Health(action2, null, true);
+		assertTrue(ret);
+		assertEquals(30, hero2.getHealth());
+
+		// Heal minion
+		((FirestoneMinion) minions.get(1)).reduceHealth(2);
+		ret = buffMethods.restore2Health(action3, null, true);
+		assertTrue(ret);
+		assertEquals(7, minions.get(1).getHealth());
+	}
+
+	@Test
 	public void testDealOneDamage() {
 		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", null,
 				Action.Type.DAMAGE);
-		FirestoneHero hero = new FirestoneHero("heroId", null, 30, null);
+		FirestoneHero hero = new FirestoneHero("heroId1", null, 30, null);
 
 		when(p1.getHero()).thenReturn(hero);
 		when(p2.getHero()).thenReturn(hero);
@@ -393,4 +426,5 @@ public class BuffMethodsTest {
 		assertFalse(minion.isSleepy());
 
 	}
+
 }
