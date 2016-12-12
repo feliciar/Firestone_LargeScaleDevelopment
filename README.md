@@ -76,13 +76,50 @@ Your team needs to write a software architecture design. You need to guide other
 * Lesser Heal (http://hearthstone.gamepedia.com/Lesser_Heal)
 * Steady Shot (http://hearthstone.gamepedia.com/Steady_Shot)
 
-## Implementing the server in Java
+# firestone-sprint-4
+
+The fourth sprint of the game. In this sprint you will work on a code base from another team.
+
+### Quality assurance
+
+We need you to provide a report regarding the quality of the implementation given to you. It should preferably be no longer than five pages of text. In order to get familiar with the new code base we would like you to implement the following new cards: 
+
+* King Krush (http://hearthstone.gamepedia.com/King_Krush)
+* Imp Gang Boss (http://hearthstone.gamepedia.com/Imp_Gang_Boss)
+* Voodoo Doctor (http://hearthstone.gamepedia.com/Voodoo_Doctor)
+* Shattered Sun Cleric (http://hearthstone.gamepedia.com/Shattered_Sun_Cleric)
+
+We would like you to test the game and make sure that it works with the view as expected. Focus on the design choices made. Is the Open/closed principle fulfilled when adding cards? Is the core logic unit tested? Is there any logic missplaced? Do entities have well defined responsibilities? Is the single responsibility principle fulfilled? A good way to measure this is to count the number of places you need to edit in order to erase all the traces of an existing minion. Is there any duplication of code? How well did you understand the design from reading the SAD (software architecture design) document? 
+
+We are thinking of buying this code base for half a million. Should we? Grade the quality of the code from 1 to 5. 5 is the best.
+
+### Sharing the repositories
+
+Make the person under your team a collaborator of your repository so that they can add the rest of their team. From now on the original team is prohibited to commit to the repository. If you are not getting access then remind the owner of the repository.
+
+
+* fgrape 
+* yberg  
+- jnorm  
+* timgr  
+* dinaj  
+* anil9  
+* fgrape 
+
+
+### Steps
+
+Create a new branch from the version 3.0.x. Call it sprint4. Do your changes in this branch. Add the report with the name quality_assurance.pdf to the branch and tag the code with version 4.0.0 when you are done.
+
+In the report we would like the names of all persons in your team and your own repository name, i.e. username/reponame.
+
+
+# Implementing the server in Java
 
 1. Include the `server.jar` file as a dependency.
 2. Include the `gson-2.3.1.jar` file as a dependency.
 3. Create an implementation of `kth.firestone.server.GameFactory`.
 4. Create a main method that creates an instance of your `GameFactory` implementation and create a `ServerFactory` instance with it and then call `createServer` followed by `start`.
-
 
 
 
