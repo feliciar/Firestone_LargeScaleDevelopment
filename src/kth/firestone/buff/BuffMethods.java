@@ -66,13 +66,13 @@ public class BuffMethods {
 			for (Minion m : p.getActiveMinions()) {
 				if (m.getId().equals(action.getTargetId())) {
 					if (performBuff) {
-						FirestoneHero hero = (FirestoneHero) p.getHero();
-						int health = hero.getHealth() + 2;
-						int maxHealth = hero.getMaxHealth();
+						FirestoneMinion min = (FirestoneMinion) m;
+						int health = min.getHealth() + 2;
+						int maxHealth = min.getMaxHealth();
 						if (health > maxHealth) {
 							health = maxHealth;
 						}
-						hero.setHealth(health);
+						min.setHealth(health);
 					}
 					return true;
 				}

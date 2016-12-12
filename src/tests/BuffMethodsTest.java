@@ -92,7 +92,7 @@ public class BuffMethodsTest {
 		((FirestoneMinion) minions.get(1)).reduceHealth(2);
 		ret = buffMethods.restore2Health(action3, null, true);
 		assertTrue(ret);
-		assertEquals(5, minions.get(1).getHealth());
+		assertEquals(7, minions.get(1).getHealth());
 	}
 
 	@Test
