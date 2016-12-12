@@ -339,18 +339,23 @@ public class BuffMethods {
 	 * @param action
 	 *            the action that just took place
 	 * @param minion
-	 *            the minion on the board that this buff belongs to
+	 *            null
 	 * @param performBuff
 	 *            true if we want to perform a buff and false if we only want to check if it is possible to perform this
 	 *            buff
 	 * @return true if the buff was invoked or can be invoked, false otherwise
 	 */
 	public boolean charge(Action action, Minion minion, boolean performBuff) {
-		// dont need action to apply charge to a minion
-		if (minion == null)
+		if (minion != null)
 			return false;
-		if (performBuff)
-			((FirestoneMinion) minion).setSleepy(false);
+		if (performBuff) {
+			Player currentPlayer = getCurrentPlayer(action);
+			for (Minion m : currentPlayer.getActiveMinions()) {
+				if (m.getId().equals(action.getMinionCreatedId())) {
+					((FirestoneMinion) m).setSleepy(false);
+				}
+			}
+		}
 		return true;
 	}
 

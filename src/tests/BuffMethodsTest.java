@@ -380,9 +380,16 @@ public class BuffMethodsTest {
 
 	@Test
 	public void testCharge() {
-		Minion minion = minions.get(0);
+		Minion minion = minions.get(1);
 
-		buffMethods.charge(null, minion, true);
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "uniqueId-2", 0, null, null,
+				Action.Type.PLAYED_CARD);
+
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p1.getActiveMinions()).thenReturn(minions);
+
+		buffMethods.charge(action, null, true);
+
 		assertFalse(minion.isSleepy());
 
 	}
