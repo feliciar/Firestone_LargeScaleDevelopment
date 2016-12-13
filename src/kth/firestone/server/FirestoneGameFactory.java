@@ -25,12 +25,12 @@ public class FirestoneGameFactory implements GameFactory {
 		// set starting state
 		int startingMana = 0;
 
-		String[] deckStrings = { "Imp", "Imp", "Imp", "Imp", "Imp", "War Golem", "War Golem", "Boulderfist Ogre",
-				"Boulderfist Ogre", "Ironforge Rifleman", "Ironforge Rifleman", "Ironforge Rifleman",
-				"Ironforge Rifleman", "Blackwing Corruptor", "Blackwing Corruptor", "Twilight Drake", "Twilight Drake",
-				"Edwin VanCleef", "Edwin VanCleef", "Midnight Drake", "Wild Pyromancer", "Frostbolt", "Frostbolt",
-				"Shadowstep", "Backstab", "Equality", "Shadowform", "Alexstrasza", "Acolyte of Pain",
-				"Lorewalker Cho" };
+		String[] deckStrings = { "Imp", "Imp", "Voodoo Doctor", "King Krush", "Shattered Sun Cleric", "War Golem",
+				"War Golem", "Boulderfist Ogre", "Boulderfist Ogre", "Ironforge Rifleman", "Ironforge Rifleman",
+				"Ironforge Rifleman", "Ironforge Rifleman", "Blackwing Corruptor", "Blackwing Corruptor",
+				"Twilight Drake", "Twilight Drake", "Edwin VanCleef", "Edwin VanCleef", "Midnight Drake",
+				"Wild Pyromancer", "Frostbolt", "Frostbolt", "Shadowstep", "Backstab", "Equality", "Shadowform",
+				"Alexstrasza", "Acolyte of Pain", "Lorewalker Cho" };
 
 		List<List<String>> decks = new ArrayList<>();
 		decks.add(new ArrayList<>(Arrays.asList(deckStrings)));

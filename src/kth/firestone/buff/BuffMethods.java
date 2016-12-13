@@ -43,9 +43,13 @@ public class BuffMethods {
 	 * @return true if the buff was invoked or can be invoked, false otherwise
 	 */
 	public boolean giveFriendlyMinionOnePlus(Action action, Minion minion, boolean performBuff) {
-		if (minion != null || action.getTargetId() == null)
+		if (minion != null)
 			return false;
 
+		// Has no friendly minion
+		if (action.getTargetId() == null) {
+			return true;
+		}
 		Player currentPlayer = getCurrentPlayer(action);
 
 		for (Minion m : currentPlayer.getActiveMinions()) {
@@ -152,6 +156,11 @@ public class BuffMethods {
 		if (minion != null)
 			return false;
 
+		// If not holding a dragon
+		if (action.getTargetId() == null) {
+			return true;
+		}
+
 		Player currentPlayer = getCurrentPlayer(action);
 		for (Card c : currentPlayer.getHand()) {
 			if (c.getRace().get().equals(MinionRace.DRAGON)) {
@@ -175,8 +184,6 @@ public class BuffMethods {
 						}
 					}
 				}
-			} else if (!performBuff) { // if not holding a dragon
-				return true;
 			}
 
 		}
