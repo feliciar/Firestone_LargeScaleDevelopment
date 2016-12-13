@@ -31,6 +31,42 @@ public class BuffMethods {
 	/* ----------------------- MINIONS ----------------------- */
 
 	/**
+	 * Method for performing buff: "Battlecry: Give a friendly minion +1/+1."
+	 * 
+	 * @param action
+	 *            the action that just took place
+	 * @param minion
+	 *            null
+	 * @param performBuff
+	 *            true if we want to perform a buff and false if we only want to check if it is possible to perform this
+	 *            buff
+	 * @return true if the buff was invoked or can be invoked, false otherwise
+	 */
+	public boolean giveFriendlyMinionOnePlus(Action action, Minion minion, boolean performBuff) {
+		if (minion != null || action.getTargetId() == null)
+			return false;
+
+		Player currentPlayer = getCurrentPlayer(action);
+
+		for (Minion m : currentPlayer.getActiveMinions()) {
+			if (m.getId().equals(action.getTargetId())) {
+				if (performBuff) {
+					FirestoneMinion min = (FirestoneMinion) m;
+
+					min.setMaxHealth(min.getHealth() + 1);
+					min.setHealth(min.getHealth() + 1);
+
+					min.setAttack(min.getAttack() + 1);
+				}
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Method for performing buff: "Battlecry: Restore 2 Health."
 	 * 
 	 * @param action

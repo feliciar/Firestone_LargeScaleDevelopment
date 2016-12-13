@@ -130,6 +130,8 @@ public class BuffHandler {
 	public Map<String, Method> createMethodMap() {
 		Map<String, Method> methodMap = new HashMap<>();
 		try {
+			methodMap.put("Battlecry: Give a friendly minion +1/+1.", BuffMethods.class
+					.getDeclaredMethod("giveFriendlyMinionOnePlus", Action.class, Minion.class, boolean.class));
 			methodMap.put("Battlecry: Restore 2 Health.",
 					BuffMethods.class.getDeclaredMethod("restore2Health", Action.class, Minion.class, boolean.class));
 			methodMap.put("Battlecry: Deal 1 damage.",

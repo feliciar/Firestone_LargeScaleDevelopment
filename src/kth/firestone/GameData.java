@@ -180,6 +180,16 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 
+		card.put("name", "Shattered Sun Cleric");
+		card.put("health", "2");
+		card.put("attack", "3");
+		card.put("mana", "3");
+		card.put("race", "NONE");
+		card.put("state", "");
+		card.put("buff", "Battlecry: Give a friendly minion +1/+1.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
+
 		// ----------- SPELLS -----------
 
 		card = new HashMap<>();

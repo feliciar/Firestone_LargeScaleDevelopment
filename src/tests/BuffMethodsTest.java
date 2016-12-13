@@ -63,6 +63,18 @@ public class BuffMethodsTest {
 	}
 
 	@Test
+	public void testGiveFriendlyMinionOnePlus() {
+		Action action = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "uniqueId-1", null,
+				Action.Type.DAMAGE);
+		when(p1.getActiveMinions()).thenReturn(minions);
+		when(p1.getId()).thenReturn("currentPlayerId");
+		when(p2.getId()).thenReturn("opponentId");
+		buffMethods.giveFriendlyMinionOnePlus(action, null, true);
+		assertEquals(2, minions.get(0).getAttack());
+		assertEquals(2, minions.get(0).getHealth());
+	}
+
+	@Test
 	public void testRestoreTwoHealth() {
 		Action action1 = new Action(players, "currentPlayerId", "playedCardId", "minionCreatedId", 0, "heroId1", null,
 				Action.Type.DAMAGE);
