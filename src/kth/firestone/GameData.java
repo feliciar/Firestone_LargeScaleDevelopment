@@ -189,6 +189,16 @@ public class GameData {
 		card.put("buff", "Battlecry: Give a friendly minion +1/+1.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
+		
+		card.put("name", "Imp Gang Boss");
+		card.put("health", "4");
+		card.put("attack", "2");
+		card.put("mana", "3");
+		card.put("race", "DEMON");
+		card.put("state", "");
+		card.put("buff", "Whenever this minion takes damage, summon a 1/1 imp.");
+		card.put("type", "MINION");
+		cards.put(card.get("name"), card);
 
 		// ----------- SPELLS -----------
 
