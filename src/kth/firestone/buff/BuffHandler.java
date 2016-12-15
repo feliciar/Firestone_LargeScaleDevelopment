@@ -162,6 +162,8 @@ public class BuffHandler {
 					.getDeclaredMethod("setHeroHealthTo15", Action.class, Minion.class, boolean.class));
 			methodMap.put("Whenever this minion takes damage, draw a card.", BuffMethods.class
 					.getDeclaredMethod("drawCardWhenThisMinionTakesDamage", Action.class, Minion.class, boolean.class));
+			methodMap.put("Whenever this minion takes damage, summon a 1/1 imp.", BuffMethods.class
+					.getDeclaredMethod("summonImpOnDamageTaken", Action.class, Minion.class, boolean.class));
 			methodMap.put("Whenever a player casts a spell, put a copy into the other player's hand.",
 					BuffMethods.class.getDeclaredMethod("copyOpponentsPlayedSpellCardIntoHand", Action.class,
 							Minion.class, boolean.class));

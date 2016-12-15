@@ -1,8 +1,11 @@
 package kth.firestone.buff;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import static java.util.Collections.EMPTY_LIST;
 
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
@@ -453,6 +456,58 @@ public class BuffMethods {
 		}
 		return true;
 	}
+	
+	/**
+	 * Method for performing buff: "Whenever this minion takes damage, summons a 1/1 imp."
+	 * 
+	 * @param action
+	 *            the action that just took place
+	 * @param minion
+	 *            the minion on the board that this buff belongs to
+	 * @param performBuff
+	 *            true if we want to perform a buff and false if we only want to check if it is possible to perform this
+	 *            buff
+	 * @return true if the buff was invoked or can be invoked, false otherwise
+	 */
+	public boolean summonImpOnDamageTaken(Action action, Minion minion, boolean performBuff) {
+		if (action.getActionType() != Action.Type.DAMAGE) {
+			return false;
+		}
+			
+		// Find the damaged minion and the owner of that minion
+		Minion damagedMinion = null;
+		GamePlayer ownerOfMinion = null;
+		for (Player p : action.getPlayers()) {
+			for (Minion m : p.getActiveMinions()) {
+				if (m.getId().equals(action.getDamagedCharacterId())) {
+					damagedMinion = m;
+					ownerOfMinion = (GamePlayer) p;
+				}
+			}
+		}
+		
+		// If the damaged minion doesn't have this effect
+		if ( ! minion.getId().equals(damagedMinion.getId())) {
+			return false;
+		}
+		
+		// Perform the effect.
+		if (performBuff) {
+			Minion imp = new FirestoneMinion(UUID.randomUUID().toString(), 
+							"Imp", 1, 1, 1, 1, MinionRace.NONE, 
+								Collections.<MinionState>emptyList(), 
+									"", null);
+			
+			List<Minion> minions = ownerOfMinion.getActiveMinions();
+			
+			// Maximum number of minions on the board
+			if (minions.size() < 7) {
+				minions.add(imp);
+			}
+		}
+		
+		return true;
+	}
 
 	/* ----------------------- SPELLS ----------------------- */
 
@@ -621,48 +676,7 @@ public class BuffMethods {
 		return true;
 	}
 	
-	/**
-	 * Method for performing buff: "Whenever this minion takes damage, summons a 1/1 imp."
-	 * 
-	 * @param action
-	 *            the action that just took place
-	 * @param minion
-	 *            the minion on the board that this buff belongs to
-	 * @param performBuff
-	 *            true if we want to perform a buff and false if we only want to check if it is possible to perform this
-	 *            buff
-	 * @return true if the buff was invoked or can be invoked, false otherwise
-	 */
-	public boolean summonImpOnDamageTaken(Action action, Minion minion, boolean performBuff) {
-		if (action.getActionType() != Action.Type.DAMAGE) {
-			return false;
-		}
-			
-		// Find the damaged minion and the owner of that minion
-		Minion damagedMinion = null;
-		GamePlayer ownerOfMinion = null;
-		for (Player p : action.getPlayers()) {
-			for (Minion m : p.getActiveMinions()) {
-				if (m.getId().equals(action.getDamagedCharacterId())) {
-					damagedMinion = m;
-					ownerOfMinion = (GamePlayer) p;
-				}
-			}
-		}
-		
-		// If the damaged minion doesn't have this effect
-		if ( ! minion.getId().equals(damagedMinion.getId())) {
-			return false;
-		}
-		
-		// Perform the effect.
-		// TODO: Create the FirestoneMinion corresponding to a 1/1 imp and add the imp to
-		// the owning player's active minions. Questions are:
-		//		- Limit to how many active minions a player can have?
-		//		- Where is the ID generated for creating minions?
-		
-		return true;
-	}
+
 
 	/* ----------------------- HERO POWERS ----------------------- */
 
