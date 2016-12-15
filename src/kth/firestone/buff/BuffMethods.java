@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static java.util.Collections.EMPTY_LIST;
-
 import kth.firestone.Action;
 import kth.firestone.DamageHandler;
 import kth.firestone.card.Card;
@@ -384,7 +382,9 @@ public class BuffMethods {
 						if (p.getDeck().size() > 0) {
 							if (performBuff) {
 								Card drawnCard = ((FirestoneDeck) p.getDeck()).getCards().pop();
-								p.getHand().add(drawnCard);
+								if (p.getHand().size() < 10) {
+									p.getHand().add(drawnCard);
+								}
 							}
 							return true;
 						}
@@ -419,9 +419,13 @@ public class BuffMethods {
 								"" + c.getHealth().get(), "" + c.getAttack().get(), "" + c.getManaCost(),
 								c.getType().toString(), c.getDescription(), "" + c.getRace().get());
 						if (action.getPlayers().get(0).getId().equals(currentPlayer.getId())) {
-							action.getPlayers().get(1).getHand().add(newCard);
+							if (action.getPlayers().get(1).getHand().size() < 10) {
+								action.getPlayers().get(1).getHand().add(newCard);
+							}
 						} else {
-							action.getPlayers().get(0).getHand().add(newCard);
+							if (action.getPlayers().get(0).getHand().size() < 10) {
+								action.getPlayers().get(0).getHand().add(newCard);
+							}
 						}
 					}
 					return true;
@@ -456,7 +460,7 @@ public class BuffMethods {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Method for performing buff: "Whenever this minion takes damage, summons a 1/1 imp."
 	 * 
@@ -473,7 +477,7 @@ public class BuffMethods {
 		if (action.getActionType() != Action.Type.DAMAGE) {
 			return false;
 		}
-			
+
 		// Find the damaged minion and the owner of that minion
 		Minion damagedMinion = null;
 		GamePlayer ownerOfMinion = null;
@@ -485,27 +489,25 @@ public class BuffMethods {
 				}
 			}
 		}
-		
+
 		// If the damaged minion doesn't have this effect
-		if ( ! minion.getId().equals(damagedMinion.getId())) {
+		if (!minion.getId().equals(damagedMinion.getId())) {
 			return false;
 		}
-		
+
 		// Perform the effect.
 		if (performBuff) {
-			Minion imp = new FirestoneMinion(UUID.randomUUID().toString(), 
-							"Imp", 1, 1, 1, 1, MinionRace.NONE, 
-								Collections.<MinionState>emptyList(), 
-									"", null);
-			
+			Minion imp = new FirestoneMinion(UUID.randomUUID().toString(), "Imp", 1, 1, 1, 1, MinionRace.NONE,
+					Collections.<MinionState> emptyList(), "", null);
+
 			List<Minion> minions = ownerOfMinion.getActiveMinions();
-			
+
 			// Maximum number of minions on the board
 			if (minions.size() < 7) {
 				minions.add(imp);
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -675,8 +677,6 @@ public class BuffMethods {
 		}
 		return true;
 	}
-	
-
 
 	/* ----------------------- HERO POWERS ----------------------- */
 
@@ -701,7 +701,9 @@ public class BuffMethods {
 		if (deck.size() > 0) {
 			if (performBuff) {
 				Card c = deck.getCards().pop();
-				currentPlayer.getHand().add(c);
+				if (currentPlayer.getHand().size() < 10) {
+					currentPlayer.getHand().add(c);
+				}
 				((FirestoneHero) currentPlayer.getHero()).reduceHealth(2);
 			}
 			return true;
