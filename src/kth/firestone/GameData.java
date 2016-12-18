@@ -180,6 +180,8 @@ public class GameData {
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
 
+		card = new HashMap<>();
+
 		card.put("name", "Shattered Sun Cleric");
 		card.put("health", "2");
 		card.put("attack", "3");
@@ -189,7 +191,9 @@ public class GameData {
 		card.put("buff", "Battlecry: Give a friendly minion +1/+1.");
 		card.put("type", "MINION");
 		cards.put(card.get("name"), card);
-		
+
+		card = new HashMap<>();
+
 		card.put("name", "Imp Gang Boss");
 		card.put("health", "4");
 		card.put("attack", "2");
