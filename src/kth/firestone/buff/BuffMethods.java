@@ -503,8 +503,13 @@ public class BuffMethods {
 			List<Minion> minions = ownerOfMinion.getActiveMinions();
 
 			// Maximum number of minions on the board
-			if (minions.size() < 7) {
-				minions.add(imp);
+			final int BOARD_MINIONS = 7;
+			
+			if (minions.size() < BOARD_MINIONS) {
+				// Position of the new Imp: one position to the right of the Imp Gang Boss.
+				// Position becomes 0 if the Imp Gang Boss is at the last position.
+				int pos = (minions.indexOf(minion) + 1) % BOARD_MINIONS;
+				minions.add(pos, imp);
 			}
 		}
 
