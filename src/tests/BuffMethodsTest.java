@@ -438,5 +438,56 @@ public class BuffMethodsTest {
 		assertFalse(minion.isSleepy());
 
 	}
+	
+	@Test
+	public void testBasicSummonImpOnDamageTaken() {
+		Minion impGangBoss = new FirestoneMinion("IGB", "Imp Gang Boss", 4, 4, 2, 2, 
+			MinionRace.DEMON, new ArrayList<>(), "Whenever this minion takes damage, summon a 1/1 imp.", buffHandler);
+		
+		List<Minion> minionsP1 = new ArrayList<>();
+		minionsP1.add(0, impGangBoss);
+		
+		final Action action = new Action(players, p2.getId(), null, null, 
+				0, null, impGangBoss.getId(), Action.Type.DAMAGE);
+		
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minions);
+		
+		assertEquals(1, minionsP1.size());
+		
+		buffMethods.summonImpOnDamageTaken(action, impGangBoss, true);
+		
+		assertEquals(2, minionsP1.size());
+		assertEquals("Imp", minionsP1.get(1).getName());
+		assertEquals(impGangBoss.getId(), minionsP1.get(0).getId());
+
+	}
+	
+	@Test
+	public void testPositionSummonImpOnDamageTaken() {
+		Minion impGangBoss = new FirestoneMinion("IGB", "Imp Gang Boss", 4, 4, 2, 2, 
+				MinionRace.DEMON, new ArrayList<>(), "Whenever this minion takes damage, summon a 1/1 imp.", buffHandler);
+		
+		Minion warGolem = new FirestoneMinion("WG1", "War Golem", 7, 7, 7, 7, MinionRace.NONE, new ArrayList<>(), "",
+				buffHandler);
+				
+		List<Minion> minionsP1 = new ArrayList<>();
+		minionsP1.add(impGangBoss);
+		minionsP1.add(warGolem);
+		
+		final Action action = new Action(players, p2.getId(), null, null, 
+				0, null, impGangBoss.getId(), Action.Type.DAMAGE);
+		
+		when(p1.getActiveMinions()).thenReturn(minionsP1);
+		when(p2.getActiveMinions()).thenReturn(minions);
+		
+		buffMethods.summonImpOnDamageTaken(action, impGangBoss, true);
+
+		assertEquals(3, minionsP1.size());
+		assertEquals(impGangBoss.getId(), minionsP1.get(0).getId());
+		assertEquals("Imp", minionsP1.get(1).getName());
+		assertEquals(warGolem.getId(), minionsP1.get(2).getId());
+		
+	}
 
 }
